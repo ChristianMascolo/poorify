@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="poorify:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>poorify</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Poorify.war">
+      <element id="artifact" artifact-name="poorify:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,72 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="poorify:war exploded">
+    <output-path>$PROJECT_DIR$/target/Poorify</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>poorify</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="poorify" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.1" />
+          <element id="library" level="project" name="Maven: org.json:json:20160810" />
+          <element id="library" level="project" name="Maven: org.webjars.bower:jquery:3.5.1" />
+          <element id="library" level="project" name="Maven: com.microsoft.sqlserver:mssql-jdbc:11.2.1.jre17" />
+          <element id="library" level="project" name="Maven: com.azure:azure-storage-blob:12.20.0" />
+          <element id="library" level="project" name="Maven: com.azure:azure-core:1.33.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.4" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.36" />
+          <element id="library" level="project" name="Maven: io.projectreactor:reactor-core:3.4.23" />
+          <element id="library" level="project" name="Maven: org.reactivestreams:reactive-streams:1.0.4" />
+          <element id="library" level="project" name="Maven: com.azure:azure-core-http-netty:1.12.6" />
+          <element id="library" level="project" name="Maven: io.netty:netty-handler:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-common:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-resolver:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-transport:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-handler-proxy:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec-socks:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-buffer:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec-http:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec-http2:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-transport-native-unix-common:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-transport-native-epoll:linux-x86_64:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-transport-classes-epoll:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-transport-native-kqueue:osx-x86_64:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-transport-classes-kqueue:4.1.82.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-tcnative-boringssl-static:2.0.54.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-tcnative-classes:2.0.54.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-tcnative-boringssl-static:linux-x86_64:2.0.54.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-tcnative-boringssl-static:linux-aarch_64:2.0.54.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-tcnative-boringssl-static:osx-x86_64:2.0.54.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-tcnative-boringssl-static:osx-aarch_64:2.0.54.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-tcnative-boringssl-static:windows-x86_64:2.0.54.Final" />
+          <element id="library" level="project" name="Maven: io.projectreactor.netty:reactor-netty-http:1.0.23" />
+          <element id="library" level="project" name="Maven: io.netty:netty-resolver-dns:4.1.81.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec-dns:4.1.81.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-resolver-dns-native-macos:osx-x86_64:4.1.81.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-resolver-dns-classes-macos:4.1.81.Final" />
+          <element id="library" level="project" name="Maven: io.projectreactor.netty:reactor-netty-core:1.0.23" />
+          <element id="library" level="project" name="Maven: com.azure:azure-storage-common:12.19.0" />
+          <element id="library" level="project" name="Maven: com.azure:azure-storage-internal-avro:12.5.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4" />
+          <element id="library" level="project" name="Maven: org.codehaus.woodstox:stax2-api:4.2.1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.woodstox:woodstox-core:6.3.1" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/Poorify/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="poorify/web/Web" />
+    </root>
+  </artifact>
+</component>
