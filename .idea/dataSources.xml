@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="poorifyConnection" uuid="5c1bde01-6789-4a28-8be3-56fc9d783e64">
+    <data-source source="LOCAL" name="poorifyConnection" uuid="0f3fbaa4-e575-49ac-adbe-716513be834e">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
       <jdbc-url>jdbc:sqlserver://poorify.database.windows.net:1433;database=poorifyDb;encrypt=false;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="AZURE_SQL_DB_SERVER" value="/subscriptions/105940c4-643e-4a17-a65d-430b2eef11ee/resourceGroups/poorify/providers/Microsoft.Sql/servers/poorify" />
-        <property name="APPROVED_DRIVER" value="sqlserver.ms" />
-      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
