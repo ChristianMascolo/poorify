@@ -1,4 +1,9 @@
 package track;
+
+import album.AlbumBean;
+import profile.ArtistBean;
+import java.util.Collection;
+
 public class TrackBean {
     private int id;
     private String title;
@@ -6,8 +11,11 @@ public class TrackBean {
     private int duration;
     private int plays;
 
-    public TrackBean() {
-    }
+    private AlbumBean album;
+
+    private Collection<ArtistBean> featuring;
+
+    public TrackBean() {}
 
     public TrackBean(int id, String title, int index, int duration, int plays) {
         this.id = id;
@@ -55,5 +63,21 @@ public class TrackBean {
 
     public void setPlays(int plays) {
         this.plays = plays;
+    }
+
+    public AlbumBean getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(AlbumBean album) {
+        this.album = album;
+    }
+
+    public Collection<ArtistBean> getFeaturing() {
+        return featuring;
+    }
+
+    public void setFeaturing(Collection<ArtistBean> featuring) {
+        this.featuring = featuring;
     }
 }

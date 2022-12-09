@@ -1,7 +1,9 @@
 package album;
 
 import profile.ArtistBean;
+import track.TrackBean;
 
+import java.util.Collection;
 import java.util.TreeSet;
 
 public class AlbumBean {
@@ -12,6 +14,8 @@ public class AlbumBean {
     private int duration;
     private int year;
     private ArtistBean artist;
+
+    private Collection<TrackBean> tracklist;
 
     public AlbumBean(int id, String title, int tracks, int duration, int year) {
         this.id = id;
@@ -69,6 +73,12 @@ public class AlbumBean {
         this.artist = artist;
     }
 
+    public Collection<TrackBean> getTracklist() {
+        return tracklist;
+    }
 
+    public void setTracklist(Collection<TrackBean> tracklist) {
+        this.tracklist = tracklist;
+    }
 
 }
