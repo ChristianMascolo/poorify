@@ -2,6 +2,7 @@ package Playlist;
 
 import profile.NationBean;
 import profile.UserBean;
+import track.TrackBean;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,9 +26,8 @@ public class PlaylistBean {
 
 
     public PlaylistBean(){ }
-    public PlaylistBean(int id, int endUser, String title, int tracks, int duration, boolean isPublic, boolean isCollaborative) {
+    public PlaylistBean(int id, String title, int tracks, int duration, boolean isPublic, boolean isCollaborative) {
         this.id = id;
-        this.endUser = endUser;
         this.title = title;
         this.tracks = tracks;
         this.duration = duration;
@@ -40,14 +40,6 @@ public class PlaylistBean {
     }
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getEndUser() {
-        return endUser;
-    }
-
-    public void setEndUser(int endUser) {
-        this.endUser = endUser;
     }
 
     public String getTitle() {
@@ -82,6 +74,14 @@ public class PlaylistBean {
         isPublic = aPublic;
     }
 
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
     public boolean isCollaborative() {
         return isCollaborative;
     }
@@ -96,14 +96,6 @@ public class PlaylistBean {
 
     public void setHost(UserBean host) {
         this.host = host;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
     }
 
     public Set<UserBean> getGuests() {
