@@ -1,4 +1,4 @@
-package Playlist;
+package playlist;
 
 import profile.NationBean;
 import profile.UserBean;
@@ -12,6 +12,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class PlaylistBean {
+
+    private enum Order{DATE, TITLE, DURATION, ARTIST, ALBUM}
+
     private int id;
     private UserBean host;
     private String title;
@@ -20,12 +23,11 @@ public class PlaylistBean {
     private boolean isPublic;
     private int likes;
     private boolean isCollaborative;
-    private Set<UserBean> guests;
+    private Collection<UserBean> guests;
     private Collection<TrackBean> tracklist;
-    private enum Order{DATE, TITLE, DURATION, ARTIST, ALBUM}
 
+    public PlaylistBean() {}
 
-    public PlaylistBean(){ }
     public PlaylistBean(int id, String title, int tracks, int duration, boolean isPublic, boolean isCollaborative) {
         this.id = id;
         this.title = title;
@@ -38,6 +40,7 @@ public class PlaylistBean {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -98,11 +101,11 @@ public class PlaylistBean {
         this.host = host;
     }
 
-    public Set<UserBean> getGuests() {
+    public Collection<UserBean> getGuests() {
         return guests;
     }
 
-    public void setGuests(Set<UserBean> guests) {
+    public void setGuests(Collection<UserBean> guests) {
         this.guests = guests;
     }
 

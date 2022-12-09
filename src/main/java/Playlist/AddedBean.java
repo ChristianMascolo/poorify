@@ -1,15 +1,15 @@
-package Playlist;
+package playlist;
 
 import profile.UserBean;
+import track.TrackBean;
 
 public class AddedBean {
     private UserBean user;
+    private TrackBean track;
     private PlaylistBean playlist;
     private String date;
-    private TrackBean track;
 
-    public AddedBean() {
-    }
+    public AddedBean() {}
 
     public AddedBean(UserBean user, PlaylistBean playlist, String date, TrackBean track) {
         this.user = user;
@@ -26,6 +26,14 @@ public class AddedBean {
         this.user = user;
     }
 
+    public TrackBean getTrack() {
+        return track;
+    }
+
+    public void setTrack(TrackBean track) {
+        this.track = track;
+    }
+
     public PlaylistBean getPlaylist() {
         return playlist;
     }
@@ -40,13 +48,5 @@ public class AddedBean {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public TrackBean getTrack() {
-        return track;
-    }
-
-    public void setTrack(TrackBean track) {
-        this.track = track;
     }
 }
