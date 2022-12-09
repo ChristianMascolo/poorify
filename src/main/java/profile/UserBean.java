@@ -7,6 +7,10 @@ public class UserBean extends ProfileBean {
     private NationBean nation;
     private boolean isPublic;
 
+    public UserBean() {
+        super(Role.USER);
+    }
+    
     public UserBean(int id, String email, String password, String alias, String birthdate, NationBean nation, boolean isPublic) {
         super(id, email, password, Role.USER);
         this.alias = alias;

@@ -9,6 +9,10 @@ public abstract class ProfileBean {
     private String password;
     private Role role;
 
+    public ProfileBean(Role role) {
+        this.role = role;
+    }
+
     public ProfileBean(int id, String email, String password, Role role) {
         this.id = id;
         this.email = email;

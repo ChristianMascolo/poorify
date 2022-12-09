@@ -5,6 +5,10 @@ public class ArtistBean extends ProfileBean {
     private String alias;
     private String bio;
 
+    public ArtistBean() {
+        super(Role.ARTIST);
+    }
+
     public ArtistBean(int id, String email, String password, String alias, String bio) {
         super(id, email, password, Role.ARTIST);
         this.alias = alias;

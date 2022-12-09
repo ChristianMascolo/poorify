@@ -5,6 +5,8 @@ public class NationBean {
     private String iso;
     private String name;
 
+    public NationBean() {}
+
     public NationBean(String iso, String name) {
         this.iso = iso;
         this.name = name;
