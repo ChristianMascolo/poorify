@@ -7,22 +7,30 @@ import java.util.Collection;
 public class TrackBean {
     private int id;
     private String title;
+    private String genre;
     private int index;
     private int duration;
     private int plays;
-
     private AlbumBean album;
-
     private Collection<ArtistBean> featuring;
 
     public TrackBean() {}
 
-    public TrackBean(int id, String title, int index, int duration, int plays) {
+    public TrackBean(int id, String title, int index, int duration, int plays,String genre) {
+        this.genre = genre;
         this.id = id;
         this.title = title;
         this.index = index;
         this.duration = duration;
         this.plays = plays;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre){
+        this.genre = genre;
     }
 
     public int getId() {
