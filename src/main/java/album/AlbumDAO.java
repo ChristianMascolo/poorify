@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class AlbumDAO {
@@ -43,6 +42,22 @@ public class AlbumDAO {
             albums.add(resultToBean(rs));
 
         return  albums;
+    }
+
+    public AlbumBean getFromTrack(int id) throws SQLException{
+        AlbumBean album = null;
+
+        PreparedStatement stmt = connection.prepareStatement("SELECT a.id AS id, a.title AS title, a.tracks AS tracks, a.duration AS duration, a.year AS year, a.type AS type " +
+                "FROM Track t, Album a " +
+                "WHERE t.album = a.id " +
+                "AND t.id = ?");
+        stmt.setInt(1,id);
+
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next())
+            album = resultToBean(rs);
+
+        return  album;
     }
 
     private AlbumBean resultToBean(ResultSet rs) throws SQLException {
