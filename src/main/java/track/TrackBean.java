@@ -10,19 +10,19 @@ public class TrackBean {
     private int index;
     private int duration;
     private int plays;
-
+    private String genre;
     private AlbumBean album;
-
     private Collection<ArtistBean> featuring;
 
     public TrackBean() {}
 
-    public TrackBean(int id, String title, int index, int duration, int plays) {
+    public TrackBean(int id, String title, int index, int duration, int plays, String genre) {
         this.id = id;
         this.title = title;
         this.index = index;
         this.duration = duration;
         this.plays = plays;
+        this.genre = genre;
     }
 
     public int getId() {
@@ -64,6 +64,10 @@ public class TrackBean {
     public void setPlays(int plays) {
         this.plays = plays;
     }
+
+    public String getGenre() { return genre; }
+
+    public void setGenre(String genre) { this.genre = genre; }
 
     public AlbumBean getAlbum() {
         return album;
