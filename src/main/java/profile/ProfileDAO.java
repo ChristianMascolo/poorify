@@ -99,6 +99,151 @@ public class ProfileDAO {
         return nations;
     }
 
+    //RETRIEVE - PART II
+    public Collection<UserBean> getFollowersFromUser(int id) throws SQLException {
+        Collection<UserBean> followers = new TreeSet<>((UserBean a, UserBean b) -> a.getAlias().compareTo(b.getAlias()));
+
+        PreparedStatement stmt = connection.prepareStatement(" " +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, u.alias AS alias, u.birthdate AS birthdate, n.iso AS iso, n.name AS name, u.isPublic AS isPublic " +
+                "FROM Profile p, EndUser u, FollowUser f, Nation n " +
+                "WHERE p.id = u.profile AND u.profile = f.follower AND u.nation = n.iso " +
+                "AND f.followed = ?");
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next())
+            followers.add((UserBean) resultToBean(rs));
+
+        rs.close(); stmt.close();
+        return followers;
+    }
+
+    public Collection<UserBean> getFollowingFromUser(int id) throws SQLException {
+        Collection<UserBean> following = new TreeSet<>((UserBean a, UserBean b) -> a.getAlias().compareTo(b.getAlias()));
+
+        PreparedStatement stmt = connection.prepareStatement(" " +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, u.alias AS alias, u.birthdate AS birthdate, n.iso AS iso, n.name AS name, u.isPublic AS isPublic " +
+                "FROM Profile p, EndUser u, FollowUser f, Nation n " +
+                "WHERE p.id = u.profile AND u.profile = f.followed AND u.nation = n.iso " +
+                "AND f.follower = ?");
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next())
+            following.add((UserBean) resultToBean(rs));
+
+        rs.close(); stmt.close();
+        return following;
+    }
+
+    public Collection<ArtistBean> getArtistsFromUser(int id) throws SQLException {
+        Collection<ArtistBean> artists = new TreeSet<>((ArtistBean a, ArtistBean b) -> a.getAlias().compareTo(b.getAlias()));
+
+        PreparedStatement stmt = connection.prepareStatement(" " +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, a.alias AS alias, a.bio AS bio " +
+                "FROM Profile p, Artist a, FollowArtist f " +
+                "WHERE p.id = a.profile AND a.profile = f.artist " +
+                "AND f.enduser = ?");
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next())
+            artists.add((ArtistBean) resultToBean(rs));
+
+        rs.close(); stmt.close();
+        return artists;
+    }
+
+    public Collection<ArtistBean> getFeaturingFromTrack(int id) throws SQLException {
+        Collection<ArtistBean> artists = new TreeSet<>((ArtistBean a, ArtistBean b) -> a.getAlias().compareTo(b.getAlias()));
+
+        PreparedStatement stmt = connection.prepareStatement(" " +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, a.alias AS alias, a.bio AS bio " +
+                "FROM Profile p, Artist a, Featuring f " +
+                "WHERE p.id = a.profile AND a.profile = f.artist " +
+                "AND f.track = ?");
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next())
+            artists.add((ArtistBean) resultToBean(rs));
+
+        rs.close(); stmt.close();
+        return artists;
+    }
+
+    public ArtistBean getFromAlbum(int id) throws SQLException {
+        ArtistBean artist = null;
+
+        PreparedStatement stmt = connection.prepareStatement(" " +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, a.alias AS alias, a.bio AS bio " +
+                "FROM Profile p, Artist a, Album l " +
+                "WHERE p.id = a.profile AND a.profile = l.artist " +
+                "AND l.id = ?");
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next())
+            artist = (ArtistBean) resultToBean(rs);
+
+        rs.close(); stmt.close();
+        return artist;
+    }
+
+    public ArtistBean getFromTrack(int id) throws SQLException {
+        ArtistBean artist = null;
+
+        PreparedStatement stmt = connection.prepareStatement(" " +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, a.alias AS alias, a.bio AS bio " +
+                "FROM Profile p, Artist a, Album l, Track t " +
+                "WHERE p.id = a.profile AND a.profile = l.artist AND l.id = t.album " +
+                "AND t.id = ?");
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next())
+            artist = (ArtistBean) resultToBean(rs);
+
+        rs.close(); stmt.close();
+        return artist;
+    }
+
+    public UserBean getHostFromPlaylist(int id) throws SQLException {
+        UserBean host = null;
+
+        PreparedStatement stmt = connection.prepareStatement(" " +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, u.alias AS alias, u.birthdate AS birthdate, n.iso AS iso, n.name AS name, u.isPublic AS isPublic " +
+                "FROM Profile p, EndUser u, Playlist g, Nation n " +
+                "WHERE p.id = u.profile AND u.profile = g.enduser AND u.nation = n.iso " +
+                "AND g.id = ?");
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next())
+            host = (UserBean) resultToBean(rs);
+
+        rs.close(); stmt.close();
+        return host;
+    }
+
+    public Collection<UserBean> getGuestsFromPlaylist(int id) throws SQLException {
+        Collection<UserBean> guests = new TreeSet<>((UserBean a, UserBean b) -> a.getAlias().compareTo(b.getAlias()));
+
+        PreparedStatement stmt = connection.prepareStatement(" " +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, u.alias AS alias, u.birthdate AS birthdate, n.iso AS iso, n.name AS name, u.isPublic AS isPublic " +
+                "FROM Profile p, EndUser u, Guests g, Nation n " +
+                "WHERE p.id = u.profile AND u.profile = g.guest AND u.nation = n.iso " +
+                "AND g.playlist = ?");
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next())
+            guests.add((UserBean) resultToBean(rs));
+
+        rs.close(); stmt.close();
+        return guests;
+    }
+
     //CREATE
     public boolean add(UserBean user) throws SQLException {
         boolean outcome = false;

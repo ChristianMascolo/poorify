@@ -25,6 +25,7 @@ public class AlbumDAO {
         if(rs.next())
             album = resultToBean(rs);
         rs.close(); stmt.close();
+
         return album;
     }
 
@@ -33,13 +34,14 @@ public class AlbumDAO {
 
         PreparedStatement stmt = connection.prepareStatement("SELECT al.id AS id, al.title AS title, al.tracks AS tracks, al.duration AS duration, al.year AS year, al.type AS type " +
                     "FROM Album al, Artist ar " +
-                    "WHERE al.artist = ar.id " +
-                    "AND ar.id = ?");
+                    "WHERE al.artist = ar.profile " +
+                    "AND ar.profile = ?");
         stmt.setInt(1,id);
 
         ResultSet rs = stmt.executeQuery();
         while(rs.next())
             albums.add(resultToBean(rs));
+        rs.close(); stmt.close();
 
         return  albums;
     }
@@ -56,6 +58,7 @@ public class AlbumDAO {
         ResultSet rs = stmt.executeQuery();
         if(rs.next())
             album = resultToBean(rs);
+        rs.close(); stmt.close();
 
         return  album;
     }
