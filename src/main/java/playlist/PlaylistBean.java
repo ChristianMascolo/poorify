@@ -1,14 +1,7 @@
 package playlist;
 
-import profile.NationBean;
 import profile.UserBean;
-import track.TrackBean;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class PlaylistBean {
@@ -24,7 +17,7 @@ public class PlaylistBean {
     private int likes;
     private boolean isCollaborative;
     private Collection<UserBean> guests;
-    private Collection<TrackBean> tracklist;
+    private Collection<AddedBean> tracklist;
 
     public PlaylistBean() {}
 
@@ -109,11 +102,28 @@ public class PlaylistBean {
         this.guests = guests;
     }
 
-    public Collection<TrackBean> getTracklist() {
+    public Collection<AddedBean> getTracklist() {
         return tracklist;
     }
 
-    public void setTracklist(Collection<TrackBean> tracklist) {
+    public Collection<AddedBean> getTracklist(Order order) {
+        Collection<AddedBean> toReturn = null;
+
+        switch(order) {
+            case DATE: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getDate().compareTo(b.getDate())); break;
+            case TITLE: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getTitle().compareTo(b.getTrack().getTitle())); break;
+            case DURATION: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getDuration() - b.getTrack().getDuration()); break;
+            case ARTIST: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getAlbum().getArtist().getAlias().compareTo(b.getTrack().getAlbum().getArtist().getAlias()) ); break;
+            case ALBUM: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getAlbum().getTitle().compareTo(b.getTrack().getAlbum().getTitle())); break;
+        }
+
+        for(AddedBean a: tracklist)
+            toReturn.add(a);
+
+        return toReturn;
+    }
+
+    public void setTracklist(Collection<AddedBean> tracklist) {
         this.tracklist = tracklist;
     }
 }
