@@ -1,6 +1,8 @@
 package main;
 
+import album.AlbumDAO;
 import profile.ProfileDAO;
+import track.TrackDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -38,6 +40,14 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
             //CREATE DAOs
             ProfileDAO profileDAO = new ProfileDAO(connection);
             sce.getServletContext().setAttribute("ProfileDAO", profileDAO);
+
+            AlbumDAO albumDAO = new AlbumDAO(connection);
+            sce.getServletContext().setAttribute("AlbumDAO", albumDAO);
+
+            TrackDAO trackDAO = new TrackDAO(connection);
+            sce.getServletContext().setAttribute("TrackDAO", trackDAO);
+
+
 
 
         } catch (Exception e) {
