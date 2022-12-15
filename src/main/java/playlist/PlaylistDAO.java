@@ -93,7 +93,7 @@ public class PlaylistDAO {
 
 
 
-    //Seleziona tutte le playlist pubbliche di un utente
+    //Seleziona tutte le playlist pubbliche relative ad un utente
     private Collection<PlaylistBean> getPublic(int id) throws SQLException{
         Collection<PlaylistBean> playlist = null;
 
