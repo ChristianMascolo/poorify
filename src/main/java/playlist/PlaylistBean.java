@@ -16,18 +16,20 @@ public class PlaylistBean {
     private boolean isPublic;
     private int likes;
     private boolean isCollaborative;
+    private String lastAccessTime;
     private Collection<UserBean> guests;
     private Collection<AddedBean> tracklist;
 
     public PlaylistBean() {}
 
-    public PlaylistBean(int id, String title, int tracks, int duration, boolean isPublic, boolean isCollaborative) {
+    public PlaylistBean(int id, String title, int tracks, int duration, boolean isPublic, boolean isCollaborative, String lastAccessTime) {
         this.id = id;
         this.title = title;
         this.tracks = tracks;
         this.duration = duration;
         this.isPublic = isPublic;
         this.isCollaborative = isCollaborative;
+        this.lastAccessTime = lastAccessTime;
     }
 
     public int getId() {
@@ -84,6 +86,14 @@ public class PlaylistBean {
 
     public void setCollaborative(boolean collaborative) {
         isCollaborative = collaborative;
+    }
+
+    public String getLastAccessTime() {
+        return lastAccessTime;
+    }
+
+    public void setLastAccessTime(String lastAccessTime) {
+        this.lastAccessTime = lastAccessTime;
     }
 
     public UserBean getHost() {

@@ -1,5 +1,7 @@
 package profile;
 
+import playlist.PlaylistDAO;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -9,10 +11,12 @@ import java.io.IOException;
 public class Login extends HttpServlet {
 
     private ProfileDAO profileDAO;
+    private PlaylistDAO playlistDAO;
 
     public void init() throws ServletException {
         super.init();
         this.profileDAO = (ProfileDAO) super.getServletContext().getAttribute("ProfileDAO");
+        this.playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
     }
 
     @Override
@@ -29,6 +33,12 @@ public class Login extends HttpServlet {
         ProfileBean profile = null;
         try {
             profile = profileDAO.get(email, password);
+            if(profile.getRole() == ProfileBean.Role.USER) {
+                ((UserBean) profile).setPlaylists(playlistDAO.getFromUser(profile.getId()));
+                ((UserBean) profile).setLikedPlaylists(playlistDAO.getFromLikes(profile.getId()));
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

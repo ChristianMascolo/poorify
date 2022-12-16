@@ -1,11 +1,19 @@
 package profile;
 
+import playlist.PlaylistBean;
+
+import java.util.Collection;
+
 public class UserBean extends ProfileBean {
 
     private String alias;
     private String birthdate;
     private NationBean nation;
     private boolean isPublic;
+
+    private Collection<PlaylistBean> playlists;
+
+    private Collection<PlaylistBean> likedPlaylists;
 
     public UserBean() {
         super(Role.USER);
@@ -49,5 +57,21 @@ public class UserBean extends ProfileBean {
 
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
+    }
+
+    public Collection<PlaylistBean> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Collection<PlaylistBean> playlists) {
+        this.playlists = playlists;
+    }
+
+    public Collection<PlaylistBean> getLikedPlaylists() {
+        return likedPlaylists;
+    }
+
+    public void setLikedPlaylists(Collection<PlaylistBean> likedPlaylists) {
+        this.likedPlaylists = likedPlaylists;
     }
 }

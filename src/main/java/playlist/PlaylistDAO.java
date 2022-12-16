@@ -1,7 +1,5 @@
 package playlist;
 
-import profile.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +18,10 @@ public class PlaylistDAO {
     public PlaylistBean get(int id) throws SQLException {
         PlaylistBean playlist = null;
         
-        PreparedStatement stmt = connection.prepareStatement("SELECT p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative FROM Playlist p WHERE p.id = ?");
+        PreparedStatement stmt = connection.prepareStatement("" +
+                "SELECT p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative, p.lastAccessTime AS lastAccessTime " +
+                "FROM Playlist p " +
+                "WHERE p.id = ?");
         stmt.setInt(1, id);
 
         ResultSet rs = stmt.executeQuery();
@@ -31,88 +32,95 @@ public class PlaylistDAO {
         return playlist;
     }
 
-    //Seleziona le Playlist in base all'utente host
-    private Collection<PlaylistBean> getFromHost(int id) throws SQLException{
-        Collection<PlaylistBean> playlist = new TreeSet<>((PlaylistBean a, PlaylistBean b) -> a.getTitle().compareTo(b.toString()));
+    //Seleziona le Playlist in base all'utente
+    public Collection<PlaylistBean> getFromUser(int id) throws SQLException{
+        Collection<PlaylistBean> playlists = new TreeSet<>((PlaylistBean a, PlaylistBean b) -> b.getLastAccessTime().compareTo(a.getLastAccessTime()));
 
-        PreparedStatement stat = connection.prepareStatement("SELECT p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative FROM Playlist p, Guests g WHERE p.id = pc.playlist AND g.playlist = p.id AND g.host=?");
+        PreparedStatement stat = connection.prepareStatement("" +
+                "SELECT p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative, p.lastAccessTime AS lastAccessTime " +
+                "FROM Playlist p " +
+                "WHERE p.enduser = ? " +
+                "UNION " +
+                "SELECT p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative, p.lastAccessTime AS lastAccessTime " +
+                "FROM Playlist p, Guests g " +
+                "WHERE p.id = g.playlist " +
+                "AND g.guest = ?");
         stat.setInt(1, id);
+        stat.setInt(2, id);
 
         ResultSet rs = stat.executeQuery();
-        if(rs.next())
-            playlist.add(resultToBean(rs));
-        rs.close();
-        stat.close();
+        while(rs.next())
+            playlists.add(resultToBean(rs));
 
-        return playlist;
-    }
-
-    //Seleziona tutte le Playlist a cui un utente partecipa come Guest
-    private Collection<PlaylistBean> getGuests(int id) throws SQLException{
-        Collection<PlaylistBean> playlist = null;
-        PreparedStatement stat = connection.prepareStatement("SELECT p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative FROM Playlist p, PlaylistCollaborative pc, Guests g WHERE g.playlist = p.id AND p.id = pc.playlist AND g.guest=?");
-        stat.setInt(1, id);
-
-        ResultSet rs = stat.executeQuery();
-        if(rs.next())
-            playlist.add(resultToBean(rs));
-        rs.close();
-        stat.close();
-
-        return playlist;
+        rs.close(); stat.close();
+        return playlists;
     }
 
     //Seleziona tutte le playlist a cui un utente ha messo like
-    private Collection<PlaylistBean> getPlaylistUserLikes(int id) throws SQLException{
-        Collection<PlaylistBean> playlist = null;
-        PreparedStatement stat = connection.prepareStatement("SELECT p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative FROM Playlist p, PlaylistPublic pp, Profile pr, EndUser e, Likes l WHERE pp.playlist = p.id AND p.likes = l.playlist AND e.profile = l.enduser AND pr.id = e.profile AND pr.id=?");
+    public Collection<PlaylistBean> getFromLikes(int id) throws SQLException{
+        Collection<PlaylistBean> playlists = new TreeSet<>((PlaylistBean a, PlaylistBean b) -> a.getTitle().compareTo(b.getTitle()));
+
+        PreparedStatement stat = connection.prepareStatement("" +
+                "SELECT p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative, p.lastAccessTime AS lastAccessTime " +
+                "FROM Playlist p, Likes l " +
+                "WHERE p.id = l.playlist " +
+                "AND l.enduser = ? ");
         stat.setInt(1, id);
 
         ResultSet rs = stat.executeQuery();
-        if(rs.next())
-            playlist.add(resultToBean(rs));
-        rs.close();
-        stat.close();
+        while(rs.next())
+            playlists.add(resultToBean(rs));
 
-        return playlist;
+        rs.close(); stat.close();
+        return playlists;
     }
-
-
 
     //Seleziona tutte le playlist pubbliche relative ad un utente
-    private Collection<PlaylistBean> getPublic(int id) throws SQLException{
-        Collection<PlaylistBean> playlist = null;
+    public Collection<PlaylistBean> getPublicFromUser(int id) throws SQLException{
+        Collection<PlaylistBean> playlists = new TreeSet<>((PlaylistBean a, PlaylistBean b) -> a.getTitle().compareTo(b.getTitle()));
 
-        PreparedStatement stat = connection.prepareStatement("SELECT p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative FROM Playlist p, PlaylistPublic pp, EndUser e, Profile pr WHERE pp.playlist = p.id AND p.enduser = e.profile AND e.profile = pr.id AND pr.id =?");
+        PreparedStatement stat = connection.prepareStatement("" +
+                "SELECT p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative, p.lastAccessTime AS lastAccessTime " +
+                "FROM Playlist p " +
+                "WHERE p.isPublic = 1 AND p.enduser = ?");
         stat.setInt(1, id);
 
         ResultSet rs = stat.executeQuery();
-        if(rs.next())
-            playlist.add(resultToBean(rs));
-        rs.close();
-        stat.close();
+        while(rs.next())
+            playlists.add(resultToBean(rs));
 
-        return playlist;
+        rs.close(); stat.close();
+        return playlists;
     }
 
-
-
     //Seleziona tutti i bean ADDED relativi a una Playlist
-    private Collection<AddedBeanProxy> getAdded(int id) throws SQLException{
-        Collection<AddedBeanProxy> beans = null;
+    public Collection<AddedBeanProxy> getAdded(int id) throws SQLException{
+        Collection<AddedBeanProxy> beans = new TreeSet<>((AddedBeanProxy a, AddedBeanProxy b) -> a.getDate().compareTo(b.getDate()));
 
-        PreparedStatement stat = connection.prepareStatement("SELECT ad.enduser, ad.track, ad.playlist, ad.date FROM Playlist p, Added ad WHERE p.id = ad.playlist AND p.id=?");
+        PreparedStatement stat = connection.prepareStatement("SELECT * FROM Added a WHERE a.playlist = ?");
         stat.setInt(1, id);
 
         ResultSet rs = stat.executeQuery();
-        if(rs.next())
+        while(rs.next())
             beans.add(resultToAddedBeanProxy(rs));
-        rs.close();
-        stat.close();
 
+        rs.close(); stat.close();
         return beans;
     }
 
+    public int getLikes(int id) throws SQLException {
+        int likes = 0;
+
+        PreparedStatement stat = connection.prepareStatement("SELECT * FROM PlaylistPublic p WHERE p.playlist = ?");
+        stat.setInt(1, id);
+
+        ResultSet rs = stat.executeQuery();
+        if(rs.next())
+            likes = rs.getInt("likes");
+
+        rs.close(); stat.close();
+        return likes;
+    }
 
     private PlaylistBean resultToBean(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
@@ -121,8 +129,9 @@ public class PlaylistDAO {
         int duration = rs.getInt("duration");
         boolean isPublic = rs.getBoolean("isPublic");
         boolean isCollaborative = rs.getBoolean("isCollaborative");
+        String lastAccessTime = rs.getString("lastAccessTime");
 
-        return new PlaylistBean(id, title, tracks, duration, isPublic, isCollaborative);
+        return new PlaylistBean(id, title, tracks, duration, isPublic, isCollaborative, lastAccessTime);
     }
 
     private AddedBeanProxy resultToAddedBeanProxy(ResultSet rs) throws SQLException {
