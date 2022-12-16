@@ -111,7 +111,7 @@ section#footer input {
 
     border-radius: 100px;
 }
-section#footer input::-moz-range-progress, section#footer input::-webkit-slider-runnable-track {
+section#footer input::-moz-range-progress {
     -webkit-appearance: none;
     appearance: none;
     height: 6px;
@@ -120,10 +120,10 @@ section#footer input::-moz-range-progress, section#footer input::-webkit-slider-
     border-top-left-radius: 100px;
 }
 
-section#footer input:hover::-moz-range-progress, section#footer input:hover::-webkit-slider-runnable-track {
+section#footer input:hover::-moz-range-progress {
     background: #00B0B0;
 }
-section#footer input::-moz-range-thumb, section#footer input::-webkit-slider-thumb {
+section#footer input::-moz-range-thumb {
     -webkit-appearance: none;
     outline: none;
     opacity: 0%;
@@ -134,7 +134,7 @@ section#footer input::-moz-range-thumb, section#footer input::-webkit-slider-thu
     height: 16px;
     width: 16px;
 }
-section#footer input:hover::-moz-range-thumb, section#footer input:hover::-webkit-slider-thumb {
+section#footer input:hover::-moz-range-thumb {
     opacity: 100%;
 }
 
