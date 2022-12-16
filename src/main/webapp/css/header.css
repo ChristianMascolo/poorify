@@ -1,0 +1,108 @@
+section#header {
+    display: flex;
+    align-items: center;
+    height: 10%;
+
+    padding: 1%;
+
+    background-color: #060606;
+}
+
+section#header h1 {
+    display: inline;
+    margin-right: 3%;
+
+    font-family: GothamBlack, sans-serif;
+    font-size: 3em;
+
+    color: #F6F4F1;
+}
+
+section#header button.single-button {
+    display: inline;
+    height: 36px;
+    width: 36px;
+
+    margin-right: 0.5%;
+
+    border: none;
+    border-radius: 100%;
+
+    background: #101010;
+}
+
+section#header img {
+    height: 18px;
+}
+section#header img.profile-picture {
+    height: 26px;
+    width: 26px;
+
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+section#header div {
+    display: inline-flex;
+    align-items: center;
+
+    margin-right: 0.5%;
+
+    height: 36px;
+    border-radius: 100px;
+
+    background: #101010;
+}
+section#header div button {
+    display: inline;
+    margin-right: 1%;
+    margin-left: 1%;
+
+    height: 36px;
+    width: 36px;
+    border: none;
+
+    background: none;
+}
+section#header div p {
+    display: inline;
+}
+
+section#header div.search-box {
+    width: 25%;
+}
+section#header div.search-box input {
+    width: 85%;
+
+    background: none;
+    border: none;
+
+    color: #AFAFAF;
+}
+section#header div.search-box input:focus, section#header div.search-box input:active {
+    outline: none;
+}
+
+section#header div.create-playlist {
+    width: 10%;
+}
+
+section#header div#to-the-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    margin-left: auto;
+    margin-right: 0;
+
+    width: 30%;
+    height: 36px;
+    border-radius: 0;
+
+    background: none;
+}
+
+section#header div#to-the-right div {
+    width: 50%;
+}
+

@@ -1,0 +1,167 @@
+section#footer {
+    display: flex;
+    align-items: center;
+
+    height: 12%;
+
+    padding: 1%;
+
+    background-color: #060606;
+}
+
+section#footer div.album {
+    display: flex;
+    align-items: center;
+    width: 25%;
+}
+
+section#footer div.album img {
+    height: 100%;
+    width: 58px;
+
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+
+    margin-right: 3%;
+
+    display: inline-block;
+    float: left;
+
+    cursor: pointer;
+}
+
+section#footer div.album div p {
+    line-height: 1.7;
+}
+
+section#footer div.album div p span.track {
+    color: #F6F4F1;
+    font-size: 1em;
+    cursor: pointer;
+}
+section#footer div.album div p span.track:hover {
+    text-decoration: underline;
+}
+
+section#footer div.album div p span.artists {
+    font-size: 0.8em;
+}
+section#footer div.album div p span.artists span.artist {
+    cursor: pointer;
+}
+section#footer div.album div p span.artists span.artist:hover {
+    text-decoration: underline;
+}
+
+section#footer div.player {
+    width: 50%;
+    font-size: 0.8em;
+}
+
+section#footer div.player div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section#footer div.player span {
+    width: 10%;
+}
+section#footer div.player span#currentTime {
+    text-align: right;
+}
+section#footer div.player span#totalTime {
+    text-align: left;
+}
+
+section#footer div.player div.controls {
+    margin-bottom: 1%;
+}
+
+section#footer div.player button {
+    height: 36px;
+    width: 36px;
+
+    border: none;
+    border-radius: 100%;
+    background-color: transparent;
+}
+
+section#footer div.player button#play-pause {
+    background-color: #F6F4F1;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+}
+section#footer div.player button img {
+    height: 18px;
+}
+
+section#footer input {
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 70%;
+    height: 6px;
+    margin-left: 1%;
+    margin-right: 1%;
+
+    background: #141414;
+    outline: none;
+
+    border-radius: 100px;
+}
+section#footer input::-moz-range-progress, section#footer input::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: #F6F4F1;
+    border-bottom-left-radius: 100px;
+    border-top-left-radius: 100px;
+}
+
+section#footer input:hover::-moz-range-progress, section#footer input:hover::-webkit-slider-runnable-track {
+    background: #00B0B0;
+}
+section#footer input::-moz-range-thumb, section#footer input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    outline: none;
+    opacity: 0%;
+    border-radius: 100%;
+    border: none;
+    background: #F6F4F1;
+
+    height: 16px;
+    width: 16px;
+}
+section#footer input:hover::-moz-range-thumb, section#footer input:hover::-webkit-slider-thumb {
+    opacity: 100%;
+}
+
+section#footer div.volume {
+    display: flex;
+    align-items: flex-end;
+    justify-items: center;
+
+    margin-left: auto;
+    margin-right: 0;
+
+    width: 25%;
+}
+
+section#footer div.volume img {
+    margin-left: auto;
+    margin-right: 0;
+
+    height: 16px;
+    width: 16px;
+}
+
+
+section#footer div.volume input {
+    width: 30%;
+    margin-right: 0;
+}
+
+
+
