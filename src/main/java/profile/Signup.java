@@ -84,7 +84,7 @@ public class Signup extends HttpServlet {
 
                 HttpSession session = request.getSession(true);
                 session.setAttribute("Profile", profile);
-                request.getRequestDispatcher("homepage.jsp").forward(request, response);
+                request.getRequestDispatcher("home.jsp").forward(request, response);
 
             } catch (Exception e) {
                 e.printStackTrace();

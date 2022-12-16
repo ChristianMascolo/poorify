@@ -1,6 +1,7 @@
 package main;
 
 import album.AlbumDAO;
+import playlist.PlaylistDAO;
 import profile.ProfileDAO;
 import track.TrackDAO;
 
@@ -47,7 +48,8 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
             TrackDAO trackDAO = new TrackDAO(connection);
             sce.getServletContext().setAttribute("TrackDAO", trackDAO);
 
-
+            PlaylistDAO playlistDAO = new PlaylistDAO(connection);
+            sce.getServletContext().setAttribute("PlaylistDAO", playlistDAO);
 
 
         } catch (Exception e) {

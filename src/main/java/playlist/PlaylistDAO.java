@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.TreeSet;
 
 public class PlaylistDAO {
     private Connection connection;
@@ -18,39 +19,24 @@ public class PlaylistDAO {
     //Seleziona Playlist in base all'id
     public PlaylistBean get(int id) throws SQLException {
         PlaylistBean playlist = null;
-        PreparedStatement stmt = connection.prepareStatement("SELECT p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative FROM Playlist p WHERE p.id = ?");
+        
+        PreparedStatement stmt = connection.prepareStatement("SELECT p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative FROM Playlist p WHERE p.id = ?");
         stmt.setInt(1, id);
 
         ResultSet rs = stmt.executeQuery();
         if(rs.next())
             playlist = resultToBean(rs);
 
-        rs.close();
-        stmt.close();
-
-        return playlist;
-    }
-
-    //Seleziona Playlist in base al titolo
-    private PlaylistBean getTitolo(String title) throws SQLException{
-        PlaylistBean playlist = null;
-        PreparedStatement stat = connection.prepareStatement("SELECT p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative FROM Playlist p WHERE p.title = ?");
-        stat.setString(1, title);
-
-        ResultSet rs = stat.executeQuery();
-        if(rs.next())
-            playlist = resultToBean(rs);
-        rs.close();
-        stat.close();
-
+        rs.close(); stmt.close();
         return playlist;
     }
 
     //Seleziona le Playlist in base all'utente host
-    private Collection<PlaylistBean> getHost(String host) throws SQLException{
-        Collection<PlaylistBean> playlist = null;
+    private Collection<PlaylistBean> getFromHost(int id) throws SQLException{
+        Collection<PlaylistBean> playlist = new TreeSet<>((PlaylistBean a, PlaylistBean b) -> a.getTitle().compareTo(b.toString()));
+
         PreparedStatement stat = connection.prepareStatement("SELECT p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative FROM Playlist p, Guests g WHERE p.id = pc.playlist AND g.playlist = p.id AND g.host=?");
-        stat.setString(1, host);
+        stat.setInt(1, id);
 
         ResultSet rs = stat.executeQuery();
         if(rs.next())
@@ -112,15 +98,15 @@ public class PlaylistDAO {
 
 
     //Seleziona tutti i bean ADDED relativi a una Playlist
-    private Collection<AddedBean> getAdded(int id) throws SQLException{
-        Collection<AddedBean> beans = null;
+    private Collection<AddedBeanProxy> getAdded(int id) throws SQLException{
+        Collection<AddedBeanProxy> beans = null;
 
         PreparedStatement stat = connection.prepareStatement("SELECT ad.enduser, ad.track, ad.playlist, ad.date FROM Playlist p, Added ad WHERE p.id = ad.playlist AND p.id=?");
         stat.setInt(1, id);
 
         ResultSet rs = stat.executeQuery();
         if(rs.next())
-            beans.add(resultToBean1(rs));
+            beans.add(resultToAddedBeanProxy(rs));
         rs.close();
         stat.close();
 
@@ -129,8 +115,6 @@ public class PlaylistDAO {
 
 
     private PlaylistBean resultToBean(ResultSet rs) throws SQLException {
-        PlaylistBean playlist = null;
-
         int id = rs.getInt("id");
         String title = rs.getString("title");
         int tracks = rs.getInt("tracks");
@@ -138,18 +122,16 @@ public class PlaylistDAO {
         boolean isPublic = rs.getBoolean("isPublic");
         boolean isCollaborative = rs.getBoolean("isCollaborative");
 
-        return playlist;
+        return new PlaylistBean(id, title, tracks, duration, isPublic, isCollaborative);
     }
 
-    private AddedBean resultToBean1(ResultSet rs) throws SQLException {
-        AddedBean bean = null;
-
-        int enduser = rs.getInt("enduser");
+    private AddedBeanProxy resultToAddedBeanProxy(ResultSet rs) throws SQLException {
+        int user = rs.getInt("enduser");
         int track = rs.getInt("track");
         int playlist = rs.getInt("playlist");
-        int date = rs.getInt("date");
+        String date = rs.getString("date");
 
-        return bean;
+        return new AddedBeanProxy(user, track, playlist, date);
     }
 
 
