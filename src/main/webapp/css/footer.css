@@ -57,6 +57,9 @@ section#footer div.player {
     width: 50%;
     font-size: 0.8em;
 }
+section#footer div.player button {
+    cursor: pointer;
+}
 
 section#footer div.player div {
     width: 100%;
@@ -140,8 +143,8 @@ section#footer input:hover::-moz-range-thumb {
 
 section#footer div.volume {
     display: flex;
-    align-items: flex-end;
-    justify-items: center;
+    align-items: center;
+    justify-content: flex-end;
 
     margin-left: auto;
     margin-right: 0;
@@ -149,17 +152,25 @@ section#footer div.volume {
     width: 25%;
 }
 
-section#footer div.volume img {
+section#footer div.volume button {
     margin-left: auto;
     margin-right: 0;
 
+    height: 36px;
+    width: 36px;
+
+    border: none;
+    border-radius: 100%;
+    background-color: transparent;
+}
+section#footer div.volume button img {
     height: 16px;
     width: 16px;
 }
 
-
 section#footer div.volume input {
     width: 30%;
+    margin-left: 1%;
     margin-right: 0;
 }
 

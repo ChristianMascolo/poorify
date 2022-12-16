@@ -55,6 +55,10 @@ function play(id) {
         slider.value = 0;
         currentTime.innerHTML = "0:00"
 
+        //UPDATE BUTTON
+        document.getElementById("play-pause").onclick = function() { pause(); };
+        document.getElementById("play-pause-img").src = "images/pause.svg";
+
         audio.play();
     }, "json");
 }
@@ -76,4 +80,29 @@ function update() {
 function change() {
     audio.currentTime = slider.value;
     update();
+}
+
+function restart() {
+    audio.currentTime = 0;
+    update();
+}
+
+function pause() {
+    audio.pause();
+    document.getElementById("play-pause").onclick = function() { reprise(); };
+    document.getElementById("play-pause-img").src = "images/play.svg";
+    update();
+}
+
+function reprise() {
+    audio.play();
+    document.getElementById("play-pause").onclick = function() { pause(); };
+    document.getElementById("play-pause-img").src = "images/pause.svg";
+    update();
+}
+
+function volume() {
+    let volumeSlider = document.getElementById("volume-slider");
+    let value = volumeSlider.value / volumeSlider.max;
+    audio.volume = value;
 }

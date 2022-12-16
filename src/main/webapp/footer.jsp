@@ -14,11 +14,11 @@
     <div class="player">
 
         <div class="controls">
-            <button class="restart">
+            <button class="restart" onclick="restart()">
                 <img src="images/replay.svg" alt="">
             </button>
-            <button id="play-pause">
-                <img src="images/pause.svg" alt="">
+            <button id="play-pause" onclick="pause()">
+                <img id="play-pause-img" src="images/play.svg" alt="">
             </button>
             <button class="next">
                 <img src="images/forward.svg" alt="">
@@ -34,8 +34,10 @@
     </div>
 
     <div class="volume">
-        <img src="images/left-arrow.svg" alt="">
-        <input type="range" min="0" value="0" id="volume-slider">
+        <button>
+            <img src="images/volume.svg" alt="">
+        </button>
+        <input type="range" min="0" max="100" value="100" oninput="volume()" onchange="volume()" onclick="volume()" id="volume-slider">
     </div>
 
     <audio src="" preload="metadata" onloadedmetadata="setMax()" id="audio"></audio>
