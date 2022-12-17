@@ -1,7 +1,11 @@
+<%@ page import="profile.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <section id="header">
 
-    <h1>Poorify</h1>
+    <% UserBean user = (UserBean) session.getAttribute("Profile"); %>
+
+    <h1 onclick="home()">Poorify</h1>
 
     <button class="single-button" class="nav-button">
         <img src="images/left-arrow.svg" alt="">
@@ -27,9 +31,9 @@
     <div id="to-the-right">
         <div class="profile">
             <button>
-                <img class="profile-picture" src="images/profile.jpg" alt="">
+                <img class="profile-picture" src=<%= "https://poorifystorage.blob.core.windows.net/profile/" + (user != null ? user.getId() : 0) + ".jpg"%>>
             </button>
-            <p>Your Alias Here</p>
+            <p><%= user != null ? user.getAlias() : "Alias" %></p>
         </div>
 
         <button class="single-button" class="logout-button">

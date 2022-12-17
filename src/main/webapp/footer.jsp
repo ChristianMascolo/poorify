@@ -14,7 +14,7 @@
     <div class="player">
 
         <div class="controls">
-            <button class="restart" onclick="restart()">
+            <button class="restart" onclick="restart()" data-title="Restart">
                 <img src="images/replay.svg" alt="">
             </button>
             <button id="play-pause" onclick="pause()">

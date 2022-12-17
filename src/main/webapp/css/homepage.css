@@ -1,0 +1,50 @@
+
+section#homepage h1 {
+    color: #F6F4F1;
+    font-size: 2em;
+    font-family: GothamBook, sans-serif;
+    font-weight: bold;
+}
+
+section#homepage section.display-sections {
+    overflow: scroll;
+    scrollbar-width: none;
+}
+section#homepage section.display-sections::-webkit-scrollbar {
+    display: none;
+}
+
+section#homepage section {
+    margin-top: 2%;
+}
+
+section#homepage section#playlist div {
+    max-width: 15%;
+    background-color: rgba(36, 36, 36, 0.7);
+    border-radius: 14px;
+    padding: 1% 1% 2% 1%;
+}
+section#homepage section#playlist div img {
+    width: 100%;
+    border-radius: 7px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 5%;
+    box-shadow: 0px 3px 10px #141414;
+    cursor: pointer;
+}
+section#homepage section#playlist div p {
+    line-height: 1.5;
+}
+section#homepage section#playlist div p span.title {
+    color: #F6F4F1;
+    font-size: 1em;
+    cursor: pointer;
+}
+section#homepage section#playlist div p span.host {
+    font-size: 0.8em;
+    cursor: pointer;
+}
+section#homepage section#playlist div p span:hover {
+    text-decoration: underline;
+}

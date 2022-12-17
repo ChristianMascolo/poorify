@@ -16,6 +16,7 @@ section#header h1 {
     font-size: 3em;
 
     color: #F6F4F1;
+    cursor: pointer;
 }
 
 section#header button.single-button {

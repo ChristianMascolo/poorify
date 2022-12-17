@@ -1,11 +1,13 @@
 package profile;
 
+import playlist.PlaylistBean;
 import playlist.PlaylistDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.Collection;
 
 @WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
@@ -34,8 +36,27 @@ public class Login extends HttpServlet {
         try {
             profile = profileDAO.get(email, password);
             if(profile.getRole() == ProfileBean.Role.USER) {
-                ((UserBean) profile).setPlaylists(playlistDAO.getFromUser(profile.getId()));
-                ((UserBean) profile).setLikedPlaylists(playlistDAO.getFromLikes(profile.getId()));
+
+                //PLAYLIST CREATE O IN COLLABORAZIONE PER L'UTENTE
+                Collection<PlaylistBean> playlists = playlistDAO.getFromUser(profile.getId());
+                for(PlaylistBean p: playlists)
+                    p.setHost(profileDAO.getHostFromPlaylist(p.getId()));
+                ((UserBean) profile).setPlaylists(playlists);
+
+                //PLAYLIST A CUI L'UTENTE HA MESSO LIKE
+                Collection<PlaylistBean> likedPlaylists = playlistDAO.getFromLikes(profile.getId());
+                for(PlaylistBean p: likedPlaylists)
+                    p.setHost(profileDAO.getHostFromPlaylist(p.getId()));
+                ((UserBean) profile).setLikedPlaylists(likedPlaylists);
+
+                //ARTISTI SEGUITI
+                ((UserBean) profile).setArtists(profileDAO.getArtistsFromUser(profile.getId()));
+
+                //UTENTI SEGUITI
+                ((UserBean) profile).setFollowing(profileDAO.getFollowingFromUser(profile.getId()));
+
+                //UTENTI FOLLOWER
+                ((UserBean) profile).setFollowers(profileDAO.getFollowersFromUser(profile.getId()));
             }
 
 

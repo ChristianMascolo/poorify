@@ -10,10 +10,11 @@ public class UserBean extends ProfileBean {
     private String birthdate;
     private NationBean nation;
     private boolean isPublic;
-
     private Collection<PlaylistBean> playlists;
-
     private Collection<PlaylistBean> likedPlaylists;
+    private Collection<ArtistBean> artists;
+    private Collection<UserBean> followers;
+    private Collection<UserBean> following;
 
     public UserBean() {
         super(Role.USER);
@@ -59,9 +60,7 @@ public class UserBean extends ProfileBean {
         isPublic = aPublic;
     }
 
-    public Collection<PlaylistBean> getPlaylists() {
-        return playlists;
-    }
+    public Collection<PlaylistBean> getPlaylists() { return playlists; }
 
     public void setPlaylists(Collection<PlaylistBean> playlists) {
         this.playlists = playlists;
@@ -73,5 +72,29 @@ public class UserBean extends ProfileBean {
 
     public void setLikedPlaylists(Collection<PlaylistBean> likedPlaylists) {
         this.likedPlaylists = likedPlaylists;
+    }
+
+    public Collection<ArtistBean> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(Collection<ArtistBean> artists) {
+        this.artists = artists;
+    }
+
+    public Collection<UserBean> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Collection<UserBean> followers) {
+        this.followers = followers;
+    }
+
+    public Collection<UserBean> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Collection<UserBean> following) {
+        this.following = following;
     }
 }
