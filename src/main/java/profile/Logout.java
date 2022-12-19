@@ -1,5 +1,7 @@
 package profile;
 
+import org.json.JSONObject;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -14,7 +16,10 @@ public class Logout extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
         request.getSession().invalidate();
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        JSONObject jsonObject = new JSONObject();
+        response.getWriter().print(jsonObject);
+        response.sendRedirect("index.jsp");
     }
 }
