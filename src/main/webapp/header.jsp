@@ -36,7 +36,7 @@
             <p><%= user != null ? user.getAlias() : "Alias" %></p>
         </div>
 
-        <button class="single-button" class="logout-button">
+        <button class="single-button" class="logout-button" onclick="logout()">
             <img src="images/logout.svg" alt="">
         </button>
     </div>
