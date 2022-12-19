@@ -36,9 +36,11 @@
             <p><%= user != null ? user.getAlias() : "Alias" %></p>
         </div>
 
-        <button class="single-button" class="logout-button">
-            <img src="images/logout.svg" alt="">
+        <form action="Logout" method="post">
+        <button class="single-button" class="logout-button" onclick="logout()">
+            <img src="images/logout.svg" alt="" onclick="logout()">
         </button>
+        </form>
     </div>
 
 </section>

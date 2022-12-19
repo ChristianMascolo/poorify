@@ -21,5 +21,6 @@
 <script src="webjars/jquery/3.5.1/dist/jquery.js"></script>
 <script src="js/navigation.js"></script>
 <script src="js/player.js"></script>
+    <script src="js/profile/login.js"></script>
 </body>
 </html>

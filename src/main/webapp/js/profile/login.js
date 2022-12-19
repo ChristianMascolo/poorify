@@ -13,3 +13,9 @@ function login() {
     });
 
 }
+
+function logout() {
+    $.post("Logout", {}, function(data){
+
+    });
+}
