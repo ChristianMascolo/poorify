@@ -9,8 +9,10 @@ import java.util.TreeSet;
 
 public class AlbumDAO {
 
-
     private Connection connection;
+
+    public AlbumDAO(){}
+
     public AlbumDAO(Connection connection) {
         this.connection = connection;
     }
