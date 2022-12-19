@@ -2,6 +2,7 @@ package profile;
 
 import main.Uploader;
 import org.json.JSONObject;
+import playlist.PlaylistDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -13,10 +14,12 @@ import java.io.IOException;
 public class Signup extends HttpServlet {
 
     private ProfileDAO profileDAO;
+    private PlaylistDAO playlistDAO;
 
     public void init() throws ServletException {
         super.init();
         this.profileDAO = (ProfileDAO) super.getServletContext().getAttribute("ProfileDAO");
+        this.playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
     }
 
     @Override
@@ -82,14 +85,14 @@ public class Signup extends HttpServlet {
                 Uploader uploader = (Uploader) request.getServletContext().getAttribute("Uploader");
                 uploader.upload(part.getInputStream(), Uploader.Container.PROFILE, localpath, filename);
 
-                HttpSession session = request.getSession(true);
-                session.setAttribute("Profile", profile);
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                //REDIRECT TO LOGIN
+                request.setAttribute("email", profile.getEmail());
+                request.setAttribute("password", profile.getPassword());
+                request.getRequestDispatcher("Login").forward(request, response);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
     }
 }

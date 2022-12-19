@@ -32,7 +32,13 @@ public class Login extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        if(email == null)
+            email = (String) request.getAttribute("email");
+        if(password == null)
+            password = (String) request.getAttribute("password");
+
         ProfileBean profile = null;
+
         try {
             profile = profileDAO.get(email, password);
             if(profile.getRole() == ProfileBean.Role.USER) {
