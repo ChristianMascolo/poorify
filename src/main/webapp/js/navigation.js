@@ -8,16 +8,16 @@ function navToUser(id) {
 }
 
 function navToPlaylist(id) {
-
     $.post("GetPlaylist", {id: String(id)}, function(data){
         $("#center").load("playlist.jsp");
     });
-
 }
 
 
 function navToAlbum(id) {
-    console.log(id);
+    $.post("GetAlbum", {id: String(id)}, function(data){
+        $("#center").load("album.jsp");
+    });
 }
 
 function navToArtist(id) {
