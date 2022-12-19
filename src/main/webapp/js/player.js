@@ -7,9 +7,9 @@ let totalTime = document.getElementById("totalTime");
 
 setInterval(update, 1000);
 
-function play(id) {
+function play(userId, trackId) {
 
-    $.post("Play", {id: String(id)}, function(data){
+    $.post("Play", {userId: String(userId), trackId: String(trackId)}, function(data){
 
         //UPDATE ALBUM COVER
         let album = document.getElementById("album");

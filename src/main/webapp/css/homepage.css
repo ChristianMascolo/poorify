@@ -6,6 +6,14 @@ section#homepage h1 {
     font-weight: bold;
 }
 
+section#homepage section {
+    margin-top: 2%;
+}
+section#homepage section h1 {
+    font-size: 1.25em;
+    margin-bottom: 1%;
+}
+
 section#homepage section.display-sections {
     overflow: scroll;
     scrollbar-width: none;
@@ -14,15 +22,13 @@ section#homepage section.display-sections::-webkit-scrollbar {
     display: none;
 }
 
-section#homepage section {
-    margin-top: 2%;
-}
-
 section#homepage section.display-sections div {
+    display: inline-block;
     max-width: 15%;
     background-color: rgba(36, 36, 36, 0.7);
     border-radius: 14px;
     padding: 1% 1% 2% 1%;
+    margin-right: 1%;
 }
 section#homepage section.display-sections div img {
     width: 100%;

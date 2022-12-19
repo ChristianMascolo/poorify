@@ -35,17 +35,21 @@ public class Play extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        int id = Integer.parseInt(request.getParameter("id"));
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        int trackId = Integer.parseInt(request.getParameter("trackId"));
 
         TrackBean track = null;
         try {
-            track = trackDAO.get(id);
-            AlbumBean album = albumDAO.getFromTrack(id);
-            ArtistBean artist = profileDAO.getFromTrack(id);
-            Collection<ArtistBean> featuring = profileDAO.getFeaturingFromTrack(id);
+            track = trackDAO.get(trackId);
+            AlbumBean album = albumDAO.getFromTrack(trackId);
+            ArtistBean artist = profileDAO.getFromTrack(trackId);
+            Collection<ArtistBean> featuring = profileDAO.getFeaturingFromTrack(trackId);
             album.setArtist(artist);
             track.setAlbum(album);
             track.setFeaturing(featuring);
+
+            trackDAO.addPlay(userId, trackId);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

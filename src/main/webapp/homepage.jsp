@@ -16,10 +16,11 @@
     <h1><%= greeting %></h1>
 
 
-    <input type="button" value="COLDPLAY" onclick="play(5)">
-    <input type="button" value="JAMES BLUNT" onclick="play(11)">
+    <input type="button" value="COLDPLAY" onclick="play(<%= user.getId() %>, 5)">
+    <input type="button" value="JAMES BLUNT" onclick="play(<%= user.getId() %>, 11)">
 
     <section class="display-sections" id="playlist">
+        <h1>Your Playlists</h1>
         <% if(user != null) { %>
             <% for(PlaylistBean p: user.getPlaylists()) { %>
                 <div>
@@ -35,6 +36,7 @@
     </section>
 
     <section class="display-sections" id="playlist-liked">
+        <h1>Playlists You Liked</h1>
         <% if(user != null) { %>
         <% for(PlaylistBean p: user.getLikedPlaylists()) { %>
         <div onclick="navToPlaylist(<%= p.getId() %>)">

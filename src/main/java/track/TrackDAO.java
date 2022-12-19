@@ -77,6 +77,15 @@ public class TrackDAO {
         return tracks;
     }
 
+    public void addPlay(int user, int track) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Plays (enduser, track) VALUES (?, ?)");
+        stmt.setInt(1, user);
+        stmt.setInt(2, track);
+
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
     public TrackBean resultToBean(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String title = rs.getString("title");
