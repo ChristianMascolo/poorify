@@ -2,6 +2,8 @@ package playlist;
 
 import album.AlbumBean;
 import album.AlbumDAO;
+import navigation.Navigator;
+import navigation.Page;
 import org.json.JSONObject;
 import profile.ArtistBean;
 import profile.ProfileDAO;
@@ -42,6 +44,7 @@ public class GetPlaylist extends HttpServlet {
         response.setContentType("application/json");
 
         int id = Integer.parseInt(request.getParameter("id"));
+        boolean new_page = Boolean.parseBoolean(request.getParameter("new_page"));
 
         PlaylistBean playlist = null;
         try {
@@ -90,8 +93,14 @@ public class GetPlaylist extends HttpServlet {
             e.printStackTrace();
         }
 
-        request.getSession().setAttribute("Playlist", playlist);
+        //NAVIGATION
+        Navigator navigator = (Navigator) request.getSession().getAttribute("Navigator");
+        if(new_page)
+            navigator.save();
+        navigator.setCurrent(new Page(id, Page.Type.PLAYLIST));
 
+        //RISPOSTA JSON
+        request.getSession().setAttribute("Playlist", playlist);
         JSONObject jsonObject = new JSONObject();
         response.getWriter().print(jsonObject);
     }

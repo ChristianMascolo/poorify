@@ -14,12 +14,12 @@ function play(userId, trackId) {
         //UPDATE ALBUM COVER
         let album = document.getElementById("album");
         album.src = "https://poorifystorage.blob.core.windows.net/album/" + data.albumID[0] + ".jpg";
-        album.onclick = function() { navToAlbum(data.albumID[0]); };
+        album.onclick = function() { navToAlbum(data.albumID[0], true); };
 
         //UPDATE SONG TITLE
         let title = document.getElementById("title");
         title.innerHTML = data.title[0];
-        title.onclick = function() { navToAlbum(data.albumID[0]); };
+        title.onclick = function() { navToAlbum(data.albumID[0], true); };
 
         //UPDATE ARTISTs ALIAS
         let artists = document.getElementById("artists");
@@ -27,7 +27,7 @@ function play(userId, trackId) {
         //Main Artist
         let mainArtistSpan = document.createElement("span");
         mainArtistSpan.innerHTML = data.artist[0];
-        mainArtistSpan.onclick = function() { navToArtist(data.artistID[0]); };
+        mainArtistSpan.onclick = function() { navToArtist(data.artistID[0], true); };
         mainArtistSpan.classList.add("artist");
 
         artists.innerHTML = "";
@@ -40,7 +40,7 @@ function play(userId, trackId) {
 
                 let featuringArtist = document.createElement("span");
                 featuringArtist.innerHTML = data.artist[i];
-                featuringArtist.onclick = function() { navToArtist(data.artistID[i]); };
+                featuringArtist.onclick = function() { navToArtist(data.artistID[i], true); };
                 featuringArtist.classList.add("artist");
                 artists.append(featuringArtist)
             }

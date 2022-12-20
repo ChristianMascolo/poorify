@@ -1,5 +1,7 @@
 package album;
 
+import navigation.Navigator;
+import navigation.Page;
 import org.json.JSONObject;
 import profile.ArtistBean;
 import profile.ProfileDAO;
@@ -39,21 +41,33 @@ public class GetAlbum extends HttpServlet {
         response.setContentType("application/json");
 
         int id = Integer.parseInt(request.getParameter("id"));
+        boolean new_page = Boolean.parseBoolean(request.getParameter("new_page"));
 
         AlbumBean album = null;
         try{
             album = albumDAO.get(id);
-            album.setArtist(profileDAO.getFromAlbum(id));
+
+            ArtistBean artist = profileDAO.getFromAlbum(id);
+            album.setArtist(artist);
 
             Collection<TrackBean> tracks = trackDAO.getFromAlbum(id);
-            for(TrackBean t: tracks)
+            for(TrackBean t: tracks) {
                 t.setAlbum(album);
+                t.setFeaturing(profileDAO.getFeaturingFromTrack(t.getId()));
+            }
             album.setTracklist(tracks);
 
         }catch(SQLException e){
             e.printStackTrace();
         }
 
+        //NAVIGATION
+        Navigator navigator = (Navigator) request.getSession().getAttribute("Navigator");
+        if(new_page)
+            navigator.save();
+        navigator.setCurrent(new Page(id, Page.Type.ALBUM));
+
+        //RISPOSTA JSON
         request.getSession().setAttribute("Album", album);
         JSONObject jsonObject = new JSONObject();
         response.getWriter().print(jsonObject);

@@ -30,6 +30,8 @@ section#header button.single-button {
     border-radius: 100%;
 
     background: #101010;
+
+    cursor: pointer;
 }
 
 section#header img {

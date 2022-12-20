@@ -24,9 +24,9 @@
         <% if(user != null) { %>
             <% for(PlaylistBean p: user.getPlaylists()) { %>
                 <div>
-                    <img src="<%= "https://poorifystorage.blob.core.windows.net/playlist/" + p.getId() + ".jpg"%>"  alt="" onclick="navToPlaylist(<%= p.getId() %>)">
+                    <img src="<%= "https://poorifystorage.blob.core.windows.net/playlist/" + p.getId() + ".jpg"%>"  alt="" onclick="navToPlaylist(<%= p.getId() %>, true)">
                     <p>
-                        <span class="title" onclick="navToPlaylist(<%= p.getId() %>)"><%= p.getTitle() %></span>
+                        <span class="title" onclick="navToPlaylist(<%= p.getId() %>, true)"><%= p.getTitle() %></span>
                         <br>
                         <span class="host" onclick="navToUser(<%= p.getHost().getId() %>)"><%= p.getHost().getAlias() %></span>
                     </p>
@@ -39,8 +39,8 @@
         <h1>Playlists You Liked</h1>
         <% if(user != null) { %>
         <% for(PlaylistBean p: user.getLikedPlaylists()) { %>
-        <div onclick="navToPlaylist(<%= p.getId() %>)">
-            <img src="<%= "https://poorifystorage.blob.core.windows.net/playlist/" + p.getId() + ".jpg"%>"  alt="">
+        <div>
+            <img src="<%= "https://poorifystorage.blob.core.windows.net/playlist/" + p.getId() + ".jpg"%>"  alt="" onclick="navToPlaylist(<%= p.getId() %>, true)">
             <p>
                 <span class="title"><%= p.getTitle() %></span>
                 <br>

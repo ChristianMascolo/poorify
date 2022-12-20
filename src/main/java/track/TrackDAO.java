@@ -51,7 +51,7 @@ public class TrackDAO {
     }
 
     public Collection<TrackBean> getTopFiveFromArtist(int id) throws SQLException {
-        Collection<TrackBean> tracks = new TreeSet<>();
+        Collection<TrackBean> tracks = new TreeSet<>((TrackBean a, TrackBean b) -> (b.getPlays() - a.getPlays()));
 
         PreparedStatement statement = connection.prepareStatement(" " +
                 " SELECT TOP 5 * FROM (" +

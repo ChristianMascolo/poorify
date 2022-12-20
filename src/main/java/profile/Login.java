@@ -1,5 +1,7 @@
 package profile;
 
+import navigation.Navigator;
+import navigation.Page;
 import playlist.PlaylistBean;
 import playlist.PlaylistDAO;
 
@@ -73,6 +75,11 @@ public class Login extends HttpServlet {
         if(profile != null) {
             HttpSession session = request.getSession(true);
             session.setAttribute("Profile", profile);
+
+            Navigator navigator = new Navigator();
+            navigator.setCurrent(new Page(0, Page.Type.HOME));
+            session.setAttribute("Navigator", navigator);
+
             request.getRequestDispatcher("home.jsp").forward(request, response);
         }
 

@@ -7,10 +7,10 @@
 
     <h1 onclick="home()">Poorify</h1>
 
-    <button class="single-button" class="nav-button">
+    <button class="single-button" class="nav-button" onclick="prev()">
         <img src="images/left-arrow.svg" alt="">
     </button>
-    <button class="single-button" class="nav-button">
+    <button class="single-button" class="nav-button" onclick="next()">
         <img src="images/right-arrow.svg" alt="">
     </button>
 

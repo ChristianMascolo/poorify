@@ -1,6 +1,7 @@
 <%@ page import="album.AlbumBean" %>
 <%@ page import="track.TrackBean" %>
-<section id="playlist">
+
+<section id="album">
 
   <% AlbumBean album = (AlbumBean) session.getAttribute("Album"); %>
 

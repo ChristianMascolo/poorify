@@ -1,5 +1,6 @@
 package profile;
 
+import album.AlbumBean;
 import track.TrackBean;
 
 import java.util.Collection;
@@ -8,7 +9,8 @@ public class ArtistBean extends ProfileBean {
 
     private String alias;
     private String bio;
-    private Collection<TrackBean> tracks;
+    private Collection<AlbumBean> albums;
+    private Collection<TrackBean> topTracks;
 
     public ArtistBean() {
         super(Role.ARTIST);
@@ -36,7 +38,15 @@ public class ArtistBean extends ProfileBean {
         this.bio = bio;
     }
 
-    public Collection<TrackBean> getTracks() { return tracks; }
+    public Collection<AlbumBean> getAlbums() {
+        return albums;
+    }
 
-    public void setTracks(Collection<TrackBean> tracks) { this.tracks = tracks; }
+    public void setAlbums(Collection<AlbumBean> albums) {
+        this.albums = albums;
+    }
+
+    public Collection<TrackBean> getTopTracks() { return topTracks; }
+
+    public void setTopTracks(Collection<TrackBean> topTracks) { this.topTracks = topTracks; }
 }
