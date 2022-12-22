@@ -7,22 +7,24 @@ let totalTime = document.getElementById("totalTime");
 
 setInterval(update, 1000);
 
-function play(userId, trackId) {
+function play(trackId) {
 
-    $.post("Play", {userId: String(userId), trackId: String(trackId)}, function(data){
+    $.post("Play", {trackId: String(trackId)}, function(data){
 
         //UPDATE ALBUM COVER
-        let album = document.getElementById("album");
+        let album = document.getElementById("album-footer");
         album.src = "https://poorifystorage.blob.core.windows.net/album/" + data.albumID[0] + ".jpg";
         album.onclick = function() { navToAlbum(data.albumID[0], true); };
 
         //UPDATE SONG TITLE
-        let title = document.getElementById("title");
+        let title = document.getElementById("title-footer");
         title.innerHTML = data.title[0];
         title.onclick = function() { navToAlbum(data.albumID[0], true); };
 
+        console.log(data.title[0]);
+
         //UPDATE ARTISTs ALIAS
-        let artists = document.getElementById("artists");
+        let artists = document.getElementById("artists-footer");
 
         //Main Artist
         let mainArtistSpan = document.createElement("span");
@@ -60,7 +62,7 @@ function play(userId, trackId) {
         document.getElementById("play-pause-img").src = "images/pause.svg";
 
         audio.play();
-    }, "json");
+    });
 }
 
 function setMax() {
@@ -105,4 +107,18 @@ function volume() {
     let volumeSlider = document.getElementById("volume-slider");
     let value = volumeSlider.value / volumeSlider.max;
     audio.volume = value;
+}
+
+function skip() {
+    $.post("Skip", {}, function(data) {
+        let id = parseInt(data.id[0]);
+        if(id > 0)
+            play(id);
+    });
+}
+
+function playAlbum(index) {
+    $.post("PlayAlbum", {index: String(index)}, function(data) {
+        skip();
+    });
 }

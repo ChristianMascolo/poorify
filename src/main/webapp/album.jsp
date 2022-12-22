@@ -40,7 +40,7 @@
     <% for(TrackBean track: album.getTracklist()) { %>
         <div class="table-line">
           <div class="index">
-            <button>
+            <button onclick="playAlbum(<%= track.getIndex() %>)">
               <span><%= track.getIndex() %></span>
               <img src="images/play.svg" alt="">
             </button>

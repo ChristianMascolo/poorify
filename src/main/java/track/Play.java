@@ -4,6 +4,7 @@ import album.AlbumBean;
 import album.AlbumDAO;
 import org.json.JSONObject;
 import profile.ArtistBean;
+import profile.ProfileBean;
 import profile.ProfileDAO;
 
 import javax.servlet.*;
@@ -35,7 +36,7 @@ public class Play extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        int userId = Integer.parseInt(request.getParameter("userId"));
+        int userId = ((ProfileBean) request.getSession().getAttribute("Profile")).getId();
         int trackId = Integer.parseInt(request.getParameter("trackId"));
 
         TrackBean track = null;

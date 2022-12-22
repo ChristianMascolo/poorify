@@ -16,8 +16,8 @@
     <h1><%= greeting %></h1>
 
 
-    <input type="button" value="COLDPLAY" onclick="play(<%= user.getId() %>, 5)">
-    <input type="button" value="JAMES BLUNT" onclick="play(<%= user.getId() %>, 11)">
+    <input type="button" value="COLDPLAY" onclick="play(5)">
+    <input type="button" value="JAMES BLUNT" onclick="play(11)">
 
     <section class="display-sections" id="playlist">
         <h1>Your Playlists</h1>

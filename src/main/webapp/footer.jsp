@@ -2,11 +2,11 @@
 <section id="footer">
 
     <div class="album">
-        <img src="images/profile.jpg" alt="" id="album" onclick="">
+        <img src="images/profile.jpg" alt="" id="album-footer" onclick="">
         <div>
             <p>
-                <span class="track" id="title">Track title</span> <br>
-                <span class="artists" id="artists">Artist alias</span>
+                <span class="track" id="title-footer">Track title</span> <br>
+                <span class="artists" id="artists-footer">Artist alias</span>
             </p>
         </div>
     </div>
@@ -20,7 +20,7 @@
             <button id="play-pause" onclick="pause()">
                 <img id="play-pause-img" src="images/play.svg" alt="">
             </button>
-            <button class="next">
+            <button class="next" onclick="skip()">
                 <img src="images/forward.svg" alt="">
             </button>
         </div>

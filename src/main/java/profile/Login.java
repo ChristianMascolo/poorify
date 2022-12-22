@@ -4,6 +4,7 @@ import navigation.Navigator;
 import navigation.Page;
 import playlist.PlaylistBean;
 import playlist.PlaylistDAO;
+import track.ListeningQueue;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -76,9 +77,13 @@ public class Login extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("Profile", profile);
 
+            //NAVIGATOR
             Navigator navigator = new Navigator();
             navigator.setCurrent(new Page(0, Page.Type.HOME));
             session.setAttribute("Navigator", navigator);
+
+            //LISTENING QUEUE
+            session.setAttribute("ListeningQueue", new ListeningQueue());
 
             request.getRequestDispatcher("home.jsp").forward(request, response);
         }
