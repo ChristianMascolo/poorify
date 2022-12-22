@@ -44,6 +44,7 @@ function navToUser(id) {
 }
 
 function navToPlaylist(id, new_page) {
+    $("#center").load("loading.jsp");
     $.post("GetPlaylist", {id: String(id), new_page: String(new_page)}, function(data){
         $("#center").load("playlist.jsp");
     });
@@ -51,12 +52,14 @@ function navToPlaylist(id, new_page) {
 
 
 function navToAlbum(id, new_page) {
+    $("#center").load("loading.jsp");
     $.post("GetAlbum", {id: String(id), new_page: String(new_page)}, function(data){
         $("#center").load("album.jsp");
     });
 }
 
 function navToArtist(id, new_page) {
+    $("#center").load("loading.jsp");
     $.post("GetArtist", {id: String(id), new_page: String(new_page)}, function(data){
         $("#center").load("artist.jsp");
     });

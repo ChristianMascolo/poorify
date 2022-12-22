@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="css/header.css" type="text/css">
     <link rel="stylesheet" href="css/footer.css" type="text/css">
     <link rel="stylesheet" href="css/homepage.css" type="text/css">
+    <link rel="stylesheet" href="css/loading.css" type="text/css">
+    <link rel="stylesheet" href="css/album.css" type="text/css">
 <body>
     <jsp:include page="header.jsp"></jsp:include>
 
@@ -21,6 +23,6 @@
 <script src="webjars/jquery/3.5.1/dist/jquery.js"></script>
 <script src="js/navigation.js"></script>
 <script src="js/player.js"></script>
-    <script src="js/profile/login.js"></script>
+<script src="js/profile/login.js"></script>
 </body>
 </html>
