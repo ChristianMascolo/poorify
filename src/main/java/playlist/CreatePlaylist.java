@@ -30,7 +30,9 @@ public class CreatePlaylist extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        int user = ((UserBean) request.getSession().getAttribute("Profile")).getId();
+        UserBean userBean = (UserBean) request.getSession().getAttribute("Profile");
+
+        int user = userBean.getId();
 
         boolean outcome = false;
         int id = 0;
@@ -40,8 +42,12 @@ public class CreatePlaylist extends HttpServlet {
             int playlists = playlistDAO.getCountFromUser(user);
             String title = "My Playlist #" + (playlists + 1);
             outcome = playlistDAO.add(user, title);
-            if(outcome)
+            if(outcome) {
                 id = playlistDAO.getLastFromUser(user);
+                PlaylistBean playlist = playlistDAO.get(id);
+                playlist.setHost(userBean);
+                userBean.getPlaylists().add(playlist);
+            }
 
         }catch(SQLException e){
             e.printStackTrace();

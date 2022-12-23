@@ -88,6 +88,7 @@ section#header div.search-box input:focus, section#header div.search-box input:a
 
 section#header div.create-playlist {
     width: 10%;
+    cursor: pointer;
 }
 
 section#header div#to-the-right {

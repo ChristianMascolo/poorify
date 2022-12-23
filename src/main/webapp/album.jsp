@@ -60,6 +60,4 @@
 
   <jsp:include page="addtoplaylistmenu.jsp"></jsp:include>
 
-  <jsp:include page="notification.jsp"></jsp:include>
-
 </section>

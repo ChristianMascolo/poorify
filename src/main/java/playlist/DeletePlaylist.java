@@ -1,6 +1,7 @@
 package playlist;
 
 import org.json.JSONObject;
+import profile.UserBean;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -31,7 +32,12 @@ public class DeletePlaylist extends HttpServlet {
 
         boolean outcome = false;
         try {
+
             outcome = playlistDAO.remove(id);
+            if(outcome)
+                ((UserBean) request.getSession().getAttribute("Profile")).getPlaylists().removeIf(p -> (p.getId() == id));
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

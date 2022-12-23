@@ -70,3 +70,25 @@ function navToArtist(id, new_page) {
         $("#center").load("artist.jsp");
     });
 }
+
+function createPlaylist() {
+    $("#center").load("loading.jsp");
+    $.post("CreatePlaylist", {}, function(data){
+        let outcome = data.outcome[0];
+        if(outcome) {
+            let id = data.id[0];
+            navToPlaylist(id, true);
+        }
+        else {
+            home();
+        }
+    });
+}
+
+function deletePlaylist(id) {
+    $("#center").load("loading.jsp");
+    $.post("DeletePlaylist", {id: String(id)}, function(data){
+        home();
+        notify("Playlist Removed");
+    });
+}
