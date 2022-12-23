@@ -32,6 +32,16 @@ public class PlaylistDAO {
         return playlist;
     }
 
+    //create playlist
+    public boolean createPlaylist(int enduser,String title) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO Playlist (enduser,title) VALUES (?,?)");
+
+        statement.setInt(1,enduser);
+        statement.setString(2,title);
+
+        return statement.executeUpdate() > 0;
+    }
+
     //Seleziona le Playlist in base all'utente
     public Collection<PlaylistBean> getFromUser(int id) throws SQLException{
         Collection<PlaylistBean> playlists = new TreeSet<>((PlaylistBean a, PlaylistBean b) -> b.getLastAccessTime().compareTo(a.getLastAccessTime()));
@@ -122,13 +132,19 @@ public class PlaylistDAO {
         return likes;
     }
 
-    public void addTrackToPlaylist(int user, int track, int playlist) throws SQLException {
+    public boolean addTrackToPlaylist(int user, int track, int playlist) throws SQLException {
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Added (enduser, track, playlist) VALUES (?, ?, ?)");
         stmt.setInt(1, user);
         stmt.setInt(2, track);
         stmt.setInt(3, playlist);
-        stmt.executeUpdate();
-        stmt.close();
+        return stmt.executeUpdate() > 0;
+    }
+
+    public boolean removeTrackFromPlaylist(int track,int playlist) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM Added a WHERE a.track = ? AND a.playlist = ?");
+        statement.setInt(1,track);
+        statement.setInt(2,playlist);
+        return statement.executeUpdate() > 0;
     }
 
     private PlaylistBean resultToBean(ResultSet rs) throws SQLException {
