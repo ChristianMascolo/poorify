@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="css/homepage.css" type="text/css">
     <link rel="stylesheet" href="css/loading.css" type="text/css">
     <link rel="stylesheet" href="css/album.css" type="text/css">
+    <link rel="stylesheet" href="css/addtoplaylistmenu.css" type="text/css">
+    <link rel="stylesheet" href="css/notification.css" type="text/css">
 <body>
     <jsp:include page="header.jsp"></jsp:include>
 
@@ -24,5 +26,7 @@
 <script src="js/navigation.js"></script>
 <script src="js/player.js"></script>
 <script src="js/profile/login.js"></script>
+<script src="js/playlist.js"></script>
+<script src="js/notification.js"></script>
 </body>
 </html>

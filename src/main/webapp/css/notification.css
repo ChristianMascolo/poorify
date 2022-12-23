@@ -1,0 +1,20 @@
+div#notification {
+    display: none;
+
+    width: 20%;
+    background-color: #006060;
+    box-shadow: 0px 0px 5px rgba(6, 6, 6, 0.3);
+
+    position: absolute;
+    z-index: 9999;
+    top: 80%;
+    left: 40%;
+
+    padding: 1%;
+    border-radius: 4px;
+}
+
+div#notification span {
+    width: 100%;
+    text-align: center;
+}

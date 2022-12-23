@@ -50,12 +50,16 @@
           <div class="duration"><span><%= track.getDuration() %></span></div>
           <div class="queue"><span>Queue</span></div>
           <div class="add-to-playlist">
-            <button>
+            <button onclick="showAddTrackMenu(<%= track.getId() %>)">
               <span>Add</span>
             </button>
           </div>
         </div>
     <% } %>
   </section>
+
+  <jsp:include page="addtoplaylistmenu.jsp"></jsp:include>
+
+  <jsp:include page="notification.jsp"></jsp:include>
 
 </section>
