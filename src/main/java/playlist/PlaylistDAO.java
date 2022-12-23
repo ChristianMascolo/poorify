@@ -143,5 +143,51 @@ public class PlaylistDAO {
         return new AddedBeanProxy(user, track, playlist, date);
     }
 
+    public void deletePlaylist(int id) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM Playlist WHERE Playlist.id = ?");
+        statement.setInt(1,id);
+        statement.executeUpdate();
+    }
 
+    public int addLike(int idUser,int idPlaylist) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO Likes VALUES (?,?)");
+
+        statement.setInt(1,idUser);
+        statement.setInt(2,idPlaylist);
+
+        return statement.executeUpdate();
+    }
+
+    public int removeLike(int idUser,int idPlaylist) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM Likes AS l WHERE l.enduser = ? AND l.playlist = ?");
+
+        statement.setInt(1,idUser);
+        statement.setInt(2,idPlaylist);
+
+        return statement.executeUpdate();
+    }
+
+    public int setPublic(int id) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("UPDATE Playlist SET Playlist.isPublic = 1 WHERE Playlist.id = ?");
+        statement.setInt(1,id);
+        return statement.executeUpdate();
+    }
+
+    public int setPrivate(int id) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("UPDATE Playlist SET Playlist.isPublic = 0 WHERE Playlist.id = ?");
+        statement.setInt(1,id);
+        return statement.executeUpdate();
+    }
+
+    public int setCollaborative(int id) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("UPDATE Playlist SET Playlist.isCollaborative = 1 WHERE Playlist.id = ?");
+        statement.setInt(1,id);
+        return statement.executeUpdate();
+    }
+
+    public int setSingle(int id) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("UPDATE Playlist SET Playlist.isCollaborative = 0 WHERE Playlist.id = ?");
+        statement.setInt(1,id);
+        return statement.executeUpdate();
+    }
 }
