@@ -33,6 +33,7 @@
       <div class="title"><span>Title</span></div>
       <div class="duration"><span>Duration</span></div>
       <div class="queue"><span>Queue</span></div>
+      <div class="add-to-playlist"><span>Add</span></div>
     </div>
 
     <hr>
@@ -48,6 +49,11 @@
           <div class="title"><span><%= track.getTitle() %></span></div>
           <div class="duration"><span><%= track.getDuration() %></span></div>
           <div class="queue"><span>Queue</span></div>
+          <div class="add-to-playlist">
+            <button>
+              <span>Add</span>
+            </button>
+          </div>
         </div>
     <% } %>
   </section>

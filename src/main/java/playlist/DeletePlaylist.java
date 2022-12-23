@@ -15,25 +15,29 @@ public class DeletePlaylist extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
+        this.playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doPost(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        int id = (int) request.getAttribute("id");
 
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        boolean outcome = false;
         try {
-            playlistDAO.deletePlaylist(id);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            outcome = playlistDAO.remove(id);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         JSONObject jsonObject = new JSONObject();
+        jsonObject.append("outcome", outcome);
         response.getWriter().print(jsonObject);
     }
 }

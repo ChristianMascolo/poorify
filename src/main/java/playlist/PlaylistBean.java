@@ -1,6 +1,8 @@
 package playlist;
 
 import profile.UserBean;
+import track.TrackBean;
+
 import java.util.Collection;
 import java.util.TreeSet;
 

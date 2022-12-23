@@ -95,6 +95,10 @@ section#tracks div div.duration span {
     text-align: right;
 }
 section#tracks div div.queue {
-    max-width: 20%;
+    max-width: 10%;
+    width: 20%;
+}
+section#tracks div div.add-to-playlist {
+    max-width: 10%;
     width: 20%;
 }

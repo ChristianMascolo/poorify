@@ -1,6 +1,7 @@
 package playlist;
 
 import org.json.JSONObject;
+import profile.ProfileBean;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,7 +16,7 @@ public class UnlikePublicPlaylist extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
+        this.playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
     }
 
     @Override
@@ -26,16 +27,19 @@ public class UnlikePublicPlaylist extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        int idUser = (int) request.getAttribute("enduser");
-        int idPlaylist = (int) request.getAttribute("idPlaylist");
 
+        int user = ((ProfileBean) request.getSession().getAttribute("Profile")).getId();
+        int playlist = Integer.parseInt(request.getParameter("id"));
+
+        boolean outcome = false;
         try {
-            playlistDAO.removeLike(idUser,idPlaylist);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            outcome = playlistDAO.unlike(user, playlist);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         JSONObject jsonObject = new JSONObject();
+        jsonObject.append("outcome", outcome);
         response.getWriter().print(jsonObject);
     }
 }

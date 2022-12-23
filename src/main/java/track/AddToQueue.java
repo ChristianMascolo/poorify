@@ -7,8 +7,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "AddToAutoQueue", value = "/AddToAutoQueue")
-public class AddToAutoQueue extends HttpServlet {
+@WebServlet(name = "AddToUserQueue", value = "/AddToUserQueue")
+public class AddToQueue extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
@@ -18,10 +19,12 @@ public class AddToAutoQueue extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        ListeningQueue queue = (ListeningQueue) request.getSession().getAttribute("ListeningQueue");
-        queue.addToAutoQueue((int)request.getAttribute("id"));
+        int id = Integer.parseInt(request.getParameter("id"));
 
-        JSONObject jsonObj = new JSONObject();
-        response.getWriter().print(jsonObj);
+        ListeningQueue queue = (ListeningQueue) request.getSession().getAttribute("ListeningQueue");
+        queue.addToUserQueue(id);
+
+        JSONObject jsonObject = new JSONObject();
+        response.getWriter().print(jsonObject);
     }
 }
