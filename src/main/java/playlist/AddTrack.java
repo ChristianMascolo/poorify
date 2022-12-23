@@ -32,19 +32,16 @@ public class AddTrack extends HttpServlet {
         int track = Integer.parseInt(request.getParameter("track"));
         int playlist = Integer.parseInt(request.getParameter("playlist"));
 
+        boolean outcome = false;
         try {
-
-            playlistDAO.addTrackToPlaylist(user, track, playlist);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            outcome = playlistDAO.addTrackToPlaylist(user, track, playlist);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         //RISPOSTA JSON
-        request.getSession().setAttribute("Playlist", playlist);
         JSONObject jsonObject = new JSONObject();
+        jsonObject.append("outcome", outcome);
         response.getWriter().print(jsonObject);
     }
 }

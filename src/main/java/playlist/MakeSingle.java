@@ -33,7 +33,7 @@ public class MakeSingle extends HttpServlet {
 
         boolean outcome = false;
         try {
-            outcome = playlistDAO.setPrivate(id);
+            outcome = playlistDAO.setSingle(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

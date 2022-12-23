@@ -15,7 +15,7 @@ public class UnfollowUser extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        profileDAO = (ProfileDAO) super.getServletContext().getAttribute("ProfileDAO");
+        this.profileDAO = (ProfileDAO) super.getServletContext().getAttribute("ProfileDAO");
     }
 
     @Override
@@ -27,15 +27,18 @@ public class UnfollowUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        int idFollower = (int) request.getSession().getAttribute("enduser");
-        int idFollowed = Integer.parseInt(request.getParameter("followed"));
+        int follower = ((UserBean) request.getSession().getAttribute("Profile")).getId();
+        int followed = Integer.parseInt(request.getParameter("user"));
 
+        boolean outcome = false;
         try{
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("outcome",profileDAO.unfollowUser(idFollower,idFollowed));
-            response.getWriter().print(jsonObject);
-        }catch(SQLException e){
+            outcome = profileDAO.unfollowUser(follower, followed);
+        }catch(Exception e){
             e.printStackTrace();
         }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.append("outcome", outcome);
+        response.getWriter().print(jsonObject);
     }
 }

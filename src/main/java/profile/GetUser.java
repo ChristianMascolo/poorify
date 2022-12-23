@@ -1,6 +1,9 @@
 package profile;
 
 import album.AlbumDAO;
+import navigation.Navigator;
+import navigation.Page;
+import org.json.JSONObject;
 import playlist.PlaylistBean;
 import playlist.PlaylistDAO;
 
@@ -32,37 +35,41 @@ public class GetUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+
         int id = Integer.parseInt(request.getParameter("id"));
-        ProfileBean profile = null;
+        boolean new_page = Boolean.parseBoolean(request.getParameter("new_page"));
 
+        UserBean user = null;
         try{
-            profile = profileDAO.get(id);
+            user = (UserBean) profileDAO.get(id);
 
-            if(profile.getRole() == ProfileBean.Role.USER){
-                //PLAYLIST CREATE O IN COLLABORAZIONE PER L'UTENTE
-                Collection<PlaylistBean> playlists = playlistDAO.getFromUser(profile.getId());
-                for(PlaylistBean p: playlists)
-                    p.setHost(profileDAO.getHostFromPlaylist(p.getId()));
-                ((UserBean) profile).setPlaylists(playlists);
+            Collection<PlaylistBean> playlists = playlistDAO.getFromUser(id);
+            for(PlaylistBean p: playlists)
+                p.setHost(profileDAO.getHostFromPlaylist(p.getId()));
+            user.setPlaylists(playlists);
 
-                //PLAYLIST A CUI L'UTENTE HA MESSO LIKE
-                Collection<PlaylistBean> likedPlaylists = playlistDAO.getFromLikes(profile.getId());
-                for(PlaylistBean p: likedPlaylists)
-                    p.setHost(profileDAO.getHostFromPlaylist(p.getId()));
-                ((UserBean) profile).setLikedPlaylists(likedPlaylists);
+            Collection<PlaylistBean> likedPlaylists = playlistDAO.getFromLikes(id);
+            for(PlaylistBean p: likedPlaylists)
+                p.setHost(profileDAO.getHostFromPlaylist(p.getId()));
+            user.setLikedPlaylists(likedPlaylists);
 
-                //ARTISTI SEGUITI
-                ((UserBean) profile).setArtists(profileDAO.getArtistsFromUser(profile.getId()));
+            user.setArtists(profileDAO.getArtistsFromUser(id));
+            user.setFollowing(profileDAO.getFollowingFromUser(id));
+            user.setFollowers(profileDAO.getFollowersFromUser(id));
 
-                //UTENTI SEGUITI
-                ((UserBean) profile).setFollowing(profileDAO.getFollowingFromUser(profile.getId()));
-
-                //UTENTI FOLLOWER
-                ((UserBean) profile).setFollowers(profileDAO.getFollowersFromUser(profile.getId()));
-            }
-        }catch(SQLException e){
+        }catch(Exception e){
             e.printStackTrace();
         }
+
+        Navigator navigator = (Navigator) request.getSession().getAttribute("Navigator");
+        if(new_page)
+            navigator.save();
+        navigator.setCurrent(new Page(id, Page.Type.USER));
+
+        request.getSession().setAttribute("User", user);
+        JSONObject jsonObject = new JSONObject();
+        response.getWriter().print(jsonObject);
 
     }
 }

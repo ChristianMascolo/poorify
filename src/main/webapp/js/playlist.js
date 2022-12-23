@@ -16,6 +16,7 @@ function hideAddTrackMenu() {
 function addTrackToPlaylist(playlist) {
     $.post("AddTrack", {track: String(track), playlist: String(playlist)}, function(data){
         hideAddTrackMenu();
-        notify("Added To Playlist");
+        let outcome = data.outcome[0];
+        notify(outcome ? "Track Added To Playlist" : "Track Already In Playlist");
     });
 }

@@ -2,6 +2,7 @@ package playlist;
 
 import netscape.javascript.JSObject;
 import org.json.JSONObject;
+import profile.UserBean;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -17,7 +18,7 @@ public class CreatePlaylist extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
+        this.playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
     }
 
     @Override
@@ -28,15 +29,27 @@ public class CreatePlaylist extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        int enduser = (int) request.getSession().getAttribute("enduser");
-        String title = request.getParameter("title");
+
+        int user = ((UserBean) request.getSession().getAttribute("Profile")).getId();
+
+        boolean outcome = false;
+        int id = 0;
 
         try{
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("outcome",playlistDAO.createPlaylist(enduser,title));
-            response.getWriter().print(jsonObject);
+
+            int playlists = playlistDAO.getCountFromUser(user);
+            String title = "My Playlist #" + (playlists + 1);
+            outcome = playlistDAO.add(user, title);
+            if(outcome)
+                id = playlistDAO.getLastFromUser(user);
+
         }catch(SQLException e){
             e.printStackTrace();
         }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.append("outcome", outcome);
+        jsonObject.append("id", id);
+        response.getWriter().print(jsonObject);
     }
 }

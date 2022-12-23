@@ -1,6 +1,5 @@
 package playlist;
 
-import netscape.javascript.JSObject;
 import org.json.JSONObject;
 
 import javax.servlet.*;
@@ -9,14 +8,13 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "AddTrackToPlaylist", value = "/AddTrackToPlaylist")
-public class AddTrackToPlaylist extends HttpServlet {
+@WebServlet(name = "RemoveTrack", value = "/RemoveTrack")
+public class RemoveTrack extends HttpServlet {
     private PlaylistDAO playlistDAO;
-
     @Override
     public void init() throws ServletException {
         super.init();
-        playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
+        this.playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
     }
 
     @Override
@@ -27,16 +25,20 @@ public class AddTrackToPlaylist extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        int enduser = (int) request.getSession().getAttribute("enduser");
+
         int track = Integer.parseInt(request.getParameter("track"));
         int playlist = Integer.parseInt(request.getParameter("playlist"));
 
+        boolean outcome = false;
         try{
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("outcome",playlistDAO.addTrackToPlaylist(enduser,track,playlist));
-            response.getWriter().print(jsonObject);
-        }catch (SQLException e){
+            outcome = playlistDAO.removeTrackFromPlaylist(track, playlist);
+        }catch (Exception e){
             e.printStackTrace();
         }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.append("outcome", outcome);
+        response.getWriter().print(jsonObject);
+
     }
 }

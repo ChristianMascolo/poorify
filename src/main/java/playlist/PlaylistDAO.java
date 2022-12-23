@@ -33,13 +33,21 @@ public class PlaylistDAO {
     }
 
     //create playlist
-    public boolean createPlaylist(int enduser,String title) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO Playlist (enduser,title) VALUES (?,?)");
-
-        statement.setInt(1,enduser);
-        statement.setString(2,title);
-
+    public boolean add(int user, String title) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO Playlist (enduser, title) VALUES (?, ?)");
+        statement.setInt(1, user);
+        statement.setString(2, title);
         return statement.executeUpdate() > 0;
+    }
+
+    public int getLastFromUser(int user) throws SQLException {
+        int id = 0;
+        PreparedStatement stmt = connection.prepareStatement("SELECT TOP 1 p.id AS id FROM Playlist p WHERE p.enduser = ? ORDER BY p.id DESC");
+        stmt.setInt(1, user);
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next())
+            id = rs.getInt("id");
+        return id;
     }
 
     //Seleziona le Playlist in base all'utente
@@ -140,8 +148,8 @@ public class PlaylistDAO {
         return stmt.executeUpdate() > 0;
     }
 
-    public boolean removeTrackFromPlaylist(int track,int playlist) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM Added a WHERE a.track = ? AND a.playlist = ?");
+    public boolean removeTrackFromPlaylist(int track, int playlist) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM Added WHERE track = ? AND playlist = ?");
         statement.setInt(1,track);
         statement.setInt(2,playlist);
         return statement.executeUpdate() > 0;
@@ -263,5 +271,19 @@ public class PlaylistDAO {
 
         statement.close();
         return outcome;
+    }
+
+    public int getCountFromUser(int id) throws SQLException {
+        int count = 0;
+
+        PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(*) AS count FROM Playlist p WHERE p.enduser = ?");
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next())
+            count = rs.getInt("count");
+
+        rs.close(); stmt.close();
+        return count;
     }
 }

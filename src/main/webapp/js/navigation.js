@@ -14,6 +14,9 @@ function navigate(id, type) {
         case "ARTIST":
             navToArtist(id, false);
             break;
+        case "USER":
+            navToUser(id, false);
+            break;
     }
 }
 
@@ -39,8 +42,11 @@ function home() {
     $("#center").load("homepage.jsp");
 }
 
-function navToUser(id) {
-    console.log(id);
+function navToUser(id, new_page) {
+    $("#center").load("loading.jsp");
+    $.post("GetUser", {id: String(id), new_page: String(new_page)}, function(data){
+        $("#center").load("user.jsp");
+    });
 }
 
 function navToPlaylist(id, new_page) {

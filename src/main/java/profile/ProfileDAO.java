@@ -350,39 +350,31 @@ public class ProfileDAO {
         return profile;
     }
 
-    public boolean followArtist(int idUser,int idArtist) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO FollowArtist VALUES (?,?)");
-
-        statement.setInt(1,idUser);
-        statement.setInt(2,idArtist);
-
+    public boolean followArtist(int user, int artist) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO FollowArtist (enduser, artist) VALUES (?, ?)");
+        statement.setInt(1, user);
+        statement.setInt(2, artist);
         return statement.executeUpdate() > 0;
     }
 
-    public boolean unfollowArtist(int idUser,int idArtist) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM FollowArtist WHERE FollowArtist.endUser = ? AND FollowArtist.artist = ?");
-
-        statement.setInt(1,idUser);
-        statement.setInt(2,idArtist);
-
+    public boolean unfollowArtist(int user, int artist) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM FollowArtist WHERE endUser = ? AND artist = ?");
+        statement.setInt(1, user);
+        statement.setInt(2, artist);
         return statement.executeUpdate() > 0;
     }
 
-    public boolean followUser(int follower,int followed) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO FollowUser VALUES (?,?)");
-
+    public boolean followUser(int follower, int followed) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO FollowUser(follower, followed) VALUES (?, ?)");
         statement.setInt(1,follower);
         statement.setInt(2,followed);
-
         return statement.executeUpdate() > 0;
     }
 
-    public boolean unfollowUser(int follower,int followed) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM FollowUser WHERE FollowUser.follower = ? AND FollowUser.followed = ?");
-
+    public boolean unfollowUser(int follower, int followed) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM FollowUser WHERE follower = ? AND followed = ?");
         statement.setInt(1,follower);
         statement.setInt(2,followed);
-
         return statement.executeUpdate() > 0;
     }
 }
