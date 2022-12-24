@@ -117,8 +117,20 @@ function skip() {
     });
 }
 
+function addToQueue(id) {
+    $.post("AddToQueue", {id: String(id)}, function(data) {
+        notify("Added to queue");
+    });
+}
+
 function playAlbum(index) {
     $.post("PlayAlbum", {index: String(index)}, function(data) {
+        skip();
+    });
+}
+
+function playPlaylist(index) {
+    $.post("PlayPlaylist", {index: String(index)}, function(data) {
         skip();
     });
 }

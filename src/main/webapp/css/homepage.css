@@ -29,9 +29,11 @@ section#homepage section.display-sections div {
     border-radius: 14px;
     padding: 1% 1% 2% 1%;
     margin-right: 1%;
+
+    transition: all 0.2s ease-in-out;
 }
 section#homepage section.display-sections div:hover {
-    background-color: rgba(70, 70, 70, 0.7);
+    background-color: rgba(60, 60, 60, 0.6);
 }
 section#homepage section.display-sections div img {
     width: 100%;

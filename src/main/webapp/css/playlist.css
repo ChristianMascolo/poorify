@@ -3,12 +3,12 @@ section#head {
     width: 100%;
 }
 
-section#head div#album-cover {
+section#head div#playlist-cover {
     display: inline-block;
     max-width: 15%;
     padding: 0% 2% 2% 0%;
 }
-section#head div#album-cover img {
+section#head div#playlist-cover img {
     width: 100%;
     object-fit: cover;
     aspect-ratio: 1 / 1;
@@ -18,10 +18,10 @@ section#head div#album-cover img {
 
     transition: all 0.15s ease-in-out;
 }
-section#head div#album-cover img:hover {
+section#head div#playlist-cover img:hover {
     box-shadow: 0px 3px 15px #282828;
 }
-section#head div#album-cover img:active {
+section#head div#playlist-cover img:active {
     box-shadow: 0px 3px 10px #141414;
 }
 
@@ -43,11 +43,12 @@ section#head div#info p#type-title span#title {
     font-family: GothamBlack;
     font-size: 4em;
 }
-section#head div#info div#artist-line {
+
+section#head div#info div#user-line {
     display: flex;
     align-items: center;
 }
-section#head div#info div#artist-line img {
+section#head div#info div#user-line img {
     display: inline;
     width: 32px;
     height: 32px;
@@ -55,17 +56,16 @@ section#head div#info div#artist-line img {
     border-radius: 100%;
     cursor: pointer;
 }
-section#head div#info div#artist-line span#info-part1 {
+section#head div#info div#user-line span#info-part1 {
     color: #F6F4F1;
 }
-section#head div#info div#artist-line span#info-part1 span#artist-alias:hover {
+section#head div#info div#user-line span#info-part1 span#host-alias:hover {
     text-decoration: underline;
     cursor: pointer;
 }
-section#head div#info div#artist-line span#info-part2 {
+section#head div#info div#user-line span#info-part2 {
     color: #AFAFAF;
 }
-
 
 
 section#tracks {
@@ -86,13 +86,14 @@ section#tracks hr {
     color: #AFAFAF;
 }
 
+
+
 section#tracks div.table-line:hover {
     background-color: rgba(70, 70, 70, 0.7);
     border-radius: 10px;
-}
-section#tracks div.table-line:hover span.track-artist {
-    color: #F6F4F1;
-}
+}section#tracks div.table-line:hover span.track-artist {
+     color: #F6F4F1;
+ }
 section#tracks div.table-line:hover div.options {
     display: flex;
 }
@@ -104,6 +105,7 @@ section#tracks div.table-line:hover div.index button img {
     width: 16px;
     height: 16px;
 }
+
 section#tracks div div.index {
     max-width: 3%;
     width: 3%;
@@ -120,9 +122,22 @@ section#tracks div div.index button img {
     display: none;
 }
 
+
 section#tracks div div.title-artists {
-    max-width: 87%;
-    width: 87%;
+    display: flex;
+    align-items: center;
+    max-width: 47%;
+    width: 47%;
+}
+section#tracks div div.title-artists img {
+    height: 100%;
+    width: 36px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    margin-right: 3%;
+    display: inline-block;
+    float: left;
+    cursor: pointer;
 }
 section#tracks div div.title-artists p {
     line-height: 1.4;
@@ -140,6 +155,47 @@ section#tracks div div.title-artists p span.track-artists span.track-artist:hove
     cursor: pointer;
 }
 
+section#tracks div div.album {
+    display: flex;
+    align-items: center;
+    max-width: 30%;
+    width: 30%;
+}
+section#tracks div div.album span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+section#tracks div div.added-by {
+    display: flex;
+    align-items: center;
+    max-width: 20%;
+    width: 20%;
+}
+section#tracks div div.added-by img {
+    height: 100%;
+    width: 28px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    margin-right: 3%;
+    display: inline-block;
+    border-radius: 100%;
+    float: left;
+    cursor: pointer;
+}
+section#tracks div div.added-by span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+section#tracks div div.date-added {
+    display: flex;
+    align-items: center;
+    max-width: 10%;
+    width: 10%;
+}
+
+
 section#tracks div div.duration {
     display: flex;
     justify-content: flex-end;
@@ -155,6 +211,8 @@ section#tracks div div.duration span {
     width: 100%;
     text-align: right;
 }
+
+
 section#tracks div div.options {
     align-items: center;
     justify-content: center;

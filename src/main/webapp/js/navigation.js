@@ -52,6 +52,7 @@ function navToUser(id, new_page) {
 function navToPlaylist(id, new_page) {
     $("#center").load("loading.jsp");
     $.post("GetPlaylist", {id: String(id), new_page: String(new_page)}, function(data){
+        document.getElementById("style-to-change").setAttribute("href", "css/playlist.css");
         $("#center").load("playlist.jsp");
     });
 }
@@ -60,6 +61,7 @@ function navToPlaylist(id, new_page) {
 function navToAlbum(id, new_page) {
     $("#center").load("loading.jsp");
     $.post("GetAlbum", {id: String(id), new_page: String(new_page)}, function(data){
+        document.getElementById("style-to-change").setAttribute("href", "css/album.css");
         $("#center").load("album.jsp");
     });
 }

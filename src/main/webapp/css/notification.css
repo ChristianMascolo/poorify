@@ -1,14 +1,15 @@
 div#notification {
     display: none;
+    justify-content: center;
 
-    width: 20%;
+    width: 10%;
     background-color: #006060;
-    box-shadow: 0px 0px 5px rgba(6, 6, 6, 0.3);
+    box-shadow: 0px 5px 5px rgba(5, 5, 5, 0.25);
 
     position: absolute;
     z-index: 9999;
     top: 80%;
-    left: 40%;
+    left: 45%;
 
     padding: 1%;
     border-radius: 4px;
@@ -17,4 +18,5 @@ div#notification {
 div#notification span {
     width: 100%;
     text-align: center;
+    font-family: GothamBlack, sans-serif;
 }

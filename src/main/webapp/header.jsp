@@ -22,7 +22,7 @@
     </div>
 
     <div class="create-playlist" onclick="createPlaylist()">
-        <button>
+        <button onclick="createPlaylist()">
             <img src="images/add.svg" alt="">
         </button>
         <p>Create playlist</p>

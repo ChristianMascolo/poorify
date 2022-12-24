@@ -90,6 +90,9 @@ section#header div.create-playlist {
     width: 10%;
     cursor: pointer;
 }
+section#header div.create-playlist button {
+    cursor: pointer;
+}
 
 section#header div#to-the-right {
     display: flex;
