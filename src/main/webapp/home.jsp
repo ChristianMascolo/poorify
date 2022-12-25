@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/homepage.css" type="text/css" id="style-to-change">
 
     <link rel="stylesheet" href="css/addtoplaylistmenu.css" type="text/css">
+    <link rel="stylesheet" href="css/editplaylistmenu.css" type="text/css">
     <link rel="stylesheet" href="css/notification.css" type="text/css">
 <body>
     <jsp:include page="header.jsp"></jsp:include>
@@ -27,6 +28,7 @@
     <jsp:include page="notification.jsp"></jsp:include>
 
 <script src="webjars/jquery/3.5.1/dist/jquery.js"></script>
+<script src="webjars/jquery-form/4.2.2/webjars-requirejs.js"></script>
 <script src="js/notification.js"></script>
 <script src="js/navigation.js"></script>
 <script src="js/player.js"></script>

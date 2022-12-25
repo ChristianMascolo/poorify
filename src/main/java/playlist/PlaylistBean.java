@@ -8,7 +8,7 @@ import java.util.TreeSet;
 
 public class PlaylistBean {
 
-    private enum Order{DATE, TITLE, DURATION, ARTIST, ALBUM}
+    public enum Order{DATE, TITLE, DURATION, ARTIST, ALBUM}
 
     private int id;
     private UserBean host;
@@ -123,10 +123,10 @@ public class PlaylistBean {
 
         switch(order) {
             case DATE: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getDate().compareTo(b.getDate())); break;
-            case TITLE: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getTitle().compareTo(b.getTrack().getTitle())); break;
-            case DURATION: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getDuration() - b.getTrack().getDuration()); break;
-            case ARTIST: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getAlbum().getArtist().getAlias().compareTo(b.getTrack().getAlbum().getArtist().getAlias()) ); break;
-            case ALBUM: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getAlbum().getTitle().compareTo(b.getTrack().getAlbum().getTitle())); break;
+            case TITLE: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getTitle().compareTo(b.getTrack().getTitle()) != 0 ? a.getTrack().getTitle().compareTo(b.getTrack().getTitle()) : a.getDate().compareTo(b.getDate())); break;
+            case DURATION: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> (a.getTrack().getDuration() - b.getTrack().getDuration()) != 0 ? a.getTrack().getDuration() - b.getTrack().getDuration() : a.getDate().compareTo(b.getDate())); break;
+            case ARTIST: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getAlbum().getArtist().getAlias().compareTo(b.getTrack().getAlbum().getArtist().getAlias()) != 0 ? a.getTrack().getAlbum().getArtist().getAlias().compareTo(b.getTrack().getAlbum().getArtist().getAlias()) : a.getDate().compareTo(b.getDate())); break;
+            case ALBUM: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getAlbum().getTitle().compareTo(b.getTrack().getAlbum().getTitle()) != 0 ? a.getTrack().getAlbum().getTitle().compareTo(b.getTrack().getAlbum().getTitle()) : a.getDate().compareTo(b.getDate())); break;
         }
 
         for(AddedBean a: tracklist)

@@ -5,7 +5,7 @@ section#head {
 
 section#head div#playlist-cover {
     display: inline-block;
-    max-width: 15%;
+    max-width: 18%;
     padding: 0% 2% 2% 0%;
 }
 section#head div#playlist-cover img {
@@ -42,6 +42,7 @@ section#head div#info p#type-title span#type {
 section#head div#info p#type-title span#title {
     font-family: GothamBlack;
     font-size: 4em;
+    cursor: pointer;
 }
 
 section#head div#info div#user-line {
@@ -66,10 +67,32 @@ section#head div#info div#user-line span#info-part1 span#host-alias:hover {
 section#head div#info div#user-line span#info-part2 {
     color: #AFAFAF;
 }
+section#head div#info div#buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 2%;
+}
+section#head div#info div#buttons button {
+    margin-right: 2%;
+    border-radius: 100%;
+    aspect-ratio: 1 / 1;
+    border: none;
+    width: 10%;
+    background-color: #AFAFAF;
+}
+section#head div#info div#buttons button img {
+    display: inline;
+    width: 18px;
+    height: 18px;
+}
 
 
 section#tracks {
     width: 100%;
+}
+section#tracks div#table-header .order-change {
+    cursor: pointer;
 }
 section#tracks div {
     padding: 0.3%;
@@ -161,7 +184,7 @@ section#tracks div div.album {
     max-width: 30%;
     width: 30%;
 }
-section#tracks div div.album span:hover {
+section#tracks div.table-line div.album span:hover {
     text-decoration: underline;
     cursor: pointer;
 }
@@ -183,7 +206,7 @@ section#tracks div div.added-by img {
     float: left;
     cursor: pointer;
 }
-section#tracks div div.added-by span:hover {
+section#tracks div.table-line div.added-by span:hover {
     text-decoration: underline;
     cursor: pointer;
 }

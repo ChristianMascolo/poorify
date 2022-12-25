@@ -7,12 +7,12 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
 
-@WebServlet(name = "RemoveTrack", value = "/RemoveTrack")
-public class RemoveTrack extends HttpServlet {
+@WebServlet(name = "AddGuest", value = "/AddGuest")
+public class AddGuest extends HttpServlet {
+
     private PlaylistDAO playlistDAO;
-    @Override
+
     public void init() throws ServletException {
         super.init();
         this.playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
@@ -27,17 +27,20 @@ public class RemoveTrack extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        int track = Integer.parseInt(request.getParameter("track"));
+        int host = ((UserBean) request.getSession().getAttribute("Profile")).getId();
+        int guest = Integer.parseInt(request.getParameter("guest"));
         int playlist = Integer.parseInt(request.getParameter("playlist"));
 
-        try{
-            playlistDAO.removeTrackFromPlaylist(track, playlist);
-        }catch (Exception e){
+        boolean outcome = false;
+        try {
+            outcome = playlistDAO.addGuest(host, guest, playlist);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
+        //RISPOSTA JSON
         JSONObject jsonObject = new JSONObject();
+        jsonObject.append("outcome", outcome);
         response.getWriter().print(jsonObject);
-
     }
 }

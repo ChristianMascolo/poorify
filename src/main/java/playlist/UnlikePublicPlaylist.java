@@ -2,6 +2,7 @@ package playlist;
 
 import org.json.JSONObject;
 import profile.ProfileBean;
+import profile.UserBean;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -28,12 +29,15 @@ public class UnlikePublicPlaylist extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        int user = ((ProfileBean) request.getSession().getAttribute("Profile")).getId();
+        UserBean profile = (UserBean) request.getSession().getAttribute("Profile");
+
+        int user = profile.getId();
         int playlist = Integer.parseInt(request.getParameter("id"));
 
         boolean outcome = false;
         try {
             outcome = playlistDAO.unlike(user, playlist);
+            profile.getLikedPlaylists().removeIf(p -> (p.getId() == playlist));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,26 +1,30 @@
-package playlist;
+package navigation;
 
+import album.AlbumDAO;
 import org.json.JSONObject;
-import profile.ProfileBean;
+import playlist.PlaylistDAO;
 import profile.ProfileDAO;
-import profile.UserBean;
+import track.TrackDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
 
-@WebServlet(name = "LikePublicPlaylist", value = "/LikePublicPlaylist")
-public class LikePublicPlaylist extends HttpServlet {
+@WebServlet(name = "Search", value = "/Search")
+public class Search extends HttpServlet {
+
     private PlaylistDAO playlistDAO;
     private ProfileDAO profileDAO;
+    private AlbumDAO albumDAO;
+    private TrackDAO trackDAO;
 
-    @Override
     public void init() throws ServletException {
         super.init();
         this.playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
         this.profileDAO = (ProfileDAO) super.getServletContext().getAttribute("ProfileDAO");
+        this.albumDAO = (AlbumDAO) super.getServletContext().getAttribute("AlbumDAO");
+        this.trackDAO = (TrackDAO) super.getServletContext().getAttribute("TrackDAO");
     }
 
     @Override
@@ -32,23 +36,21 @@ public class LikePublicPlaylist extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        UserBean profile = (UserBean) request.getSession().getAttribute("Profile");
+        String search = request.getParameter("search");
 
-        int user = profile.getId();
-        int playlist = Integer.parseInt(request.getParameter("id"));
-
-        boolean outcome = false;
+        ResultsContainer results = new ResultsContainer();
         try {
-            outcome = playlistDAO.like(user, playlist);
-            PlaylistBean p = playlistDAO.get(playlist);
-            p.setHost(profileDAO.getHostFromPlaylist(playlist));
-            profile.getLikedPlaylists().add(playlistDAO.get(playlist));
+
+            results.setUsers(profileDAO.searchUsersByAlias(search));
+            results.setArtists(profileDAO.searchArtistsByAlias(search));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        request.getSession().setAttribute("Results", results);
+
         JSONObject jsonObject = new JSONObject();
-        jsonObject.append("outcome", outcome);
         response.getWriter().print(jsonObject);
     }
 }

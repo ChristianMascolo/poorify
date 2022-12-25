@@ -45,6 +45,7 @@ public class GetPlaylist extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         boolean new_page = Boolean.parseBoolean(request.getParameter("new_page"));
+        UserBean profile = (UserBean) request.getSession().getAttribute("Profile");
 
         PlaylistBean playlist = null;
         try {
@@ -53,6 +54,9 @@ public class GetPlaylist extends HttpServlet {
             playlist.setHost(profileDAO.getHostFromPlaylist(id));
             if(playlist.isPublic()) playlist.setLikes(playlistDAO.getLikes(id));
             if(playlist.isCollaborative()) playlist.setGuests(profileDAO.getGuestsFromPlaylist(id));
+
+            if(playlist.getHost().getId() == profile.getId())
+                playlistDAO.updateLastAccess(playlist.getId());
 
             //RICERCA E COMPOSIZIONE DEI BRANI NELLA PLAYLIST
             Collection<AddedBean> addedBeans = new TreeSet<>((AddedBean a, AddedBean b) -> a.getDate().compareTo(b.getDate()));

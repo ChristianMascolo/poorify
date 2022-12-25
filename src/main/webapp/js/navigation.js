@@ -94,3 +94,11 @@ function deletePlaylist(id) {
         notify("Playlist Removed");
     });
 }
+
+function search(input) {
+    $("#center").load("loading.jsp");
+    let search = input.value;
+    $.post("Search", {search: search}, function(data){
+        $("#center").load("search.jsp");
+    });
+}

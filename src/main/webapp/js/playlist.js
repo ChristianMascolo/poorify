@@ -1,6 +1,37 @@
 
 let track = 0;
 
+function showEditMenu(id) {
+    hideEditMenu();
+
+    let menu = document.getElementById("edit-playlist-menu");
+    menu.style.display = "block";
+
+    document.getElementById("edit-id").value = id;
+
+    $("#edit-form").submit(function(event) {
+        hideEditMenu();
+        $("#center").load("loading.jsp");
+        $.ajax({
+            url: "EditPlaylist",
+            type: "POST",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                notify("Changes saved!");
+                navToPlaylist(id, false);
+            }
+        });
+        event.preventDefault();
+    });
+}
+
+function hideEditMenu() {
+    let menu = document.getElementById("edit-playlist-menu");
+    menu.style.display = "none";
+}
+
 function showAddTrackMenu(id) {
     hideAddTrackMenu();
     let menu = document.getElementById("add-to-playlist-menu");
@@ -21,6 +52,47 @@ function addTrackToPlaylist(playlist) {
     });
 }
 
+function checkLike(id) {
+    $.post("CheckLike", {id: String(id)}, function(data){
+        let outcome = data.outcome[0];
+        if(outcome) {
+            let span = document.getElementById("likes-span");
+            span.innerHTML = span.innerHTML + " (liked)";
+        }
+    });
+}
+
+function likePlaylist(id) {
+    $.post("CheckLike", {id: String(id)}, function(data){
+        let outcome = data.outcome[0];
+        if(outcome) {
+            $.post("UnlikePublicPlaylist", {id: String(id)}, function(data){
+                notify("Playlist unliked");
+            });
+        }
+        else {
+            $.post("LikePublicPlaylist", {id: String(id)}, function (data) {
+                notify("Playlist liked");
+            });
+        }
+        navToPlaylist(id, false);
+    });
+}
+
+function removeTrack(track, playlist) {
+    $.post("RemoveTrack", {track: String(track), playlist: String(playlist)}, function(data){
+        navToPlaylist(playlist);
+        notify("Track removed");
+    });
+}
+
+function changeOrder(playlist, order) {
+    $.post("ChangeOrder", {order: order}, function(data) {
+        navToPlaylist(playlist);
+    });
+
+}
+
 function resizeForCollaborative(isCollaborative) {
     let title_artists_width = isCollaborative ? "37%" : "47%";
     let album_width = isCollaborative ? "20%" : "30%";
@@ -34,4 +106,28 @@ function resizeForCollaborative(isCollaborative) {
         div.style.width = album_width;
     });
 
+}
+
+function searchGuests(input, playlist) {
+    let search = input.value;
+    $('#guests-results').empty();
+    $.post("SearchForGuests", {search: search}, function(data){
+        for(let i = 0; i < data.id.length; i++) {
+            let line = document.createElement("div");
+            line.innerHTML = data.alias[i];
+            line.onclick = addGuest(data.id[i], playlist);
+            $('#guests-results').append(line);
+        }
+    });
+}
+
+function addGuest(guest, playlist) {
+    $.post("AddGuest", {guest: String(guest), playlist: String(playlist)}, function(data) {
+        let outcome = data.outcome[0];
+        if(outcome)
+            notify("Guest added");
+        else
+            notify("User already guest");
+        navToPlaylist(playlist);
+    });
 }

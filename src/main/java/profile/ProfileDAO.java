@@ -377,4 +377,41 @@ public class ProfileDAO {
         statement.setInt(2,followed);
         return statement.executeUpdate() > 0;
     }
+
+    public Collection<UserBean> searchUsersByAlias(String search) throws SQLException {
+        Collection<UserBean> users = new TreeSet<>((UserBean a, UserBean b) -> a.getAlias().compareTo(b.getAlias()));
+        PreparedStatement stmt = connection.prepareStatement("" +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, u.alias AS alias, u.birthdate AS birthdate, n.iso AS iso, n.name AS name, u.isPublic AS isPublic " +
+                "FROM Profile p, EndUser u, Nation n " +
+                "WHERE p.id = u.profile AND u.nation = n.iso " +
+                "AND u.alias LIKE ?");
+        search = '%' + search +  '%';
+        stmt.setString(1, search);
+
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next())
+            users.add((UserBean) resultToBean(rs));
+
+        rs.close(); stmt.close();
+        return users;
+    }
+
+    public Collection<ArtistBean> searchArtistsByAlias(String search) throws SQLException {
+        Collection<ArtistBean> artists = new TreeSet<>((ArtistBean a, ArtistBean b) -> a.getAlias().compareTo(b.getAlias()));
+        PreparedStatement stmt = connection.prepareStatement("" +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, a.alias AS alias, a.bio AS bio " +
+                "FROM Profile p, Artist a " +
+                "WHERE p.id = a.profile " +
+                "AND a.alias LIKE ?");
+        search = '%' + search +  '%';
+        stmt.setString(1, search);
+
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next())
+            artists.add((ArtistBean) resultToBean(rs));
+
+        rs.close(); stmt.close();
+        return artists;
+    }
+
 }

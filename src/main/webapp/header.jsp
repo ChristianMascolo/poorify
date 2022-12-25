@@ -18,7 +18,7 @@
         <button>
             <img src="images/search.svg" alt="">
         </button>
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Search..." onchange="search(this)">
     </div>
 
     <div class="create-playlist" onclick="createPlaylist()">
@@ -36,9 +36,11 @@
             <p><%= user != null ? user.getAlias() : "Alias" %></p>
         </div>
 
+        <form action="Logout" method="post">
         <button class="single-button" class="logout-button" onclick="logout()">
             <img src="images/logout.svg" alt="" onclick="logout()">
         </button>
+        </form>
     </div>
 
 </section>

@@ -2,12 +2,19 @@
 <%@ page import="playlist.AddedBean" %>
 <%@ page import="profile.ProfileBean" %>
 <%@ page import="profile.UserBean" %>
-<%@ page import="java.util.Collection" %>
 <%@ page import="profile.ArtistBean" %>
 <%@ page import="main.DateFormatter" %>
 <section id="playlist">
 
   <% PlaylistBean playlist = (PlaylistBean) session.getAttribute("Playlist"); %>
+  <% boolean owned = playlist.getHost().getId() == ((ProfileBean) session.getAttribute("Profile")).getId(); %>
+  <% boolean guest = false;
+     if(playlist.getGuests() != null)
+        for(ProfileBean profile: playlist.getGuests())
+            if(profile.getId() == ((ProfileBean) session.getAttribute("Profile")).getId())
+                guest = true;
+  %>
+  <% boolean supervisor = ((ProfileBean) session.getAttribute("Profile")).getRole() == ProfileBean.Role.OVERSEER; %>
 
     <section id="head">
         <div id="playlist-cover">
@@ -16,7 +23,13 @@
         <div id="info">
             <p id="type-title">
                 <span id="type">Playlist</span> <br>
-                <span id="title"><%= playlist.getTitle()%></span>
+                <span id="title"
+                        <% if(owned || guest) { %> onclick="showEditMenu(<%= playlist.getId() %>)" <% } %>
+                        <% if(!owned && !guest && !supervisor) { %> onclick="likePlaylist(<%= playlist.getId() %>)" <% } %>
+                        <% if(supervisor) { %> onclick="deletePlaylist(<%= playlist.getId() %>)" <% } %>
+                    >
+                    <%= playlist.getTitle()%>
+                </span>
             </p>
             <div id="user-line">
                 <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + playlist.getHost().getId() + ".jpg" %>" onclick="navToUser(<%= playlist.getHost().getId() %>, true)">
@@ -28,18 +41,23 @@
                 <% } %>
                 <p id="details">
                     &nbsp
-                    <span id="info-part1"><span id="host-alias" onclick="navToUser(<%= playlist.getHost().getId()%>, true)"><%= playlist.getHost().getAlias() %></span> &#183 <% if(playlist.isPublic()) { %> <%= playlist.getLikes() %> likes &#183<% } %> <%= playlist.getTracks()%> tracks, </span>
+                    <span id="info-part1">
+                        <span id="host-alias" onclick="navToUser(<%= playlist.getHost().getId()%>, true)"><%= playlist.getHost().getAlias() %></span>
+                        &#183
+                        <% if(playlist.isPublic()) { %> <span id="likes-span"><%= playlist.getLikes() %> likes</span> &#183 <% } %>
+                        <%= playlist.getTracks()%> tracks,
+                        </span>
                     <span id="info-part2">
-            <%  int hours = playlist.getDuration() / 3600;
-                int minutes = (playlist.getDuration() % 3600) / 60;
-                int seconds = (playlist.getDuration() % 3600) % 60;
-            %>
-            <% if(hours >= 1) { %>
-              <%= hours %> <%= hours > 1 ? "hours" : "hour" %> <%= minutes %> min
-            <% } else { %>
-              <%= minutes %> min <%= seconds %> sec
-            <% } %>
-          </span>
+                        <%  int hours = playlist.getDuration() / 3600;
+                            int minutes = (playlist.getDuration() % 3600) / 60;
+                            int seconds = (playlist.getDuration() % 3600) % 60;
+                        %>
+                        <% if(hours >= 1) { %>
+                          <%= hours %> <%= hours > 1 ? "hours" : "hour" %> <%= minutes %> min
+                        <% } else { %>
+                          <%= minutes %> min <%= seconds %> sec
+                        <% } %>
+                  </span>
                 </p>
             </div>
         </div>
@@ -49,20 +67,22 @@
 
         <div id="table-header">
             <div class="index"><span>#</span></div>
-            <div class="title-artists"><span>Title</span></div>
-            <div class="album"><span>Album</span></div>
+            <div class="title-artists"><span class="order-change"  onclick="changeOrder(<%= playlist.getId() %>, 'title')">Title</span> &nbsp (<span class="order-change"  onclick="changeOrder(<%= playlist.getId() %>, 'artist')">Artist</span>)</div>
+            <div class="album"><span class="order-change"  onclick="changeOrder(<%= playlist.getId() %>, 'album')">Album</span></div>
             <% if(playlist.isCollaborative()) { %>
                 <div class="added-by"><span>Added By</span></div>
             <% } %>
-            <div class="date-added"><span>Date Added</span></div>
-            <div class="duration"><img src="images/duration.svg"></div>
+            <div class="date-added"><span class="order-change" onclick="changeOrder(<%= playlist.getId() %>, 'date')">Date Added</span></div>
+            <div class="duration"><img class="order-change"  src="images/duration.svg" onclick="changeOrder(<%= playlist.getId() %>, 'duration')"></div>
             <div class="options"></div>
         </div>
 
         <hr>
 
         <% int i = 0; %>
-        <% for(AddedBean added: playlist.getTracklist()) { %>
+        <% PlaylistBean.Order order = (PlaylistBean.Order) session.getAttribute("Order"); %>
+        <% session.removeAttribute("Order"); %>
+        <% for(AddedBean added: order == null ? playlist.getTracklist() : playlist.getTracklist(order)) { %>
             <div class="table-line">
 
                 <div class="index">
@@ -115,6 +135,7 @@
                         <div class="dropdown">
                             <div onclick="addToQueue(<%= added.getTrack().getId() %>)"><span>Add to queue</span></div>
                             <div onclick="showAddTrackMenu(<%= added.getTrack().getId() %>)"><span>Add to playlist</span></div>
+                            <div onclick="removeTrack(<%= added.getTrack().getId() %>, <%= playlist.getId() %>)"><span>Remove track</span></div>
                         </div>
                     </button>
                 </div>
@@ -124,12 +145,14 @@
         <% } %>
     </section>
 
-    <% if(playlist.getHost().getId() == ((ProfileBean) session.getAttribute("Profile")).getId()) { %>
-    <button onclick="deletePlaylist(<%= playlist.getId() %>)">Delete</button>
-    <% } %>
-
     <jsp:include page="addtoplaylistmenu.jsp"></jsp:include>
 
+    <% if(owned) { %>
+        <jsp:include page="editplaylistmenu.jsp"></jsp:include>
+        <jsp:include page="addguestsmenu.jsp"></jsp:include>
+    <% } %>
+
     <script> resizeForCollaborative(<%= playlist.isCollaborative() %>); </script>
+    <script> checkLike(<%= playlist.getId() %>)</script>
 
 </section>
