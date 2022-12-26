@@ -1,5 +1,4 @@
 <%@ page import="playlist.PlaylistBean" %>
-<%@ page import="profile.ProfileBean" %>
 
 <% PlaylistBean playlist = (PlaylistBean) session.getAttribute("Playlist"); %>
 
@@ -10,5 +9,7 @@
   <div id="guests-results">
 
   </div>
+
+  <button onclick="hideGuestsMenu()">Cancel</button>
 
 </div>

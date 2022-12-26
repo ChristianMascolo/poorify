@@ -16,3 +16,27 @@ div#edit-playlist-menu {
     border-radius: 8px;
 }
 
+div#edit-playlist-menu input, div#edit-playlist-menu label, div#edit-playlist-menu button {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1%;
+
+    background-color: #AFAFAF;
+    border-radius: 4px;
+    border: none;
+    color: #060606;
+
+    margin-bottom: 1%;
+}
+
+div#edit-playlist-menu input[type=file], div#edit-playlist-menu input[type=checkbox] {
+    display: none;
+}
+div#edit-playlist-menu input[type=checkbox]:checked + label {
+    background-color: #00B0B0;
+}
+
+div#edit-playlist-menu form {
+    margin-bottom: 5%;
+}

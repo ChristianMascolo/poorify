@@ -90,6 +90,7 @@ section#head div#info div#buttons button img {
 
 section#tracks {
     width: 100%;
+    margin-bottom: 5%;
 }
 section#tracks div#table-header .order-change {
     cursor: pointer;
@@ -110,11 +111,11 @@ section#tracks hr {
 }
 
 
-
 section#tracks div.table-line:hover {
     background-color: rgba(70, 70, 70, 0.7);
     border-radius: 10px;
-}section#tracks div.table-line:hover span.track-artist {
+}
+section#tracks div.table-line:hover span.track-artist {
      color: #F6F4F1;
  }
 section#tracks div.table-line:hover div.options {

@@ -201,9 +201,37 @@ public class PlaylistDAO {
     }
 
     public boolean remove(int id) throws SQLException{
+        PreparedStatement stLikes = connection.prepareStatement("DELETE FROM Likes WHERE playlist = ?");
+        stLikes.setInt(1, id);
+        stLikes.executeUpdate();
+        stLikes.close();
+
+        PreparedStatement stGuests = connection.prepareStatement("DELETE FROM Guests WHERE playlist = ?");
+        stGuests.setInt(1, id);
+        stGuests.executeUpdate();
+        stGuests.close();
+
+        PreparedStatement stPublic = connection.prepareStatement("DELETE FROM PlaylistPublic WHERE playlist = ?");
+        stPublic.setInt(1, id);
+        stPublic.executeUpdate();
+        stPublic.close();
+
+        PreparedStatement stCollab = connection.prepareStatement("DELETE FROM PlaylistCollaborative WHERE playlist = ?");
+        stCollab.setInt(1, id);
+        stCollab.executeUpdate();
+        stCollab.close();
+
+        PreparedStatement stAdded = connection.prepareStatement("DELETE FROM Added WHERE playlist = ?");
+        stAdded.setInt(1, id);
+        stAdded.executeUpdate();
+        stAdded.close();
+
         PreparedStatement statement = connection.prepareStatement("DELETE FROM Playlist WHERE id = ?");
         statement.setInt(1,id);
-        return statement.executeUpdate() > 0;
+        boolean outcome = statement.executeUpdate() > 0;
+        statement.close();
+
+        return outcome;
     }
 
     public boolean like(int user, int playlist) throws SQLException {
@@ -273,15 +301,14 @@ public class PlaylistDAO {
     public boolean setPrivate(int id) throws SQLException{
         boolean outcome = false;
 
+        PreparedStatement stmtLikes = connection.prepareStatement("DELETE FROM Likes WHERE playlist = ?");
+        stmtLikes.setInt(1, id);
+        stmtLikes.executeUpdate();
+        stmtLikes.close();
+
         PreparedStatement statement = connection.prepareStatement("DELETE FROM PlaylistPublic WHERE playlist = ?");
         statement.setInt(1, id);
         if(statement.executeUpdate() > 0) {
-
-            PreparedStatement stmtLikes = connection.prepareStatement("DELETE FROM Likes WHERE playlist = ?");
-            stmtLikes.setInt(1, id);
-            stmtLikes.executeUpdate();
-            stmtLikes.close();
-
             PreparedStatement stmt = connection.prepareStatement("UPDATE Playlist SET isPublic = 0 WHERE id = ?");
             stmt.setInt(1, id);
             outcome = stmt.executeUpdate() > 0;
@@ -311,21 +338,21 @@ public class PlaylistDAO {
     public boolean setSingle(int id) throws SQLException{
         boolean outcome = false;
 
+        PreparedStatement stmtAdded = connection.prepareStatement("DELETE FROM Added WHERE playlist = ? AND e" +
+                "nduser IN (SELECT g.guest FROM Guests g WHERE g.playlist = ?) ");
+        stmtAdded.setInt(1, id);
+        stmtAdded.setInt(2, id);
+        stmtAdded.executeUpdate();
+        stmtAdded.close();
+
+        PreparedStatement stmtGuests = connection.prepareStatement("DELETE FROM Guests WHERE playlist = ?");
+        stmtGuests.setInt(1, id);
+        stmtGuests.executeUpdate();
+        stmtGuests.close();
+
         PreparedStatement statement = connection.prepareStatement("DELETE FROM PlaylistCollaborative WHERE playlist = ?");
         statement.setInt(1, id);
         if(statement.executeUpdate() > 0) {
-
-            PreparedStatement stmtAdded = connection.prepareStatement("DELETE FROM Added a WHERE a.playlist = ? AND a.enduser IN (SELECT g.guest FROM Guests g WHERE g.playlist = ?) ");
-            stmtAdded.setInt(1, id);
-            stmtAdded.setInt(2, id);
-            stmtAdded.executeUpdate();
-            stmtAdded.close();
-
-            PreparedStatement stmtGuests = connection.prepareStatement("DELETE FROM Guests WHERE playlist = ?");
-            stmtGuests.setInt(1, id);
-            stmtGuests.executeUpdate();
-            stmtGuests.close();
-
             PreparedStatement stmt = connection.prepareStatement("UPDATE Playlist SET isCollaborative = 0 WHERE id = ?");
             stmt.setInt(1, id);
             outcome = stmt.executeUpdate() > 0;

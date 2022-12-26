@@ -7,6 +7,7 @@
 <section id="playlist">
 
   <% PlaylistBean playlist = (PlaylistBean) session.getAttribute("Playlist"); %>
+  <% boolean roleUser = ((ProfileBean) session.getAttribute("Profile")).getRole() == ProfileBean.Role.USER; %>
   <% boolean owned = playlist.getHost().getId() == ((ProfileBean) session.getAttribute("Profile")).getId(); %>
   <% boolean guest = false;
      if(playlist.getGuests() != null)
@@ -26,7 +27,7 @@
                 <span id="title"
                         <% if(owned || guest) { %> onclick="showEditMenu(<%= playlist.getId() %>)" <% } %>
                         <% if(!owned && !guest && !supervisor) { %> onclick="likePlaylist(<%= playlist.getId() %>)" <% } %>
-                        <% if(supervisor) { %> onclick="deletePlaylist(<%= playlist.getId() %>)" <% } %>
+                        <% if(supervisor) { %> onclick="showDeleteMenu()" <% } %>
                     >
                     <%= playlist.getTitle()%>
                 </span>
@@ -135,21 +136,32 @@
                         <div class="dropdown">
                             <div onclick="addToQueue(<%= added.getTrack().getId() %>)"><span>Add to queue</span></div>
                             <div onclick="showAddTrackMenu(<%= added.getTrack().getId() %>)"><span>Add to playlist</span></div>
-                            <div onclick="removeTrack(<%= added.getTrack().getId() %>, <%= playlist.getId() %>)"><span>Remove track</span></div>
+                            <% if(owned || guest) { %>
+                                <div onclick="removeTrack(<%= added.getTrack().getId() %>, <%= playlist.getId() %>)"><span>Remove track</span></div>
+                            <% } %>
                         </div>
                     </button>
                 </div>
 
             </div>
-        <% i++; %>
+            <% i++; %>
         <% } %>
     </section>
 
-    <jsp:include page="addtoplaylistmenu.jsp"></jsp:include>
+    <% if(roleUser) { %>
+        <jsp:include page="addtoplaylistmenu.jsp"></jsp:include>
+    <% } %>
+
+    <% if(owned || guest) { %>
+        <jsp:include page="editplaylistmenu.jsp"></jsp:include>
+    <% } %>
 
     <% if(owned) { %>
-        <jsp:include page="editplaylistmenu.jsp"></jsp:include>
         <jsp:include page="addguestsmenu.jsp"></jsp:include>
+    <% } %>
+
+    <% if(owned || supervisor) { %>
+        <jsp:include page="deleteplaylistmenu.jsp"></jsp:include>
     <% } %>
 
     <script> resizeForCollaborative(<%= playlist.isCollaborative() %>); </script>

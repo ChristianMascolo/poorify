@@ -381,7 +381,7 @@ public class ProfileDAO {
     public Collection<UserBean> searchUsersByAlias(String search) throws SQLException {
         Collection<UserBean> users = new TreeSet<>((UserBean a, UserBean b) -> a.getAlias().compareTo(b.getAlias()));
         PreparedStatement stmt = connection.prepareStatement("" +
-                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, u.alias AS alias, u.birthdate AS birthdate, n.iso AS iso, n.name AS name, u.isPublic AS isPublic " +
+                "SELECT TOP 10 p.id AS id, p.email AS email, p.password AS password, p.role AS role, u.alias AS alias, u.birthdate AS birthdate, n.iso AS iso, n.name AS name, u.isPublic AS isPublic " +
                 "FROM Profile p, EndUser u, Nation n " +
                 "WHERE p.id = u.profile AND u.nation = n.iso " +
                 "AND u.alias LIKE ?");
@@ -399,7 +399,7 @@ public class ProfileDAO {
     public Collection<ArtistBean> searchArtistsByAlias(String search) throws SQLException {
         Collection<ArtistBean> artists = new TreeSet<>((ArtistBean a, ArtistBean b) -> a.getAlias().compareTo(b.getAlias()));
         PreparedStatement stmt = connection.prepareStatement("" +
-                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, a.alias AS alias, a.bio AS bio " +
+                "SELECT TOP 10 p.id AS id, p.email AS email, p.password AS password, p.role AS role, a.alias AS alias, a.bio AS bio " +
                 "FROM Profile p, Artist a " +
                 "WHERE p.id = a.profile " +
                 "AND a.alias LIKE ?");
@@ -414,4 +414,47 @@ public class ProfileDAO {
         return artists;
     }
 
+    public void changeAlias(int id, String alias) throws SQLException {
+
+        PreparedStatement st1 = connection.prepareStatement("UPDATE EndUser SET alias = ? WHERE profile = ?");
+        st1.setString(1, alias);
+        st1.setInt(2, id);
+        st1.executeUpdate();
+        st1.close();
+
+        PreparedStatement st2 = connection.prepareStatement("UPDATE Artist SET alias = ? WHERE profile = ?");
+        st2.setString(1, alias);
+        st2.setInt(2, id);
+        st2.executeUpdate();
+        st2.close();
+
+    }
+
+    public void changePassword(int id, String password) throws SQLException {
+
+        PreparedStatement st1 = connection.prepareStatement("UPDATE Profile SET password = ? WHERE profile = ?");
+        st1.setString(1, password);
+        st1.setInt(2, id);
+        st1.executeUpdate();
+        st1.close();
+
+    }
+
+    public void changePublic(int id, boolean isPublic) throws SQLException {
+        PreparedStatement st1 = connection.prepareStatement("UPDATE EndUser SET isPublic = ? WHERE profile = ?");
+        st1.setInt(1, isPublic ? 1 : 0);
+        st1.setInt(2, id);
+        st1.executeUpdate();
+        st1.close();
+    }
+
+    public void changeBio(int id, String bio) throws SQLException {
+        PreparedStatement st1 = connection.prepareStatement("UPDATE Artist SET bio = ? WHERE profile = ?");
+        st1.setString(1, bio);
+        st1.setInt(2, id);
+        st1.executeUpdate();
+        st1.close();
+    }
+
 }
+

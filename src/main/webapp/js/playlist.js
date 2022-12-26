@@ -108,14 +108,37 @@ function resizeForCollaborative(isCollaborative) {
 
 }
 
+function showGuestsMenu() {
+    hideEditMenu();
+    hideGuestsMenu();
+    let menu = document.getElementById("add-guests-menu");
+    menu.style.display = "block";
+}
+
+function hideGuestsMenu() {
+    let menu = document.getElementById("add-guests-menu");
+    menu.style.display = "none";
+}
+
 function searchGuests(input, playlist) {
     let search = input.value;
     $('#guests-results').empty();
     $.post("SearchForGuests", {search: search}, function(data){
         for(let i = 0; i < data.id.length; i++) {
             let line = document.createElement("div");
-            line.innerHTML = data.alias[i];
-            line.onclick = addGuest(data.id[i], playlist);
+
+            let img = document.createElement("img");
+            img.src = "https://poorifystorage.blob.core.windows.net/profile/" + String(data.id[i]) + ".jpg";
+            img.alt = "";
+            img.addEventListener("click", function() { addGuest(data.id[i], playlist); });
+            line.append(img);
+
+            let span = document.createElement("span");
+            span.innerHTML = data.alias[i] + " (" + data.email[i] + ")";
+            span.addEventListener("click", function() { addGuest(data.id[i], playlist); });
+            line.append(span);
+
+            line.addEventListener("click", function() { addGuest(data.id[i], playlist); });
             $('#guests-results').append(line);
         }
     });
@@ -130,4 +153,16 @@ function addGuest(guest, playlist) {
             notify("User already guest");
         navToPlaylist(playlist);
     });
+}
+
+function showDeleteMenu() {
+    hideEditMenu();
+    hideDeleteMenu();
+    let menu = document.getElementById("delete-playlist-menu");
+    menu.style.display = "block";
+}
+
+function hideDeleteMenu() {
+    let menu = document.getElementById("delete-playlist-menu");
+    menu.style.display = "none";
 }

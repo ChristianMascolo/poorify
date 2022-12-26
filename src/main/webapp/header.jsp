@@ -29,7 +29,7 @@
     </div>
 
     <div id="to-the-right">
-        <div class="profile">
+        <div class="profile" onclick="showProfileMenu()">
             <button>
                 <img class="profile-picture" src=<%= "https://poorifystorage.blob.core.windows.net/profile/" + (user != null ? user.getId() : 0) + ".jpg"%>>
             </button>

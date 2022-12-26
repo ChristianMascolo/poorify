@@ -28,11 +28,11 @@
   </form>
 
   <% if(owned && playlist.isCollaborative()) { %>
-    <button onclick=""><span>Add guest</span></button>
+    <button onclick="showGuestsMenu()"><span>Add guest</span></button>
   <% } %>
 
   <% if(owned) { %>
-    <button onclick="deletePlaylist(<%= playlist.getId() %>)"><span>Delete playlist</span></button>
+    <button onclick="showDeleteMenu()"><span>Delete playlist</span></button>
   <% } %>
 
   <button onclick="hideEditMenu()"><span>Cancel</span></button>
