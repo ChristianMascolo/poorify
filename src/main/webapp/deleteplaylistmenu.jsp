@@ -4,7 +4,7 @@
 
 <div id="delete-playlist-menu">
 
-  <p>Are you sure you want to delete this playlist? (THE DATA )</p>
+  <p>Are you sure you want to delete this playlist? (THE DATA WILL BE LOST FOREVER)</p>
 
   <button onclick="deletePlaylist(<%= playlist.getId() %>)">Yes, proceed</button>
 

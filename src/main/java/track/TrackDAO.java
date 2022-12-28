@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.TreeSet;
 
 public class TrackDAO {
@@ -51,7 +52,15 @@ public class TrackDAO {
     }
 
     public Collection<TrackBean> getTopFiveFromArtist(int id) throws SQLException {
-        Collection<TrackBean> tracks = new TreeSet<>((TrackBean a, TrackBean b) -> (b.getPlays() - a.getPlays()));
+        Comparator<TrackBean> comparator = new Comparator<TrackBean>() {
+            @Override
+            public int compare(TrackBean a, TrackBean b) {
+                if(a.getPlays() == b.getPlays())
+                    return 1;
+                return b.getPlays() - a.getPlays();
+            }
+        };
+        Collection<TrackBean> tracks = new TreeSet<>(comparator);
 
         PreparedStatement statement = connection.prepareStatement(" " +
                 " SELECT TOP 5 * FROM (" +

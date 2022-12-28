@@ -51,4 +51,52 @@
         <% } %>
     </section>
 
+    <section class="display-sections" id="artists-following">
+        <h1>Your Favorite Artists</h1>
+        <% if(user != null) { %>
+        <% for(ArtistBean a: user.getArtists()) { %>
+        <div>
+            <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + a.getId() + ".jpg"%>"  alt="" onclick="navToArtist(<%= a.getId() %>, true)">
+            <p>
+                <span class="title"><%= a.getAlias() %></span>
+                <br>
+                <span class="host"></span>
+            </p>
+        </div>
+        <% } %>
+        <% } %>
+    </section>
+
+    <section class="display-sections" id="user-following">
+        <h1>Users You're Following</h1>
+        <% if(user != null) { %>
+        <% for(UserBean u: user.getFollowing()) { %>
+        <div>
+            <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + u.getId() + ".jpg"%>"  alt="" onclick="navToUser(<%= u.getId() %>, true)">
+            <p>
+                <span class="title"><%= u.getAlias() %></span>
+                <br>
+                <span class="host"></span>
+            </p>
+        </div>
+        <% } %>
+        <% } %>
+    </section>
+
+    <section class="display-sections" id="user-followers">
+        <h1>Your Followers</h1>
+        <% if(user != null) { %>
+        <% for(UserBean u: user.getFollowers()) { %>
+        <div>
+            <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + u.getId() + ".jpg"%>"  alt="" onclick="navToUser(<%= u.getId() %>, true)">
+            <p>
+                <span class="title"><%= u.getAlias() %></span>
+                <br>
+                <span class="host"></span>
+            </p>
+        </div>
+        <% } %>
+        <% } %>
+    </section>
+    
 </section>

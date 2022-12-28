@@ -69,6 +69,7 @@ function navToAlbum(id, new_page) {
 function navToArtist(id, new_page) {
     $("#center").load("loading.jsp");
     $.post("GetArtist", {id: String(id), new_page: String(new_page)}, function(data){
+        document.getElementById("style-to-change").setAttribute("href", "css/artist.css");
         $("#center").load("artist.jsp");
     });
 }
