@@ -1,0 +1,43 @@
+section.display-sections {
+    overflow: scroll;
+    scrollbar-width: none;
+}
+section.display-sections::-webkit-scrollbar {
+    display: none;
+}
+section.display-sections div {
+    display: inline-block;
+    max-width: 15%;
+    background-color: rgba(36, 36, 36, 0.7);
+    border-radius: 14px;
+    padding: 1% 1% 2% 1%;
+    margin-right: 1%;
+
+    transition: all 0.2s ease-in-out;
+}
+section.display-sections div:hover {
+    background-color: rgba(60, 60, 60, 0.6);
+}
+section.display-sections div img {
+    width: 100%;
+    border-radius: 7px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 5%;
+    box-shadow: 0px 3px 10px #141414;
+    cursor: pointer;
+}
+section.display-sections div p {
+    line-height: 1.5;
+}
+section.display-sections div p span.title {
+    color: #F6F4F1;
+    font-size: 1em;
+    cursor: pointer;
+}
+section.display-sections div p span.info {
+    font-size: 0.8em;
+}
+section.display-sections div p span.title:hover {
+    text-decoration: underline;
+}

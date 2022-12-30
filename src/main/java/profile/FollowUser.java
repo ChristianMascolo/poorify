@@ -28,12 +28,17 @@ public class FollowUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        int follower = ((UserBean) request.getSession().getAttribute("Profile")).getId();
-        int followed = Integer.parseInt(request.getParameter("user"));
+        UserBean profile = (UserBean) request.getSession().getAttribute("Profile");
+
+        int follower = profile.getId();
+        int followed = Integer.parseInt(request.getParameter("id"));
 
         boolean outcome = false;
         try{
             outcome = profileDAO.followUser(follower, followed);
+            if(outcome)
+                profile.getFollowing().add((UserBean) profileDAO.get(followed));
+
         }catch(Exception e){
             e.printStackTrace();
         }

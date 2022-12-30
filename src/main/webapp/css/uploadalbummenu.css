@@ -1,0 +1,49 @@
+
+div#upload-album-menu {
+    display: none;
+
+    width: 30%;
+    height: 80%;
+    background-color: #282828;
+    box-shadow: 0px 0px 10px rgba(5, 5, 5, 0.5);
+
+    position: absolute;
+    z-index: 9999;
+    top: 10%;
+    left: 35%;
+
+    padding: 1%;
+    border-radius: 8px;
+}
+
+div#upload-album-menu input, div#upload-album-menu label, div#upload-album-menu button {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1%;
+
+    background-color: #AFAFAF;
+    border-radius: 4px;
+    border: none;
+    color: #060606;
+
+    margin-bottom: 1%;
+}
+
+div#edit-playlist-menu input[type=file] {
+    display: none;
+}
+
+div#upload-album-menu form {
+    margin-bottom: 5%;
+}
+
+div#upload-album-menu div#edit-tracks-upload {
+    width: 90%;
+    height: 50%;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+div#upload-album-menu div#edit-tracks-upload::-webkit-scrollbar {
+    display: none;
+}

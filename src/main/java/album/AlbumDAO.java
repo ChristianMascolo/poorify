@@ -1,5 +1,7 @@
 package album;
 
+import track.TrackBean;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,6 +77,53 @@ public class AlbumDAO {
         return new AlbumBean(id, title, tracks, duration, year, type);
     }
 
+    public Collection<AlbumBean> searchAlbumsByTitle(String search) throws SQLException {
+        Collection<AlbumBean> albums = new TreeSet<>((AlbumBean a, AlbumBean b) -> a.getTitle().compareTo(b.getTitle()));
+        PreparedStatement stmt = connection.prepareStatement("" +
+                "SELECT TOP 10 a.id AS id, a.title AS title, a.tracks AS tracks, a.duration AS duration, a.year AS year, a.type AS type " +
+                "FROM Album a " +
+                "WHERE a.title LIKE ?");
+        search = '%' + search +  '%';
+        stmt.setString(1, search);
 
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next())
+            albums.add((AlbumBean) resultToBean(rs));
+
+        rs.close(); stmt.close();
+        return albums;
+    }
+
+    public boolean add(int artist, String title, int tracks, int duration, int year, String type) throws SQLException {
+
+        PreparedStatement stmt = connection.prepareStatement(" " +
+                "INSERT INTO Album (artist, title, tracks, duration, year, type) VALUES (?, ?, ?, ?, ?, ?)");
+        stmt.setInt(1, artist);
+        stmt.setString(2, title);
+        stmt.setInt(3, tracks);
+        stmt.setInt(4, duration);
+        stmt.setInt(5, year);
+        stmt.setString(6, type);
+
+        boolean outcome = stmt.executeUpdate() > 0;
+        stmt.close();
+
+        return outcome;
+    }
+
+    public int get(int artist, String title) throws SQLException {
+        int outcome = 0;
+
+        PreparedStatement stmt = connection.prepareStatement("SELECT a.id AS id FROM Album a WHERE a.artist = ? AND a.title = ?");
+        stmt.setInt(1, artist);
+        stmt.setString(2, title);
+
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next())
+            outcome = rs.getInt("id");
+
+        rs.close(); stmt.close();
+        return outcome;
+    }
 
 }

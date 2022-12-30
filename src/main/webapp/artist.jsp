@@ -8,7 +8,7 @@
 
   <section id="head">
     <div id="artist-cover">
-      <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + artist.getId() + ".jpg" %>">
+      <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + artist.getId() + ".jpg" %>" onclick="follow(<%= artist.getId() %>, 'artist')">
     </div>
     <div id="info">
       <p id="type-title">
@@ -90,5 +90,6 @@
     <% } %>
   </section>
 
+  <script>checkFollowing(<%= artist.getId() %>, "artist")</script>
 
 </section>

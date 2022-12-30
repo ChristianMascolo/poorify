@@ -1,6 +1,10 @@
+<%@ page import="profile.ProfileBean" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <section id="footer">
 
+    <% ProfileBean profile = (ProfileBean) session.getAttribute("Profile"); %>
+
+    <% if(profile.getRole() != ProfileBean.Role.ARTIST) { %>
     <div class="album">
         <img src="images/profile.jpg" alt="" id="album-footer" onclick="">
         <div>
@@ -42,4 +46,7 @@
 
     <audio src="" preload="metadata" onloadedmetadata="setMax()" id="audio"></audio>
 
+    <% } else { %>
+        <h1>POORIFY FOR ARTISTS</h1>
+    <% } %>
 </section>

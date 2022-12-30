@@ -1,15 +1,19 @@
 package navigation;
 
+import album.AlbumBean;
 import album.AlbumDAO;
 import org.json.JSONObject;
+import playlist.PlaylistBean;
 import playlist.PlaylistDAO;
 import profile.ProfileDAO;
+import track.TrackBean;
 import track.TrackDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.Collection;
 
 @WebServlet(name = "Search", value = "/Search")
 public class Search extends HttpServlet {
@@ -43,6 +47,25 @@ public class Search extends HttpServlet {
 
             results.setUsers(profileDAO.searchUsersByAlias(search));
             results.setArtists(profileDAO.searchArtistsByAlias(search));
+
+            Collection<TrackBean> tracks = trackDAO.searchTracksByTitle(search);
+            for(TrackBean t: tracks) {
+                AlbumBean album = albumDAO.getFromTrack(t.getId());
+                album.setArtist(profileDAO.getFromAlbum(album.getId()));
+                t.setAlbum(album);
+                t.setFeaturing(profileDAO.getFeaturingFromTrack(t.getId()));
+            }
+            results.setTracks(tracks);
+
+            Collection<AlbumBean> albums = albumDAO.searchAlbumsByTitle(search);
+            for(AlbumBean a: albums)
+                a.setArtist(profileDAO.getFromAlbum(a.getId()));
+            results.setAlbums(albums);
+
+            Collection<PlaylistBean> playlists = playlistDAO.searchPlaylistsByTitle(search);
+            for(PlaylistBean p: playlists)
+                p.setHost(profileDAO.getHostFromPlaylist(p.getId()));
+            results.setPlaylists(playlists);
 
         } catch (Exception e) {
             e.printStackTrace();

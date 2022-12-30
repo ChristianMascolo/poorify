@@ -456,5 +456,21 @@ public class ProfileDAO {
         st1.close();
     }
 
+    public boolean checkFollowing(int user, int followed) throws SQLException {
+        boolean outcome = false;
+        PreparedStatement statement = connection.prepareStatement("" +
+                "SELECT a.enduser FROM FollowArtist a WHERE a.enduser = ? AND a.artist = ? " +
+                "UNION " +
+                "SELECT u.follower FROM FollowUser u WHERE u.follower = ? AND u.followed = ?");
+        statement.setInt(1, user);
+        statement.setInt(2, followed);
+        statement.setInt(3, user);
+        statement.setInt(4, followed);
+        ResultSet rs = statement.executeQuery();
+        outcome = rs.next();
+        rs.close(); statement.close();
+        return outcome;
+    }
+
 }
 

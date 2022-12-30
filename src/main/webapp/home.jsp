@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/homepage.css" type="text/css" id="style-to-change">
 
     <link rel="stylesheet" href="css/addtoplaylistmenu.css" type="text/css">
+    <link rel="stylesheet" href="css/uploadalbummenu.css" type="text/css">
     <link rel="stylesheet" href="css/editplaylistmenu.css" type="text/css">
     <link rel="stylesheet" href="css/editprofilemenu.css" type="text/css">
     <link rel="stylesheet" href="css/addguestsmenu.css" type="text/css">
@@ -35,6 +36,10 @@
         <jsp:include page="editprofilemenu.jsp"></jsp:include>
     <% } %>
 
+    <% if(profile.getRole() == ProfileBean.Role.ARTIST) { %>
+        <jsp:include page="uploadalbummenu.jsp"></jsp:include>
+    <% } %>
+
     <jsp:include page="notification.jsp"></jsp:include>
 
 <script src="webjars/jquery/3.5.1/dist/jquery.js"></script>
@@ -45,5 +50,7 @@
 <script src="js/profile/login.js"></script>
 <script src="js/profile/profile.js"></script>
 <script src="js/playlist.js"></script>
+<script src="js/social.js"></script>
+<script src="js/uploadalbum.js"></script>
 </body>
 </html>

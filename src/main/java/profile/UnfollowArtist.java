@@ -28,12 +28,17 @@ public class UnfollowArtist extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        int user = ((UserBean) request.getSession().getAttribute("Profile")).getId();
-        int artist = Integer.parseInt(request.getParameter("artist"));
+        UserBean profile = (UserBean) request.getSession().getAttribute("Profile");
+
+        int user = profile.getId();
+        int artist = Integer.parseInt(request.getParameter("id"));
 
         boolean outcome = false;
         try{
             outcome = profileDAO.unfollowArtist(user, artist);
+            if(outcome)
+                profile.getArtists().removeIf(a -> (a.getId() == artist));
+
         }catch(Exception e){
             e.printStackTrace();
         }

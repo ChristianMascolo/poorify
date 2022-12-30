@@ -45,6 +45,7 @@ function home() {
 function navToUser(id, new_page) {
     $("#center").load("loading.jsp");
     $.post("GetUser", {id: String(id), new_page: String(new_page)}, function(data){
+        document.getElementById("style-to-change").setAttribute("href", "css/user.css");
         $("#center").load("user.jsp");
     });
 }
@@ -100,6 +101,7 @@ function search(input) {
     $("#center").load("loading.jsp");
     let search = input.value;
     $.post("Search", {search: search}, function(data){
+        document.getElementById("style-to-change").setAttribute("href", "css/search.css");
         $("#center").load("search.jsp");
     });
 }

@@ -1,5 +1,7 @@
 package track;
 
+import profile.ArtistBean;
+
 import javax.sound.midi.Track;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -104,4 +106,52 @@ public class TrackDAO {
 
         return new TrackBean(id, title, index, duration, plays, genre);
     }
+
+    public Collection<TrackBean> searchTracksByTitle(String search) throws SQLException {
+        Collection<TrackBean> tracks = new TreeSet<>((TrackBean a, TrackBean b) -> a.getTitle().compareTo(b.getTitle()));
+        PreparedStatement stmt = connection.prepareStatement("" +
+                "SELECT TOP 10 t.id AS id, t.title AS title, t.track AS track, t.duration AS duration, t.plays AS plays, g.label AS genre " +
+                "FROM Track t, Genre g " +
+                "WHERE t.genre = g.id " +
+                "AND t.title LIKE ?");
+        search = '%' + search +  '%';
+        stmt.setString(1, search);
+
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next())
+            tracks.add((TrackBean) resultToBean(rs));
+
+        rs.close(); stmt.close();
+        return tracks;
+    }
+
+    public boolean add(int album, String title, int track, int duration, int genre) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Track (album, title, track, duration, genre) VALUES (?, ?, ?, ?, ?)");
+        stmt.setInt(1, album);
+        stmt.setString(2, title);
+        stmt.setInt(3, track);
+        stmt.setInt(4, duration);
+        stmt.setInt(5, genre);
+
+        boolean outcome = stmt.executeUpdate() > 0;
+        stmt.close();
+
+        return outcome;
+    }
+
+    public int get(int album, String title) throws SQLException {
+        int outcome = 0;
+
+        PreparedStatement stmt = connection.prepareStatement("SELECT t.id AS id FROM Track t WHERE t.album = ? AND t.title = ?");
+        stmt.setInt(1, album);
+        stmt.setString(2, title);
+
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next())
+            outcome = rs.getInt("id");
+
+        rs.close(); stmt.close();
+        return outcome;
+    }
+
 }

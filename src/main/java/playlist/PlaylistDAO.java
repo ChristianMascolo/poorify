@@ -1,5 +1,7 @@
 package playlist;
 
+import track.TrackBean;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -400,6 +402,24 @@ public class PlaylistDAO {
         stmt.setInt(1, playlist);
         stmt.executeUpdate();
         stmt.close();
+    }
+
+    public Collection<PlaylistBean> searchPlaylistsByTitle(String search) throws SQLException {
+        Collection<PlaylistBean> playlists = new TreeSet<>((PlaylistBean a, PlaylistBean b) -> a.getTitle().compareTo(b.getTitle()));
+        PreparedStatement stmt = connection.prepareStatement("" +
+                "SELECT TOP 10 p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative, p.lastAccessTime AS lastAccessTime " +
+                "FROM Playlist p " +
+                "WHERE p.isPublic = 1 " +
+                "AND p.title LIKE ?");
+        search = '%' + search +  '%';
+        stmt.setString(1, search);
+
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next())
+            playlists.add(resultToBean(rs));
+
+        rs.close(); stmt.close();
+        return playlists;
     }
 
 }

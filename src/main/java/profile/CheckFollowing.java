@@ -6,13 +6,12 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
 
-@WebServlet(name = "UnfollowUser", value = "/UnfollowUser")
-public class UnfollowUser extends HttpServlet {
+@WebServlet(name = "CheckFollowing", value = "/CheckFollowing")
+public class CheckFollowing extends HttpServlet {
+
     private ProfileDAO profileDAO;
 
-    @Override
     public void init() throws ServletException {
         super.init();
         this.profileDAO = (ProfileDAO) super.getServletContext().getAttribute("ProfileDAO");
@@ -27,22 +26,20 @@ public class UnfollowUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        UserBean profile = (UserBean) request.getSession().getAttribute("Profile");
-
-        int follower = profile.getId();
+        int user = ((ProfileBean) request.getSession().getAttribute("Profile")).getId();
         int followed = Integer.parseInt(request.getParameter("id"));
+        String type = request.getParameter("type");
 
         boolean outcome = false;
-        try{
-            outcome = profileDAO.unfollowUser(follower, followed);
-            if(outcome)
-                profile.getFollowing().removeIf(u -> (u.getId() == followed));
-        }catch(Exception e){
+        try {
+            outcome = profileDAO.checkFollowing(user, followed);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.append("outcome", outcome);
+        jsonObject.append("type", type);
         response.getWriter().print(jsonObject);
     }
 }
