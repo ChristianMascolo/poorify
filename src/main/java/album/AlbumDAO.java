@@ -126,4 +126,33 @@ public class AlbumDAO {
         return outcome;
     }
 
+    public void remove(int id) throws SQLException {
+
+        PreparedStatement stPlays = connection.prepareStatement("DELETE FROM Plays WHERE track IN (SELECT t.id AS id FROM Track t WHERE t.album = ?)");
+        stPlays.setInt(1, id);
+        stPlays.executeUpdate();
+        stPlays.close();
+
+        PreparedStatement stAdded = connection.prepareStatement("DELETE FROM Added WHERE track IN (SELECT t.id AS id FROM Track t WHERE t.album = ?)");
+        stAdded.setInt(1, id);
+        stAdded.executeUpdate();
+        stAdded.close();
+
+        PreparedStatement stFeaturing = connection.prepareStatement("DELETE FROM Featuring WHERE track IN (SELECT t.id AS id FROM Track t WHERE t.album = ?)");
+        stFeaturing.setInt(1, id);
+        stFeaturing.executeUpdate();
+        stFeaturing.close();
+
+        PreparedStatement stTrack = connection.prepareStatement("DELETE FROM Track WHERE album = ?");
+        stTrack.setInt(1, id);
+        stTrack.executeUpdate();
+        stTrack.close();
+
+        PreparedStatement stAlbum = connection.prepareStatement("DELETE FROM Album WHERE id = ?");
+        stAlbum.setInt(1, id);
+        stAlbum.executeUpdate();
+        stAlbum.close();
+
+    }
+    
 }

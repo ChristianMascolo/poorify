@@ -1,5 +1,6 @@
 package profile;
 
+import album.AlbumDAO;
 import navigation.Navigator;
 import navigation.Page;
 import playlist.PlaylistBean;
@@ -17,11 +18,13 @@ public class Login extends HttpServlet {
 
     private ProfileDAO profileDAO;
     private PlaylistDAO playlistDAO;
+    private AlbumDAO albumDAO;
 
     public void init() throws ServletException {
         super.init();
         this.profileDAO = (ProfileDAO) super.getServletContext().getAttribute("ProfileDAO");
         this.playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
+        this.albumDAO = (AlbumDAO) super.getServletContext().getAttribute("AlbumDAO");
     }
 
     @Override
@@ -66,6 +69,9 @@ public class Login extends HttpServlet {
 
                 //UTENTI FOLLOWER
                 ((UserBean) profile).setFollowers(profileDAO.getFollowersFromUser(profile.getId()));
+            } else if(profile.getRole() == ProfileBean.Role.ARTIST) {
+
+                ((ArtistBean) profile).setAlbums(albumDAO.getFromArtist(profile.getId()));
             }
 
 

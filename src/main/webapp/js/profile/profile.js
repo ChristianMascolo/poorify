@@ -27,3 +27,9 @@ function hideProfileMenu() {
     let menu = document.getElementById("edit-profile-menu");
     menu.style.display = "none";
 }
+
+function deleteProfile() {
+    $.post("DeleteProfile", {}, function(data) {
+
+    });
+}

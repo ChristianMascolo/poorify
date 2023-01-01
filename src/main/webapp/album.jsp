@@ -1,9 +1,11 @@
 <%@ page import="album.AlbumBean" %>
 <%@ page import="track.TrackBean" %>
 <%@ page import="profile.ArtistBean" %>
+<%@ page import="profile.ProfileBean" %>
 
 <section id="album">
 
+  <% ProfileBean profile = (ProfileBean) session.getAttribute("Profile"); %>
   <% AlbumBean album = (AlbumBean) session.getAttribute("Album"); %>
 
   <section id="head">
@@ -13,13 +15,13 @@
     <div id="info">
       <p id="type-title">
         <span id="type"><%= album.getType() %></span> <br>
-        <span id="title"><%= album.getTitle()%></span>
+        <span id="title" <% if(profile.getRole() != ProfileBean.Role.USER) { %> onclick="deleteAlbum(<%= album.getId() %>)" <% } %> ><%= album.getTitle()%></span>
       </p>
       <div id="artist-line">
-        <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + album.getArtist().getId() + ".jpg" %>" onclick="navToArtist(<%= album.getArtist().getId()%>, true)">
+        <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + album.getArtist().getId() + ".jpg" %>" <% if(profile.getRole() != ProfileBean.Role.ARTIST) { %> onclick="navToArtist(<%= album.getArtist().getId()%>, true)" <% } %>>
         <p id="details">
           &nbsp
-          <span id="info-part1"><span id="artist-alias" onclick="navToArtist(<%= album.getArtist().getId()%>, true)"><%= album.getArtist().getAlias() %></span> &#183 <%= album.getYear()%> &#183 <%= album.getTracks()%> tracks, </span>
+          <span id="info-part1"><span id="artist-alias" <% if(profile.getRole() != ProfileBean.Role.ARTIST) { %> onclick="navToArtist(<%= album.getArtist().getId()%>, true)" <% } %> ><%= album.getArtist().getAlias() %></span> &#183 <%= album.getYear()%> &#183 <%= album.getTracks()%> tracks, </span>
           <span id="info-part2">
             <%  int hours = album.getDuration() / 3600;
                 int minutes = (album.getDuration() % 3600) / 60;
@@ -50,7 +52,7 @@
         <div class="table-line">
 
           <div class="index">
-            <button onclick="playAlbum(<%= track.getIndex() %>)">
+            <button <% if(profile.getRole() != ProfileBean.Role.ARTIST) { %> onclick="playAlbum(<%= track.getIndex() %>)" <% } %>>
               <span><%= track.getIndex() %></span>
               <img src="images/play_track.svg" alt="">
             </button>
@@ -61,9 +63,9 @@
               <span class="track-title"><%= track.getTitle() %></span>
               <br>
               <span class="track-artists">
-                <span class="track-artist" onclick="navToArtist(<%= track.getAlbum().getArtist().getId() %>, true)"><%= track.getAlbum().getArtist().getAlias() %></span>
+                <span class="track-artist" <% if(profile.getRole() != ProfileBean.Role.ARTIST) { %> onclick="navToArtist(<%= track.getAlbum().getArtist().getId() %>, true)" <% } %> ><%= track.getAlbum().getArtist().getAlias() %></span>
                 <% for(ArtistBean a: track.getFeaturing() ) { %>
-                  , <span class="track-artist" onclick="navToArtist(<%= a.getId() %>, true)"><%= a.getAlias() %></span>
+                  , <span class="track-artist" <% if(profile.getRole() != ProfileBean.Role.ARTIST) { %> onclick="navToArtist(<%= a.getId() %>, true)" <% } %>><%= a.getAlias() %></span>
                 <% } %>
               </span>
             </p>
@@ -78,13 +80,15 @@
           </div>
 
           <div class="options">
-            <button>
-              <img src="images/options.svg" alt="">
-              <div class="dropdown">
-                <div onclick="addToQueue(<%= track.getId() %>)"><span>Add to queue</span></div>
-                <div onclick="showAddTrackMenu(<%= track.getId() %>)"><span>Add to playlist</span></div>
-              </div>
-            </button>
+            <% if(profile.getRole() == ProfileBean.Role.USER) { %>
+              <button>
+                <img src="images/options.svg" alt="">
+                <div class="dropdown">
+                  <div onclick="addToQueue(<%= track.getId() %>)"><span>Add to queue</span></div>
+                  <div onclick="showAddTrackMenu(<%= track.getId() %>)"><span>Add to playlist</span></div>
+                </div>
+              </button>
+            <% } %>
           </div>
 
 
@@ -92,6 +96,8 @@
     <% } %>
   </section>
 
-  <jsp:include page="addtoplaylistmenu.jsp"></jsp:include>
+  <% if(profile.getRole() == ProfileBean.Role.USER) { %>
+    <jsp:include page="addtoplaylistmenu.jsp"></jsp:include>
+  <% } %>
 
 </section>

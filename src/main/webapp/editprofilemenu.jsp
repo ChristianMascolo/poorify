@@ -31,6 +31,8 @@
     </div>
   </form>
 
+  <button onclick="deleteProfile()"><span>Delete Profile</span></button>
+
   <button onclick="hideProfileMenu()"><span>Cancel</span></button>
 
 </div>

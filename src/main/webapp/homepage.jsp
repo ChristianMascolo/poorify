@@ -1,6 +1,7 @@
 <%@ page import="profile.*" %>
 <%@ page import="playlist.*" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="album.AlbumBean" %>
 
 <section id="homepage">
 
@@ -93,6 +94,21 @@
         <% } %>
     </section>
 
-    <% } %>
+    <% } else if (artist != null) { %>
 
+        <section class="display-sections" id="albums">
+            <h1>Discography</h1>
+            <% for(AlbumBean a: artist.getAlbums()) { %>
+            <div>
+                <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + a.getId() + ".jpg"%>"  alt="" onclick="navToAlbum(<%= a.getId() %>, true)">
+                <p>
+                    <span class="title" onclick="navToAlbum(<%= a.getId() %>, true)"><%= a.getTitle() %></span>
+                    <br>
+                    <span class="info"><%= a.getYear() %> &#183 <%= a.getType() %></span>
+                </p>
+            </div>
+            <% } %>
+        </section>
+
+    <% } %>
 </section>

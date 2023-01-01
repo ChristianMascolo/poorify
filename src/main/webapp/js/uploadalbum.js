@@ -89,6 +89,10 @@ function updateTracks(input) {
     }
 }
 
-function uploadAlbum() {
-
+function deleteAlbum(id) {
+    $("#center").load("loading.jsp");
+    $.post("DeleteAlbum", {id: String(id)}, function(data){
+        home();
+        notify("Album deleted");
+    });
 }

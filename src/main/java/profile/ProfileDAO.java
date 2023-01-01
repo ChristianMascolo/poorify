@@ -472,5 +472,93 @@ public class ProfileDAO {
         return outcome;
     }
 
+    public void removeUser(int id) throws SQLException {
+        PreparedStatement stLikes = connection.prepareStatement("DELETE FROM Likes WHERE enduser = ?");
+        stLikes.setInt(1, id);
+        stLikes.executeUpdate();
+        stLikes.close();
+
+        PreparedStatement stAdded = connection.prepareStatement("DELETE FROM Added WHERE enduser = ?");
+        stAdded.setInt(1, id);
+        stAdded.executeUpdate();
+        stAdded.close();
+
+        PreparedStatement stFollowArtist = connection.prepareStatement("DELETE FROM FollowArtist WHERE enduser = ?");
+        stFollowArtist.setInt(1, id);
+        stFollowArtist.executeUpdate();
+        stFollowArtist.close();
+
+        PreparedStatement stFollowUser = connection.prepareStatement("DELETE FROM FollowUser WHERE follower = ? OR followed = ?");
+        stFollowUser.setInt(1, id);
+        stFollowUser.setInt(2, id);
+        stFollowUser.executeUpdate();
+        stFollowUser.close();
+
+        PreparedStatement stGuests = connection.prepareStatement("DELETE FROM Guests WHERE guest = ?");
+        stGuests.setInt(1, id);
+        stGuests.executeUpdate();
+        stGuests.close();
+
+        PreparedStatement stPlays = connection.prepareStatement("DELETE FROM Plays WHERE enduser = ?");
+        stPlays.setInt(1, id);
+        stPlays.executeUpdate();
+        stPlays.close();
+
+        PreparedStatement stUser = connection.prepareStatement("DELETE FROM EndUser WHERE profile = ?");
+        stUser.setInt(1, id);
+        stUser.executeUpdate();
+        stUser.close();
+
+        PreparedStatement stProfile = connection.prepareStatement("DELETE FROM Profile WHERE id = ?");
+        stProfile.setInt(1, id);
+        stProfile.executeUpdate();
+        stProfile.close();
+    }
+
+    public void removeArtist(int id) throws SQLException {
+
+        PreparedStatement stAdded = connection.prepareStatement("DELETE FROM Added WHERE track IN (SELECT t.id AS id FROM Track t, Album a WHERE t.album = a.id AND a.artist = ? UNION SELECT t.id AS id FROM Track t, Featuring f WHERE t.id = f.track AND f.artist = ?)");
+        stAdded.setInt(1, id);
+        stAdded.setInt(2, id);
+        stAdded.executeUpdate();
+        stAdded.close();
+
+        PreparedStatement stFollowArtist = connection.prepareStatement("DELETE FROM FollowArtist WHERE artist = ?");
+        stFollowArtist.setInt(1, id);
+        stFollowArtist.executeUpdate();
+        stFollowArtist.close();
+
+        PreparedStatement stPlays =  connection.prepareStatement("DELETE FROM Plays WHERE track IN (SELECT t.id AS id FROM Track t, Album a WHERE t.album = a.id AND a.artist = ? UNION SELECT t.id AS id FROM Track t, Featuring f WHERE t.id = f.track AND f.artist = ?)");
+        stPlays.setInt(1, id);
+        stPlays.setInt(2, id);
+        stPlays.executeUpdate();
+        stPlays.close();
+
+        PreparedStatement stFeaturing = connection.prepareStatement("DELETE FROM Featuring WHERE artist = ?");
+        stFeaturing.setInt(1, id);
+        stFeaturing.executeUpdate();
+        stFeaturing.close();
+
+        PreparedStatement stTracks = connection.prepareStatement("DELETE FROM Tracks WHERE album IN (SELECT a.id AS id FROM Album a WHERE a.artist = ?)");
+        stTracks.setInt(1, id);
+        stTracks.executeUpdate();
+        stTracks.close();
+
+        PreparedStatement stAlbums = connection.prepareStatement("DELETE FROM Album WHERE artist = ?");
+        stAlbums.setInt(1, id);
+        stAlbums.executeUpdate();
+        stAlbums.close();
+
+        PreparedStatement stArtist = connection.prepareStatement("DELETE FROM Artist WHERE profile = ?");
+        stArtist.setInt(1, id);
+        stArtist.executeUpdate();
+        stArtist.close();
+
+        PreparedStatement stProfile = connection.prepareStatement("DELETE FROM Profile WHERE id = ?");
+        stProfile.setInt(1, id);
+        stProfile.executeUpdate();
+        stProfile.close();
+    }
+
 }
 
