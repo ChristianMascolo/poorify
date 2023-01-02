@@ -9,7 +9,7 @@
 
     <h2>LOGIN</h2>
 
-    <form action="Login" method="post">
+    <form id="login-form" action="Login" method="post">
       <div id="email" class="box">
         <p>Email address</p>
         <input type="email" name="email" placeholder="Email address">
@@ -19,9 +19,13 @@
         <input type="password" name="password" placeholder="Password">
       </div>
       <div class="submit">
-        <input type="submit" value="Login">
+        <input type="button" value="Login" onclick="login()">
       </div>
     </form>
+
+    <div class="error">
+      <p id="error-message"></p>
+    </div>
 
     <div class="hr">
       <hr>
@@ -35,5 +39,7 @@
 
   </section>
 
+<script src="webjars/jquery/3.5.1/dist/jquery.js"></script>
+<script src="js/profile/login.js"></script>
 </body>
 </html>
