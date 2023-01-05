@@ -31,7 +31,7 @@
     </div>
   </form>
 
-  <button onclick="deleteProfile()"><span>Delete Profile</span></button>
+  <button onclick="deleteProfile(0)"><span>Delete Profile</span></button>
 
   <button onclick="hideProfileMenu()"><span>Cancel</span></button>
 

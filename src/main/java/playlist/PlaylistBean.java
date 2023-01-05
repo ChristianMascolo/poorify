@@ -122,11 +122,11 @@ public class PlaylistBean {
         Collection<AddedBean> toReturn = null;
 
         switch(order) {
-            case DATE: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getDate().compareTo(b.getDate())); break;
-            case TITLE: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getTitle().compareTo(b.getTrack().getTitle()) != 0 ? a.getTrack().getTitle().compareTo(b.getTrack().getTitle()) : a.getDate().compareTo(b.getDate())); break;
-            case DURATION: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> (a.getTrack().getDuration() - b.getTrack().getDuration()) != 0 ? a.getTrack().getDuration() - b.getTrack().getDuration() : a.getDate().compareTo(b.getDate())); break;
-            case ARTIST: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getAlbum().getArtist().getAlias().compareTo(b.getTrack().getAlbum().getArtist().getAlias()) != 0 ? a.getTrack().getAlbum().getArtist().getAlias().compareTo(b.getTrack().getAlbum().getArtist().getAlias()) : a.getDate().compareTo(b.getDate())); break;
-            case ALBUM: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getAlbum().getTitle().compareTo(b.getTrack().getAlbum().getTitle()) != 0 ? a.getTrack().getAlbum().getTitle().compareTo(b.getTrack().getAlbum().getTitle()) : a.getDate().compareTo(b.getDate())); break;
+            case DATE: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getDate().compareTo(b.getDate()) != 0 ? a.getDate().compareTo(b.getDate()) : -1); break;
+            case TITLE: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getTitle().compareTo(b.getTrack().getTitle()) != 0 ? a.getTrack().getTitle().compareTo(b.getTrack().getTitle()) : -1); break;
+            case DURATION: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> (a.getTrack().getDuration() - b.getTrack().getDuration()) != 0 ? a.getTrack().getDuration() - b.getTrack().getDuration() : -1); break;
+            case ARTIST: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getAlbum().getArtist().getAlias().compareTo(b.getTrack().getAlbum().getArtist().getAlias()) != 0 ? a.getTrack().getAlbum().getArtist().getAlias().compareTo(b.getTrack().getAlbum().getArtist().getAlias()) : -1); break;
+            case ALBUM: toReturn = new TreeSet<>((AddedBean a, AddedBean b) -> a.getTrack().getAlbum().getTitle().compareTo(b.getTrack().getAlbum().getTitle()) != 0 ? a.getTrack().getAlbum().getTitle().compareTo(b.getTrack().getAlbum().getTitle()) : -1); break;
         }
 
         for(AddedBean a: tracklist)

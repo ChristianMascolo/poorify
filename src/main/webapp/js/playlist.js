@@ -129,7 +129,7 @@ function searchGuests(input, playlist) {
 
             let img = document.createElement("img");
             img.src = "https://poorifystorage.blob.core.windows.net/profile/" + String(data.id[i]) + ".jpg";
-            img.alt = "";
+            img.onerror = function() {standby(this)};
             img.addEventListener("click", function() { addGuest(data.id[i], playlist); });
             line.append(img);
 

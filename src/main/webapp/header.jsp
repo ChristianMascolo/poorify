@@ -22,7 +22,7 @@
         <button>
             <img src="images/search.svg" alt="">
         </button>
-        <input type="text" placeholder="Search..." onchange="search(this)">
+        <input type="text" placeholder="Search..." onblur="search(this)">
     </div>
     <% } %>
 
@@ -47,14 +47,14 @@
         <% if(user != null) { %>
             <div class="profile" onclick="showProfileMenu()">
                 <button>
-                    <img class="profile-picture" src=<%= "https://poorifystorage.blob.core.windows.net/profile/" + user.getId() + ".jpg"%>>
+                    <img class="profile-picture" src=<%= "https://poorifystorage.blob.core.windows.net/profile/" + user.getId() + ".jpg"%> onerror="standby(this)">
                 </button>
                 <p><%= user.getAlias() %></p>
             </div>
         <% } else if(artist != null) { %>
             <div class="profile" onclick="showProfileMenu()">
                 <button>
-                    <img class="profile-picture" src=<%= "https://poorifystorage.blob.core.windows.net/profile/" + artist.getId() + ".jpg"%>>
+                    <img class="profile-picture" src=<%= "https://poorifystorage.blob.core.windows.net/profile/" + artist.getId() + ".jpg"%> onerror="standby(this)">
                 </button>
                 <p><%= artist.getAlias() %></p>
             </div>

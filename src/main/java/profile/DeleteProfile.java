@@ -31,13 +31,24 @@ public class DeleteProfile extends HttpServlet {
 
             if(profile.getRole() == ProfileBean.Role.USER)
                 profileDAO.removeUser(profile.getId());
-            else
+            else if(profile.getRole() == ProfileBean.Role.ARTIST)
                 profileDAO.removeArtist(profile.getId());
+            else {
+                int id = Integer.parseInt(request.getParameter("id"));
+                ProfileBean temp = profileDAO.get(id);
+                if(temp.getRole() == ProfileBean.Role.USER)
+                    profileDAO.removeUser(id);
+                else
+                    profileDAO.removeArtist(id);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        if(profile.getRole() != ProfileBean.Role.OVERSEER)
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        else
+            request.getRequestDispatcher("homepage.jsp").forward(request, response);
     }
 }

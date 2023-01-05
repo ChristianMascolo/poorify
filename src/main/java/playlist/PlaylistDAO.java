@@ -102,8 +102,14 @@ public class PlaylistDAO {
         PreparedStatement stat = connection.prepareStatement("" +
                 "SELECT p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative, p.lastAccessTime AS lastAccessTime " +
                 "FROM Playlist p " +
-                "WHERE p.isPublic = 1 AND p.enduser = ?");
+                "WHERE p.isPublic = 1 AND p.enduser = ? " +
+                "UNION " +
+                "SELECT p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative, p.lastAccessTime AS lastAccessTime " +
+                "FROM Playlist p, Guests g " +
+                "WHERE p.id = g.playlist AND p.isPublic = 1 AND g.guest = ?"
+                );
         stat.setInt(1, id);
+        stat.setInt(2, id);
 
         ResultSet rs = stat.executeQuery();
         while(rs.next())
@@ -115,7 +121,7 @@ public class PlaylistDAO {
 
     //Seleziona tutti i bean ADDED relativi a una Playlist
     public Collection<AddedBeanProxy> getAdded(int id) throws SQLException{
-        Collection<AddedBeanProxy> beans = new TreeSet<>((AddedBeanProxy a, AddedBeanProxy b) -> a.getDate().compareTo(b.getDate()));
+        Collection<AddedBeanProxy> beans = new TreeSet<>((AddedBeanProxy a, AddedBeanProxy b) -> a.getDate().compareTo(b.getDate()) != 0 ? a.getDate().compareTo(b.getDate()) : -1);
 
         PreparedStatement stat = connection.prepareStatement("SELECT * FROM Added a WHERE a.playlist = ?");
         stat.setInt(1, id);

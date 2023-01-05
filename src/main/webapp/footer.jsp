@@ -6,11 +6,11 @@
 
     <% if(profile.getRole() != ProfileBean.Role.ARTIST) { %>
     <div class="album">
-        <img src="images/profile.jpg" alt="" id="album-footer" onclick="">
+        <img src="images/trasparent.png" id="album-footer" onclick="">
         <div>
             <p>
-                <span class="track" id="title-footer">Track title</span> <br>
-                <span class="artists" id="artists-footer">Artist alias</span>
+                <span class="track" id="title-footer"></span> <br>
+                <span class="artists" id="artists-footer"></span>
             </p>
         </div>
     </div>

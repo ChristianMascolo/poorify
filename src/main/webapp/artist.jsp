@@ -1,19 +1,22 @@
 <%@ page import="track.TrackBean" %>
 <%@ page import="profile.ArtistBean" %>
 <%@ page import="album.AlbumBean" %>
+<%@ page import="profile.ProfileBean" %>
 
 <section id="artist">
+
+  <% boolean overseer = ((ProfileBean) session.getAttribute("Profile")).getRole() == ProfileBean.Role.OVERSEER; %>
 
   <% ArtistBean artist = (ArtistBean) session.getAttribute("Artist"); %>
 
   <section id="head">
     <div id="artist-cover">
-      <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + artist.getId() + ".jpg" %>" onclick="follow(<%= artist.getId() %>, 'artist')">
+      <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + artist.getId() + ".jpg" %>" onerror="standby(this)" onclick="follow(<%= artist.getId() %>, 'artist')">
     </div>
     <div id="info">
       <p id="type-title">
         <span id="type">Artist</span> <br>
-        <span id="title"><%= artist.getAlias() %></span>
+        <span id="title" <% if(overseer) { %> onclick="deleteProfile(<%= artist.getId() %>)" <% } %>><%= artist.getAlias() %></span>
       </p>
       <div id="following-line">
         <span id="following-span"></span>
@@ -36,7 +39,7 @@
           </div>
 
           <div class="title-artists">
-            <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + track.getAlbum().getId() + ".jpg" %>" alt="" id="album-cover" onclick="navToAlbum(<%= track.getAlbum().getId() %>, true)">
+            <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + track.getAlbum().getId() + ".jpg" %>" onerror="standby(this)" id="album-cover" onclick="navToAlbum(<%= track.getAlbum().getId() %>, true)">
             <p>
               <span class="track-title"><%= track.getTitle() %></span>
               <br>
@@ -80,15 +83,19 @@
     <h1>Discography</h1>
     <% for(AlbumBean a: artist.getAlbums()) { %>
     <div>
-      <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + a.getId() + ".jpg"%>"  alt="" onclick="navToAlbum(<%= a.getId() %>, true)">
+      <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + a.getId() + ".jpg"%>"  onerror="standby(this)" onclick="navToAlbum(<%= a.getId() %>, true)">
       <p>
-        <span class="title" onclick="navToAlbum(<%= a.getId() %>, true)"><%= a.getTitle() %></span>
+        <span class="title" onmouseover="slide(this)" onmouseout="slideBack(this)" onclick="navToAlbum(<%= a.getId() %>, true)"><%= a.getTitle() %></span>
         <br>
         <span class="info"><%= a.getYear() %> &#183 <%= a.getType() %></span>
       </p>
     </div>
     <% } %>
   </section>
+
+  <% if(((ProfileBean) session.getAttribute("Profile")).getRole() == ProfileBean.Role.USER) { %>
+    <jsp:include page="addtoplaylistmenu.jsp"></jsp:include>
+  <% } %>
 
   <script>checkFollowing(<%= artist.getId() %>, "artist")</script>
 

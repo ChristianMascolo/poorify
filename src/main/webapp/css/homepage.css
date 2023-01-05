@@ -17,6 +17,7 @@ section#homepage section h1 {
 section#homepage section.display-sections {
     overflow: scroll;
     scrollbar-width: none;
+    white-space: nowrap;
 }
 section#homepage section.display-sections::-webkit-scrollbar {
     display: none;
@@ -51,6 +52,15 @@ section#homepage section.display-sections div p span.title {
     color: #F6F4F1;
     font-size: 1em;
     cursor: pointer;
+
+    display: inline-block;
+    max-width: 100%;
+    overflow: scroll;
+    scrollbar-width: none;
+    white-space: nowrap;
+}
+section.display-sections div p span.title::-webkit-scrollbar {
+    display: none;
 }
 section#homepage section.display-sections div p span.host {
     font-size: 0.8em;

@@ -38,6 +38,15 @@ section#footer div.album div p span.track {
     color: #F6F4F1;
     font-size: 1em;
     cursor: pointer;
+
+    display: inline-block;
+    max-width: 100%;
+    overflow: scroll;
+    scrollbar-width: none;
+    white-space: nowrap;
+}
+section#footer div.album div p span.track::-webkit-scrollbar {
+    display: none;
 }
 section#footer div.album div p span.track:hover {
     text-decoration: underline;

@@ -105,3 +105,7 @@ function search(input) {
         $("#center").load("search.jsp");
     });
 }
+
+function standby(img) {
+    img.src = "https://poorifystorage.blob.core.windows.net/profile/0.jpg";
+}

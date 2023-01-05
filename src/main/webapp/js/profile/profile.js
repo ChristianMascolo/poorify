@@ -28,8 +28,8 @@ function hideProfileMenu() {
     menu.style.display = "none";
 }
 
-function deleteProfile() {
-    $.post("DeleteProfile", {}, function(data) {
+function deleteProfile(id) {
+    $.post("DeleteProfile", {id: String(id)}, function(data) {
 
     });
 }

@@ -10,7 +10,7 @@
 
   <section id="head">
     <div id="album-cover">
-      <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + album.getId() + ".jpg" %>" onclick="playAlbum(1)">
+      <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + album.getId() + ".jpg" %>" onerror="standby(this)" onclick="playAlbum(1)">
     </div>
     <div id="info">
       <p id="type-title">
@@ -18,7 +18,7 @@
         <span id="title" <% if(profile.getRole() != ProfileBean.Role.USER) { %> onclick="deleteAlbum(<%= album.getId() %>)" <% } %> ><%= album.getTitle()%></span>
       </p>
       <div id="artist-line">
-        <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + album.getArtist().getId() + ".jpg" %>" <% if(profile.getRole() != ProfileBean.Role.ARTIST) { %> onclick="navToArtist(<%= album.getArtist().getId()%>, true)" <% } %>>
+        <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + album.getArtist().getId() + ".jpg" %>" onerror="standby(this)" <% if(profile.getRole() != ProfileBean.Role.ARTIST) { %> onclick="navToArtist(<%= album.getArtist().getId()%>, true)" <% } %>>
         <p id="details">
           &nbsp
           <span id="info-part1"><span id="artist-alias" <% if(profile.getRole() != ProfileBean.Role.ARTIST) { %> onclick="navToArtist(<%= album.getArtist().getId()%>, true)" <% } %> ><%= album.getArtist().getAlias() %></span> &#183 <%= album.getYear()%> &#183 <%= album.getTracks()%> tracks, </span>

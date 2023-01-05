@@ -44,7 +44,7 @@ public class GetUser extends HttpServlet {
         try{
             user = (UserBean) profileDAO.get(id);
 
-            Collection<PlaylistBean> playlists = playlistDAO.getFromUser(id);
+            Collection<PlaylistBean> playlists = playlistDAO.getPublicFromUser(user.getId());
             for(PlaylistBean p: playlists)
                 p.setHost(profileDAO.getHostFromPlaylist(p.getId()));
             user.setPlaylists(playlists);

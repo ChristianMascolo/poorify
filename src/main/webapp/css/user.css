@@ -58,6 +58,7 @@ section#head div#info div#following-line span#info-part1 {
 section.display-sections {
     overflow: scroll;
     scrollbar-width: none;
+    white-space: nowrap;
 }
 section.display-sections::-webkit-scrollbar {
     display: none;
@@ -91,6 +92,15 @@ section.display-sections div p span.title {
     color: #F6F4F1;
     font-size: 1em;
     cursor: pointer;
+
+    display: inline-block;
+    max-width: 100%;
+    overflow: scroll;
+    scrollbar-width: none;
+    white-space: nowrap;
+}
+section.display-sections div p span.title::-webkit-scrollbar {
+    display: none;
 }
 section.display-sections div p span.info {
     font-size: 0.8em;

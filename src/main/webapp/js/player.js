@@ -2,6 +2,8 @@
 let slider = document.getElementById("time-slider");
 
 let audio = document.getElementById("audio");
+audio.onended = function() { skip(); };
+
 let currentTime = document.getElementById("currentTime");
 let totalTime = document.getElementById("totalTime");
 

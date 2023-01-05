@@ -19,7 +19,7 @@
 
     <section id="head">
         <div id="playlist-cover">
-            <img src="<%= "https://poorifystorage.blob.core.windows.net/playlist/" + playlist.getId() + ".jpg" %>" onclick="playPlaylist(0)">
+            <img src="<%= "https://poorifystorage.blob.core.windows.net/playlist/" + playlist.getId() + ".jpg" %>" onerror="standby(this)" onclick="playPlaylist(0)">
         </div>
         <div id="info">
             <p id="type-title">
@@ -33,11 +33,11 @@
                 </span>
             </p>
             <div id="user-line">
-                <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + playlist.getHost().getId() + ".jpg" %>" onclick="navToUser(<%= playlist.getHost().getId() %>, true)">
+                <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + playlist.getHost().getId() + ".jpg" %>" onerror="standby(this)" onclick="navToUser(<%= playlist.getHost().getId() %>, true)">
                 <% if(playlist.isCollaborative() && playlist.getGuests() != null) { %>
                 <% for(UserBean u: playlist.getGuests()) { %>
                     &nbsp
-                <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + u.getId() + ".jpg" %>" onclick="navToUser(<%= u.getId()%>, true)">
+                <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + u.getId() + ".jpg" %>" onerror="standby(this)" onclick="navToUser(<%= u.getId()%>, true)">
                 <% } %>
                 <% } %>
                 <p id="details">
@@ -94,7 +94,7 @@
                 </div>
 
                 <div class="title-artists">
-                    <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + added.getTrack().getAlbum().getId() + ".jpg" %>" alt="" id="album-cover" onclick="navToAlbum(<%= added.getTrack().getAlbum().getId() %>, true)">
+                    <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + added.getTrack().getAlbum().getId() + ".jpg" %>" onerror="standby(this)" id="album-cover" onclick="navToAlbum(<%= added.getTrack().getAlbum().getId() %>, true)">
                     <p>
                         <span class="track-title"><%= added.getTrack().getTitle() %></span>
                         <br>
@@ -113,7 +113,7 @@
 
                 <% if(playlist.isCollaborative()) { %>
                     <div class="added-by">
-                        <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + added.getUser().getId() + ".jpg" %>" onclick="navToUser(<%= added.getUser().getId() %>)">
+                        <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + added.getUser().getId() + ".jpg" %>" onerror="standby(this)" onclick="navToUser(<%= added.getUser().getId() %>)">
                         <span class="added-by-alias" onclick="<%= added.getUser().getId() %>"><%= added.getUser().getAlias() %></span>
                     </div>
                 <% } %>

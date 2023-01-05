@@ -59,7 +59,7 @@ public class GetPlaylist extends HttpServlet {
                 playlistDAO.updateLastAccess(playlist.getId());
 
             //RICERCA E COMPOSIZIONE DEI BRANI NELLA PLAYLIST
-            Collection<AddedBean> addedBeans = new TreeSet<>((AddedBean a, AddedBean b) -> a.getDate().compareTo(b.getDate()));
+            Collection<AddedBean> addedBeans = new TreeSet<>((AddedBean a, AddedBean b) -> a.getDate().compareTo(b.getDate()) != 0 ? a.getDate().compareTo(b.getDate()) : -1);
             Collection<AddedBeanProxy> addedBeanProxies = playlistDAO.getAdded(id);
             for(AddedBeanProxy proxy: addedBeanProxies) {
 
