@@ -1,29 +1,39 @@
 package profile;
 
+import album.AlbumBean;
 import album.AlbumDAO;
+import com.fasterxml.jackson.databind.DatabindException;
+import main.DateFormatter;
 import navigation.Navigator;
 import navigation.Page;
+import playlist.AddedBean;
 import playlist.PlaylistBean;
 import playlist.PlaylistDAO;
 import track.ListeningQueue;
+import track.TrackBean;
+import track.TrackDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.TreeSet;
 
 @WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
 
     private ProfileDAO profileDAO;
     private PlaylistDAO playlistDAO;
+    private TrackDAO trackDAO;
     private AlbumDAO albumDAO;
 
     public void init() throws ServletException {
         super.init();
         this.profileDAO = (ProfileDAO) super.getServletContext().getAttribute("ProfileDAO");
         this.playlistDAO = (PlaylistDAO) super.getServletContext().getAttribute("PlaylistDAO");
+        this.trackDAO = (TrackDAO) super.getServletContext().getAttribute("TrackDAO");
         this.albumDAO = (AlbumDAO) super.getServletContext().getAttribute("AlbumDAO");
     }
 
@@ -44,6 +54,7 @@ public class Login extends HttpServlet {
             password = (String) request.getAttribute("password");
 
         ProfileBean profile = null;
+        PlaylistBean feed = null;
 
         try {
             profile = profileDAO.get(email, password);
@@ -69,8 +80,39 @@ public class Login extends HttpServlet {
 
                 //UTENTI FOLLOWER
                 ((UserBean) profile).setFollowers(profileDAO.getFollowersFromUser(profile.getId()));
-            } else if(profile.getRole() == ProfileBean.Role.ARTIST) {
 
+                //FEED
+                UserBean poorify = (UserBean) profileDAO.get(1);
+                DateFormatter dateFormatter = new DateFormatter();
+
+                feed = new PlaylistBean();
+                feed.setId(-1);
+                feed.setHost(poorify);
+                feed.setTitle("Feed");
+
+                Collection<AddedBean> addedBeans = new TreeSet<>((AddedBean a, AddedBean b) -> a.getDate().compareTo(b.getDate()) != 0 ? a.getDate().compareTo(b.getDate()) : -1);
+                Collection<TrackBean> tracks = trackDAO.generateFeed(profile.getId());
+                for(TrackBean t: tracks) {
+                    AlbumBean album = albumDAO.getFromTrack(t.getId());
+                    album.setArtist(profileDAO.getFromAlbum(album.getId()));
+                    t.setAlbum(album);
+                    t.setFeaturing(profileDAO.getFeaturingFromTrack(t.getId()));
+
+                    AddedBean addedBean = new AddedBean();
+                    addedBean.setUser(poorify);
+                    addedBean.setPlaylist(feed);
+                    addedBean.setTrack(t);
+                    addedBean.setDate(dateFormatter.getCurrentDateAzureSQLFormat());
+
+                    addedBeans.add(addedBean);
+
+                    feed.setDuration(feed.getDuration() + t.getDuration());
+                }
+                feed.setTracks(tracks.size());
+                feed.setTracklist(addedBeans);
+
+
+            } else if(profile.getRole() == ProfileBean.Role.ARTIST) {
                 ((ArtistBean) profile).setAlbums(albumDAO.getFromArtist(profile.getId()));
             }
 
@@ -88,8 +130,14 @@ public class Login extends HttpServlet {
             navigator.setCurrent(new Page(0, Page.Type.HOME));
             session.setAttribute("Navigator", navigator);
 
-            //LISTENING QUEUE
-            session.setAttribute("ListeningQueue", new ListeningQueue());
+            if(profile.getRole() != ProfileBean.Role.ARTIST) {
+                //LISTENING QUEUE
+                session.setAttribute("ListeningQueue", new ListeningQueue());
+            }
+
+            if(profile.getRole() == ProfileBean.Role.USER) {
+                session.setAttribute("Feed", feed);
+            }
 
             request.getRequestDispatcher("home.jsp").forward(request, response);
         }

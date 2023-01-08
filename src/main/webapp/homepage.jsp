@@ -2,6 +2,7 @@
 <%@ page import="playlist.*" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="album.AlbumBean" %>
+<%@ page import="track.Play" %>
 
 <section id="homepage">
 
@@ -20,6 +21,19 @@
     <h1><%= greeting %></h1>
 
     <% if(user != null) { %>
+
+    <section class="display-sections" id="feed">
+        <h1>For You</h1>
+        <% PlaylistBean feed = (PlaylistBean) session.getAttribute("Feed"); %>
+        <div>
+            <img src="<%= "https://poorifystorage.blob.core.windows.net/playlist/-1.jpg"%>"  onerror="standby(this)" onclick="navToFeed(<% session.setAttribute("Playlist", feed); %>)">
+            <p>
+                <span class="title" onmouseover="slide(this)" onmouseout="slideBack(this)" onclick="navToFeed(<% session.setAttribute("Playlist", feed); %>)"><%= feed.getTitle() %></span>
+                <br>
+                <span class="host" onclick="navToUser(<%= feed.getHost().getId() %>)"><%= feed.getHost().getAlias() %></span>
+            </p>
+        </div>
+    </section>
 
     <section class="display-sections" id="playlist">
         <h1>Your Playlists</h1>

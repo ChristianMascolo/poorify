@@ -154,4 +154,68 @@ public class TrackDAO {
         return outcome;
     }
 
+    public Collection<TrackBean> generateFeed(int id) throws SQLException {
+        Collection<TrackBean> tracks = new ArrayList<>();
+
+        PreparedStatement plays = connection.prepareStatement("SELECT TOP 1 * FROM Plays p WHERE p.enduser = ?");
+        plays.setInt(1, id);
+        ResultSet rsPlays = plays.executeQuery();
+
+        if(rsPlays.next()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT TOP 25 t.id AS id, t.title AS title, t.track AS track, t.duration AS duration, t.plays AS plays, g.label AS genre " +
+                    "FROM Track t, Genre g " +
+                    "WHERE t.genre = g.id " +
+                    "AND t.genre IN ( " +
+                    "   SELECT TOP 10 g.id " +
+                    "   FROM Plays p, Track t, Genre g " +
+                    "   WHERE p.track = t.id AND t.genre = g.id AND p.enduser = ? " +
+                    "   ORDER BY p.time DESC " +
+                    "   ) " +
+                    "ORDER BY NEWID()");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+                tracks.add(resultToBean(rs));
+            rs.close();
+            stmt.close();
+        } else {
+            PreparedStatement stmt = connection.prepareStatement("SELECT TOP 25 t.id AS id, t.title AS title, t.track AS track, t.duration AS duration, t.plays AS plays, g.label AS genre " +
+                    "FROM Track t, Genre g " +
+                    "WHERE t.genre = g.id " +
+                    "AND t.genre IN ( " +
+                    "   SELECT TOP 10 g.id FROM Genre g " +
+                    "   ) " +
+                    "ORDER BY NEWID()");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+                tracks.add(resultToBean(rs));
+            rs.close();
+            stmt.close();
+        }
+
+        rsPlays.close();
+        plays.close();
+
+        return tracks;
+    }
+
+    public int shuffle(int id) throws SQLException {
+        int outcome = 0;
+        PreparedStatement stmt = connection.prepareStatement("SELECT TOP 1 t.id AS id " +
+                "FROM Track t " +
+                "WHERE t.genre IN (" +
+                "   SELECT TOP 1 t.genre " +
+                "   FROM Plays p, Track t" +
+                "   WHERE p.track = t.id AND p.enduser = ? " +
+                "   ORDER BY p.time DESC " +
+                ") ORDER BY NEWID()");
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next())
+            outcome = rs.getInt("id");
+        rs.close(); stmt.close();
+        return outcome;
+    }
+
 }

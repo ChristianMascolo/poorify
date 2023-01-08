@@ -17,4 +17,9 @@ public class DateFormatter {
         return to.format(ld);
     }
 
+    public String getCurrentDateAzureSQLFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.now().format(formatter);
+    }
+
 }
