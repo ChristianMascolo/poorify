@@ -16,8 +16,6 @@ function checkNations() {
 }
 
 function signup(type) {
-
-
     if (type == 'user') {
 
     } else {
@@ -27,7 +25,7 @@ function signup(type) {
 
 function validateEmail(field) {
     let div = field.parentElement;
-    div.children[2].innerHTML = "";
+    div.children[1].innerHTML = "";
 
     let email = field.value.trim();
     let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -35,14 +33,14 @@ function validateEmail(field) {
         return true;
     }
     else {
-        div.children[2].innerHTML = "Invalid email format!";
+        div.children[1].innerHTML = "Invalid email format!";
         return false;
     }
 }
 
 function validatePassword(field) {
     let div = field.parentElement;
-    div.children[2].innerHTML = "";
+    div.children[1].innerHTML = "";
 
     let password = field.value.trim();
     let regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
@@ -50,28 +48,28 @@ function validatePassword(field) {
         return true;
     }
     else {
-        div.children[2].innerHTML = "Invalid password format!";
+        div.children[1].innerHTML = "Invalid password format!";
         return false;
     }
 }
 
 function validateAlias(field) {
     let div = field.parentElement;
-    div.children[2].innerHTML = "";
+    div.children[1].innerHTML = "";
 
     let alias = field.value.trim();
     if(alias.length >= 10) {
         return true;
     }
     else {
-        div.children[2].innerHTML = "Alias should be at least 10 characters long!";
+        div.children[1].innerHTML = "Alias should be at least 10 characters long!";
         return false;
     }
 }
 
 function validatePicture(field) {
     let div = field.parentElement;
-    div.children[3].innerHTML = "";
+    div.children[2].innerHTML = "";
 
     let file = field.files[0];
     let img = new Image();
@@ -81,7 +79,7 @@ function validatePicture(field) {
         if(this.width >= 500 && this.height >= 500) {
             return true;
         } else {
-            div.children[3].innerHTML = "Picture should be at least 500x500!";
+            div.children[2].innerHTML = "Picture should be at least 500x500!";
             return false;
         }
     };
@@ -90,14 +88,14 @@ function validatePicture(field) {
 
 function validateBirthdate(field) {
     let div = field.parentElement;
-    div.children[2].innerHTML = "";
+    div.children[1].innerHTML = "";
 
     let birthdate = field.value.trim();
     if(birthdate != "") {
         return true;
     }
     else {
-        div.children[2].innerHTML = "Enter your birthdate!";
+        div.children[1].innerHTML = "Enter your birthdate!";
         return false;
     }
 }

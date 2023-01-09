@@ -1,66 +1,123 @@
-/*body{
-    background-color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
+@font-face {
+    font-family: "GothamBlack";
+    src: url("../fonts/GothamBlack.otf") format("opentype");
 }
 
-section.form form#login-form {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-}
-section.form form#login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: black;
-    width: 355px;
-    height: 320px;
-    padding: 35px;
-
+@font-face {
+    font-family: "GothamBook";
+    src: url("../fonts/GothamBook.otf") format("opentype");
 }
 
-section.form div.submit input[type="button"] {
-    display: block;
-    background: #101010;
-    font-size: 40px;
-    align-items: center;
+@font-face {
+    font-family: "GothamLight";
+    src: url("../fonts/GothamLight.otf") format("opentype");
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+div#container {
+    max-width: 100%;
     width: 100%;
-    flex-direction: column;
+    min-height: 100vh;
 
+    font-family: GothamBook, sans-serif;
+    font-size: 0.8em;
+    color: #060606;
 }
 
-section.form input::placeholder{
+div#container img {
+    width: 100%;
+    position: absolute;
+    object-fit: cover;
+    z-index: -1;
+}
+
+div#container div {
+    max-width: 100%;
+    padding: 2%;
+}
+
+section {
+    max-width: 40%;
+    margin: auto;
+    padding: 1%;
+
+    background-color: rgba(42, 42, 42, 0.8);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+}
+
+section h2, section h3 {
+    font-family: GothamBlack, sans-serif;
+    font-size: 5em;
     color: #F6F4F1;
-    font-size: 14px;
-}*/
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
 
-
-
-
-/*.submit {
-display: flex;
-width: 100%;
-flex-direction: column;
-
+    margin-bottom: 5%;
 }
-.box{
-margin-top: 10px;
-background-color: black;
-border: none;
-height: 45px;
-outline: none;
-border-radius: 8px;
-}*/
-
-body {
-
-    background-color: #222D32;
-    font-family: 'Roboto', sans-serif;
+section h3 {
+    font-size: 1em;
 }
 
+input, label, select, option {
+    max-width: 100%;
+    width: 100%;
 
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 2% 1%;
+
+    outline: none;
+    border: none;
+
+    background-color: rgba(168, 168, 168, 0.4);
+
+    color: #AFAFAF;
+}
+label {
+    display: block;
+}
+
+input[type=button], input[type=submit] {
+    background-color: rgba(6, 6, 6, 0.4);
+    border-radius: 12px;
+    text-transform: uppercase;
+}
+
+input[type=file] {
+    display: none;
+}
+
+div.error p {
+    line-height: 1.5;
+}
+
+hr {
+    height: 1px;
+    background-color: rgba(6, 6, 6, 0.4);
+    border: none;
+}
+
+div.redirect p {
+    line-height: 1.5;
+}
+
+div.redirect p a:link, div.redirect p a:active, div.redirect p a:hover {
+    color: #00B0B0;
+}
+div.redirect p a:active {
+    color: #060606;
+}
+
+
+/*
 .login-box {
     margin-top: 75px;
     height: auto;
@@ -183,3 +240,4 @@ label {
 .loginbttm {
     padding: 0px;
 }
+*/

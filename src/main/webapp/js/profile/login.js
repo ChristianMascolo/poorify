@@ -2,9 +2,9 @@
 
 function login() {
 
-    let email = document.getElementById("email").children[1].value;
+    let email = document.getElementById("email").children[0].value;
     //let password = btoa(document.getElementById("password").children[1].value); //Base64
-    let password = document.getElementById("password").children[1].value;
+    let password = document.getElementById("password").children[0].value;
 
     $.post("CheckCredentials", {email: email, password: password}, function(data){
         let outcome = data.outcome[0];

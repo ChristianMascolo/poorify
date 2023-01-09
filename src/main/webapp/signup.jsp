@@ -2,49 +2,51 @@
 <html>
 <head>
   <title>Poorify | Sign Up</title>
+  <link rel="stylesheet" href="css/index.css" type="text/css">
 </head>
 <body>
+
+<div id="container">
+  <img src="images/sfondo_index.jpg">
+
+  <div>
   <section class="form">
 
-    <h2>SIGN UP</h2>
+    <h3>SIGN UP</h3>
 
     <form action="Signup" method="post" enctype="multipart/form-data" onsubmit="return signup('user')">
       <input type="hidden" name="type" value="user">
 
       <div id="email" class="box">
-        <p>Email address</p>
         <input type="email" name="email" placeholder="Email address" required onblur="validateEmail(this)">
         <p class="error"></p>
       </div>
+
       <div id="password" class="box">
-        <p>Password</p>
         <input type="password" name="password" placeholder="Password" required onblur="validatePassword(this)">
         <p class="error"></p>
       </div>
+
       <div id="alias" class="box">
-        <p>Alias</p>
         <input type="text" name="alias" placeholder="Alias" required onblur="validateAlias(this)">
         <p class="error"></p>
       </div>
+
       <div id="picture" class="box">
-        <p>Profile picture</p>
         <input id="picture-input" type="file" accept="image/jpeg" name="picture" onchange="validatePicture(this)">
-        <label for="picture-input"><span>Profile picture</span></label>
+        <label for="picture-input"><span>Upload profile picture</span></label>
         <p class="error"></p>
       </div>
 
       <div id="birthdate" class="box">
-        <p>Birthdate</p>
-        <input type="date" name="birthdate" placeholder="Birthdate" required onblur="validateBirthdate(this)">
+        <input type="date" name="birthdate" required onblur="validateBirthdate(this)">
         <p class="error"></p>
       </div>
 
       <div id="nation" class="box">
-        <p>Nation</p>
-          <select name="nation" required>
-            <!-- FILLED BY JAVASCRIPT -->
-          </select>
-        <p class="error"></p>
+        <select name="nation" required>
+          <!-- FILLED BY JAVASCRIPT -->
+        </select>
       </div>
 
       <div class="submit">
@@ -58,11 +60,16 @@
     </div>
 
     <div class="redirect">
-      <p>Already have an account?</p>
-      <a href="index.jsp">LOGIN</a> <br>
+      <p>
+        <span>Already have an account?</span> <br>
+        <a href="index.jsp">LOGIN</a> <br>
+      </p>
     </div>
 
   </section>
+  </div>
+
+</div>
 
 <script src="webjars/jquery/3.5.1/dist/jquery.js"></script>
 <script src="js/profile/signup.js"></script>
