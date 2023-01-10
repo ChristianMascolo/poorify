@@ -17,9 +17,9 @@ import java.util.Collection;
 @WebServlet(name = "GetUser", value = "/GetUser")
 public class GetUser extends HttpServlet {
 
-    private ProfileDAO profileDAO;
-    private PlaylistDAO playlistDAO;
-    private AlbumDAO albumDAO;
+    public ProfileDAO profileDAO;
+    public PlaylistDAO playlistDAO;
+    public AlbumDAO albumDAO;
 
     public void init() throws ServletException {
         super.init();

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 @WebServlet(name = "CheckCredentials", value = "/CheckCredentials")
 public class CheckCredentials extends HttpServlet {
 
-    private ProfileDAO profileDAO;
+    public ProfileDAO profileDAO;
 
     public void init() throws ServletException {
         super.init();
