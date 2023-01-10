@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(name = "DeleteAlbum", value = "/DeleteAlbum")
 public class DeleteAlbum extends HttpServlet {
 
-    private AlbumDAO albumDAO;
+    public AlbumDAO albumDAO;
 
     @Override
     public void init() throws ServletException {

@@ -16,8 +16,8 @@ import java.sql.SQLException;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 3, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 100)
 public class UploadAlbum extends HttpServlet {
 
-    private AlbumDAO albumDAO;
-    private TrackDAO trackDAO;
+    public  AlbumDAO albumDAO;
+    public  TrackDAO trackDAO;
 
     @Override
     public void init() throws ServletException {

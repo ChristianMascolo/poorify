@@ -20,9 +20,9 @@ import java.util.List;
 @WebServlet(name = "GetAlbum", value = "/GetAlbum")
 public class GetAlbum extends HttpServlet {
 
-    private AlbumDAO albumDAO;
-    private ProfileDAO profileDAO;
-    private TrackDAO trackDAO;
+    public AlbumDAO albumDAO;
+    public ProfileDAO profileDAO;
+    public TrackDAO trackDAO;
 
     public void init() throws ServletException {
         super.init();
