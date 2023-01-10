@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "DeletePlaylist", value = "/DeletePlaylist")
 public class DeletePlaylist extends HttpServlet {
-    private PlaylistDAO playlistDAO;
+    public PlaylistDAO playlistDAO;
 
     @Override
     public void init() throws ServletException {

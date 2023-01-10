@@ -13,7 +13,7 @@ import java.sql.SQLException;
 @WebServlet(name = "MakePublic", value = "/MakePublic")
 public class MakePublic extends HttpServlet {
 
-    private PlaylistDAO playlistDAO;
+    public PlaylistDAO playlistDAO;
 
     @Override
     public void init() throws ServletException {

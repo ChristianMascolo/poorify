@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "MakeSingle", value = "/MakeSingle")
 public class MakeSingle extends HttpServlet {
-    private PlaylistDAO playlistDAO;
+    public PlaylistDAO playlistDAO;
 
     @Override
     public void init() throws ServletException {
