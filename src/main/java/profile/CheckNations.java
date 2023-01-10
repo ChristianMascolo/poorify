@@ -11,7 +11,7 @@ import java.util.Collection;
 @WebServlet(name = "CheckNations", value = "/CheckNations")
 public class CheckNations extends HttpServlet {
 
-    private ProfileDAO profileDAO;
+    public ProfileDAO profileDAO;
 
     public void init() throws ServletException {
         super.init();

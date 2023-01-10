@@ -15,7 +15,7 @@ import java.io.IOException;
 @WebServlet(name = "Skip", value = "/Skip")
 public class Skip extends HttpServlet {
 
-    private TrackDAO trackDAO;
+    public TrackDAO trackDAO;
 
     public void init() throws ServletException {
         super.init();
