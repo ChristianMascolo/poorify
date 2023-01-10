@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "MakeCollaborative", value = "/MakeCollaborative")
 public class MakeCollaborative extends HttpServlet {
-    private PlaylistDAO playlistDAO;
+    public PlaylistDAO playlistDAO;
 
     @Override
     public void init() throws ServletException {
