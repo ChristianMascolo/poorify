@@ -24,10 +24,10 @@ import java.util.TreeSet;
 @WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
 
-    private ProfileDAO profileDAO;
-    private PlaylistDAO playlistDAO;
-    private TrackDAO trackDAO;
-    private AlbumDAO albumDAO;
+    public ProfileDAO profileDAO;
+    public PlaylistDAO playlistDAO;
+    public TrackDAO trackDAO;
+    public AlbumDAO albumDAO;
 
     public void init() throws ServletException {
         super.init();
@@ -47,6 +47,7 @@ public class Login extends HttpServlet {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+
 
         if(email == null)
             email = (String) request.getAttribute("email");

@@ -16,9 +16,9 @@ import java.util.Collection;
 @WebServlet(name = "Play", value = "/Play")
 public class Play extends HttpServlet {
 
-    private TrackDAO trackDAO;
-    private AlbumDAO albumDAO;
-    private ProfileDAO profileDAO;
+    public TrackDAO trackDAO;
+    public AlbumDAO albumDAO;
+    public ProfileDAO profileDAO;
 
     public void init() throws ServletException {
         super.init();
