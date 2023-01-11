@@ -1,6 +1,8 @@
 package profile;
 
-import org.junit.Test;
+
+
+import org.junit.jupiter.api.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +40,7 @@ class FollowArtistTest {
         ProfileDAO profileDAO = mock(ProfileDAO.class);
         UserBean userBean = mock(UserBean.class);
         when(userBean.getArtists()).thenReturn(new ArrayList<>());
-        when(session.getAttribute("Profilw")).thenReturn(userBean);
+        when(session.getAttribute("Profile")).thenReturn(userBean);
 
         FollowArtist followArtist = new FollowArtist();
         followArtist.profileDAO = profileDAO;
