@@ -11,7 +11,8 @@ import java.sql.SQLException;
 
 @WebServlet(name = "RemoveTrack", value = "/RemoveTrack")
 public class RemoveTrack extends HttpServlet {
-    private PlaylistDAO playlistDAO;
+    public PlaylistDAO playlistDAO;
+
     @Override
     public void init() throws ServletException {
         super.init();
