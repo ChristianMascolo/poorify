@@ -113,5 +113,5 @@ function search(input) {
 }
 
 function standby(img) {
-    img.src = "https://poorifystorage.blob.core.windows.net/profile/0.jpg";
+    img.src = "files/0.jpg";
 }

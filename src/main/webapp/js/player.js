@@ -15,7 +15,7 @@ function play(trackId) {
 
         //UPDATE ALBUM COVER
         let album = document.getElementById("album-footer");
-        album.src = "https://poorifystorage.blob.core.windows.net/album/" + data.albumID[0] + ".jpg";
+        album.src = "files/album/" + data.albumID[0] + ".jpg";
         album.onclick = function() { navToAlbum(data.albumID[0], true); };
 
         //UPDATE SONG TITLE
@@ -52,7 +52,7 @@ function play(trackId) {
 
         //LOAD AUDIO TRACK FROM AZURE
         audio.pause();
-        audio.src = "https://poorifystorage.blob.core.windows.net/track/" + data.trackID[0] + ".mp3";
+        audio.src = "files/track/" + data.trackID[0] + ".mp3";
         audio.load();
 
         //UPDATE SLIDER

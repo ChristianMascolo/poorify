@@ -65,7 +65,7 @@ public class TrackDAO {
         Collection<TrackBean> tracks = new TreeSet<>(comparator);
 
         PreparedStatement statement = connection.prepareStatement(" " +
-                " SELECT TOP 5 * FROM (" +
+                " SELECT * FROM (" +
                     " SELECT t.id AS id, t.title AS title, t.track AS track, t.duration AS duration, t.plays AS plays, g.label AS genre " +
                     " FROM Artist ar, Album al, Track t, Genre g " +
                     " WHERE ar.profile = al.artist AND al.id = t.album AND t.genre = g.id " +
@@ -76,7 +76,8 @@ public class TrackDAO {
                     " WHERE ar.profile = f.artist AND f.track = t.id AND t.genre = g.id" +
                     " AND ar.profile = ?" +
                 " ) AS temp" +
-                " ORDER BY plays DESC");
+                " ORDER BY plays DESC " +
+                " LIMIT 5 ");
         statement.setInt(1, id);
         statement.setInt(2, id);
 
@@ -110,10 +111,11 @@ public class TrackDAO {
     public Collection<TrackBean> searchTracksByTitle(String search) throws SQLException {
         Collection<TrackBean> tracks = new TreeSet<>((TrackBean a, TrackBean b) -> a.getTitle().compareTo(b.getTitle()));
         PreparedStatement stmt = connection.prepareStatement("" +
-                "SELECT TOP 10 t.id AS id, t.title AS title, t.track AS track, t.duration AS duration, t.plays AS plays, g.label AS genre " +
+                "SELECT t.id AS id, t.title AS title, t.track AS track, t.duration AS duration, t.plays AS plays, g.label AS genre " +
                 "FROM Track t, Genre g " +
                 "WHERE t.genre = g.id " +
-                "AND t.title LIKE ?");
+                "AND t.title LIKE ? " +
+                "LIMIT 10 ");
         search = '%' + search +  '%';
         stmt.setString(1, search);
 
@@ -157,21 +159,23 @@ public class TrackDAO {
     public Collection<TrackBean> generateFeed(int id) throws SQLException {
         Collection<TrackBean> tracks = new ArrayList<>();
 
-        PreparedStatement plays = connection.prepareStatement("SELECT TOP 1 * FROM Plays p WHERE p.enduser = ?");
+        PreparedStatement plays = connection.prepareStatement("SELECT * FROM Plays p WHERE p.enduser = ? LIMIT 1");
         plays.setInt(1, id);
         ResultSet rsPlays = plays.executeQuery();
 
         if(rsPlays.next()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT TOP 25 t.id AS id, t.title AS title, t.track AS track, t.duration AS duration, t.plays AS plays, g.label AS genre " +
+            PreparedStatement stmt = connection.prepareStatement("SELECT t.id AS id, t.title AS title, t.track AS track, t.duration AS duration, t.plays AS plays, g.label AS genre " +
                     "FROM Track t, Genre g " +
                     "WHERE t.genre = g.id " +
                     "AND t.genre IN ( " +
-                    "   SELECT TOP 10 g.id " +
+                    "   SELECT g.id " +
                     "   FROM Plays p, Track t, Genre g " +
                     "   WHERE p.track = t.id AND t.genre = g.id AND p.enduser = ? " +
                     "   ORDER BY p.time DESC " +
+                    "  " +
                     "   ) " +
-                    "ORDER BY NEWID()");
+                    "ORDER BY RAND() " +
+                    "LIMIT 25 ");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
@@ -179,14 +183,14 @@ public class TrackDAO {
             rs.close();
             stmt.close();
         } else {
-            PreparedStatement stmt = connection.prepareStatement("SELECT TOP 25 t.id AS id, t.title AS title, t.track AS track, t.duration AS duration, t.plays AS plays, g.label AS genre " +
+            PreparedStatement stmt = connection.prepareStatement("SELECT t.id AS id, t.title AS title, t.track AS track, t.duration AS duration, t.plays AS plays, g.label AS genre " +
                     "FROM Track t, Genre g " +
                     "WHERE t.genre = g.id " +
                     "AND t.genre IN ( " +
-                    "   SELECT TOP 10 g.id FROM Genre g " +
+                    "   SELECT g.id FROM Genre g " +
                     "   ) " +
-                    "ORDER BY NEWID()");
-            stmt.setInt(1, id);
+                    "ORDER BY RAND() " +
+                    "LIMIT 25 ");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
                 tracks.add(resultToBean(rs));
@@ -202,14 +206,16 @@ public class TrackDAO {
 
     public int shuffle(int id) throws SQLException {
         int outcome = 0;
-        PreparedStatement stmt = connection.prepareStatement("SELECT TOP 1 t.id AS id " +
+        PreparedStatement stmt = connection.prepareStatement("SELECT t.id AS id " +
                 "FROM Track t " +
                 "WHERE t.genre IN (" +
-                "   SELECT TOP 1 t.genre " +
+                "   SELECT t.genre " +
                 "   FROM Plays p, Track t" +
                 "   WHERE p.track = t.id AND p.enduser = ? " +
-                "   ORDER BY p.time DESC " +
-                ") ORDER BY NEWID()");
+                "   ORDER BY p.time DESC" +
+                "   LIMIT 1 " +
+                ") ORDER BY NEWID() " +
+                "LIMIT 1 ");
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
         if(rs.next())

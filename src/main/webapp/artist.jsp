@@ -11,7 +11,7 @@
 
   <section id="head">
     <div id="artist-cover">
-      <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + artist.getId() + ".jpg" %>" onerror="standby(this)" onclick="follow(<%= artist.getId() %>, 'artist')">
+      <img src="<%="files/profile/" + artist.getId() + ".jpg"%>" onerror="standby(this)" onclick="follow(<%= artist.getId() %>, 'artist')">
     </div>
     <div id="info">
       <p id="type-title">
@@ -39,7 +39,7 @@
           </div>
 
           <div class="title-artists">
-            <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + track.getAlbum().getId() + ".jpg" %>" onerror="standby(this)" id="album-cover" onclick="navToAlbum(<%= track.getAlbum().getId() %>, true)">
+            <img src="<%="files/album/" + track.getAlbum().getId() + ".jpg"%>" onerror="standby(this)" id="album-cover" onclick="navToAlbum(<%= track.getAlbum().getId() %>, true)">
             <p>
               <span class="track-title"><%= track.getTitle() %></span>
               <br>
@@ -83,7 +83,7 @@
     <h1>Discography</h1>
     <% for(AlbumBean a: artist.getAlbums()) { %>
     <div>
-      <img src="<%= "https://poorifystorage.blob.core.windows.net/album/" + a.getId() + ".jpg"%>"  onerror="standby(this)" onclick="navToAlbum(<%= a.getId() %>, true)">
+      <img src="<%="files/album/" + a.getId() + ".jpg"%>"  onerror="standby(this)" onclick="navToAlbum(<%= a.getId() %>, true)">
       <p>
         <span class="title" onmouseover="slide(this)" onmouseout="slideBack(this)" onclick="navToAlbum(<%= a.getId() %>, true)"><%= a.getTitle() %></span>
         <br>

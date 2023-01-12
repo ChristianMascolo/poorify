@@ -79,11 +79,10 @@ public class Signup extends HttpServlet {
 
                 profile = profileDAO.get(email, password);
                 Part part = request.getPart("picture");
-                String filename = profile.getId() + ".jpg";
-                String localpath = getServletContext().getRealPath(filename);
 
+                String filename = "profile/" + profile.getId() + ".jpg";
                 Uploader uploader = (Uploader) request.getServletContext().getAttribute("Uploader");
-                uploader.upload(part.getInputStream(), Uploader.Container.PROFILE, localpath, filename);
+                uploader.upload(part.getInputStream(), filename);
 
                 //REDIRECT TO LOGIN
                 request.setAttribute("email", profile.getEmail());

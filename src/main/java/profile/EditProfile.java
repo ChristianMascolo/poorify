@@ -42,10 +42,9 @@ public class EditProfile extends HttpServlet {
         try {
 
             if(part.getSize() > 0) {
-                String filename = id + ".jpg";
-                String localpath = getServletContext().getRealPath(filename);
+                String filename = "profile/" + id + ".jpg";
                 Uploader uploader = (Uploader) request.getServletContext().getAttribute("Uploader");
-                uploader.upload(part.getInputStream(), Uploader.Container.PROFILE, localpath, filename);
+                uploader.upload(part.getInputStream(), filename);
             }
 
             if(profile.getRole() == ProfileBean.Role.USER) {

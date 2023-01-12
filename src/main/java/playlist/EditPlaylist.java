@@ -42,10 +42,9 @@ public class EditPlaylist extends HttpServlet {
         try {
 
             if(part.getSize() > 0) {
-                String filename = id + ".jpg";
-                String localpath = getServletContext().getRealPath(filename);
+                String filename = "playlist/" + id + ".jpg";
                 Uploader uploader = (Uploader) request.getServletContext().getAttribute("Uploader");
-                uploader.upload(part.getInputStream(), Uploader.Container.PLAYLIST, localpath, filename);
+                uploader.upload(part.getInputStream(), filename);
             }
 
             PlaylistBean playlist = playlistDAO.get(id);

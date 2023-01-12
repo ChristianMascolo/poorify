@@ -47,14 +47,14 @@
         <% if(user != null) { %>
             <div class="profile" onclick="showProfileMenu()">
                 <button>
-                    <img class="profile-picture" src=<%= "https://poorifystorage.blob.core.windows.net/profile/" + user.getId() + ".jpg"%> onerror="standby(this)">
+                    <img class="profile-picture" src="<%="files/profile/" + user.getId() + ".jpg"%>" onerror="standby(this)">
                 </button>
                 <p><%= user.getAlias() %></p>
             </div>
         <% } else if(artist != null) { %>
             <div class="profile" onclick="showProfileMenu()">
                 <button>
-                    <img class="profile-picture" src=<%= "https://poorifystorage.blob.core.windows.net/profile/" + artist.getId() + ".jpg"%> onerror="standby(this)">
+                    <img class="profile-picture" src="<%="files/profile/" + artist.getId() + ".jpg"%>" onerror="standby(this)">
                 </button>
                 <p><%= artist.getAlias() %></p>
             </div>

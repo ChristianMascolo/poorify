@@ -10,7 +10,7 @@
 
     <section id="head">
         <div id="user-cover">
-            <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + user.getId() + ".jpg" %>" onerror="standby(this)" <% if(user.isPublic()) { %> onclick="follow(<%= user.getId() %>, 'user')" <% } %>>
+            <img src="<%= "files/profile/" + user.getId() + ".jpg" %>" onerror="standby(this)" <% if(user.isPublic()) { %> onclick="follow(<%= user.getId() %>, 'user')" <% } %>>
         </div>
         <div id="info">
             <p id="type-title">
@@ -30,7 +30,7 @@
         <% for(PlaylistBean p: user.getPlaylists()) { %>
         <% if(p.isPublic()) { %>
         <div>
-            <img src="<%= "https://poorifystorage.blob.core.windows.net/playlist/" + p.getId() + ".jpg"%>" onerror="standby(this)" onclick="navToPlaylist(<%= p.getId() %>, true)">
+            <img src="<%= "files/playlist/" + p.getId() + ".jpg"%>" onerror="standby(this)" onclick="navToPlaylist(<%= p.getId() %>, true)">
             <p>
                 <span class="title" onmouseover="slide(this)" onmouseout="slideBack(this)" onclick="navToPlaylist(<%= p.getId() %>, true)"><%= p.getTitle() %></span>
                 <br>
@@ -45,7 +45,7 @@
         <h1>Favorite Artists</h1>
         <% for(ArtistBean a: user.getArtists()) { %>
         <div>
-            <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + a.getId() + ".jpg"%>" onerror="standby(this)" onclick="navToArtist(<%= a.getId() %>, true)">
+            <img src="<%= "files/profile/" + a.getId() + ".jpg"%>" onerror="standby(this)" onclick="navToArtist(<%= a.getId() %>, true)">
             <p>
                 <span class="title" onmouseover="slide(this)" onmouseout="slideBack(this)" onclick="navToArtist(<%= a.getId() %>, true)"><%= a.getAlias() %></span>
                 <br>
@@ -59,7 +59,7 @@
         <h1>Followers</h1>
         <% for(UserBean u: user.getFollowers()) { %>
         <div>
-            <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + u.getId() + ".jpg"%>" onerror="standby(this)" onclick="navToUser(<%= u.getId() %>, true)">
+            <img src="<%= "files/profile/" + u.getId() + ".jpg"%>" onerror="standby(this)" onclick="navToUser(<%= u.getId() %>, true)">
             <p>
                 <span class="title" onmouseover="slide(this)" onmouseout="slideBack(this)" onclick="navToUser(<%= u.getId() %>, true)"><%= u.getAlias() %></span>
                 <br>
@@ -73,7 +73,7 @@
         <h1>Following</h1>
         <% for(UserBean u: user.getFollowing()) { %>
         <div>
-            <img src="<%= "https://poorifystorage.blob.core.windows.net/profile/" + u.getId() + ".jpg"%>" onerror="standby(this)" onclick="navToUser(<%= u.getId() %>, true)">
+            <img src="<%= "files/profile/" + u.getId() + ".jpg"%>" onerror="standby(this)" onclick="navToUser(<%= u.getId() %>, true)">
             <p>
                 <span class="title" onmouseover="slide(this)" onmouseout="slideBack(this)" onclick="navToUser(<%= u.getId() %>, true)"><%= u.getAlias() %></span>
                 <br>

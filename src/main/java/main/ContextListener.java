@@ -5,9 +5,12 @@ import playlist.PlaylistDAO;
 import profile.ProfileDAO;
 import track.TrackDAO;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
@@ -21,6 +24,7 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
 
     }
 
+    /*
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
@@ -55,6 +59,45 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+     */
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+
+        try {
+            //PROPERTIES
+            Properties properties = new Properties();
+            properties.load(ContextListener.class.getClassLoader().getResourceAsStream("application.properties"));
+            sce.getServletContext().setAttribute("Properties", properties);
+            
+            //CREATE UTIL CLASSES
+            Uploader uploader = new Uploader();
+            sce.getServletContext().setAttribute("Uploader", uploader);
+
+            //DATASOURCE
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/PoorifyDB");
+            connection = ds.getConnection();
+
+            //CREATE DAOs
+            ProfileDAO profileDAO = new ProfileDAO(connection);
+            sce.getServletContext().setAttribute("ProfileDAO", profileDAO);
+
+            AlbumDAO albumDAO = new AlbumDAO(connection);
+            sce.getServletContext().setAttribute("AlbumDAO", albumDAO);
+
+            TrackDAO trackDAO = new TrackDAO(connection);
+            sce.getServletContext().setAttribute("TrackDAO", trackDAO);
+
+            PlaylistDAO playlistDAO = new PlaylistDAO(connection);
+            sce.getServletContext().setAttribute("PlaylistDAO", playlistDAO);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

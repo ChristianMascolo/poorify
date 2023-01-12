@@ -9,7 +9,7 @@
         <% for(PlaylistBean p: playlists) { %>
             <div class="playlist" onclick="addTrackToPlaylist(<%= p.getId() %>)">
                 <div>
-                    <img src="<%= "https://poorifystorage.blob.core.windows.net/playlist/" + p.getId() + ".jpg"%>" onerror="standby(this)">
+                    <img src="<%= "files/playlist/" + p.getId() + ".jpg"%>" onerror="standby(this)">
                     <span><%= p.getTitle() %></span>
                 </div>
             </div>

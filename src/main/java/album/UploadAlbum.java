@@ -49,10 +49,9 @@ public class UploadAlbum extends HttpServlet {
             albumDAO.add(artist.getId(), title, tracks, duration, year, type);
             int album_id = albumDAO.get(artist.getId(), title);
 
-            String filename = album_id + ".jpg";
-            String localpath = getServletContext().getRealPath(filename);
+            String filename = "album/" + album_id + ".jpg";
             Uploader uploader = (Uploader) request.getServletContext().getAttribute("Uploader");
-            uploader.upload(cover.getInputStream(), Uploader.Container.ALBUM, localpath, filename);
+            uploader.upload(cover.getInputStream(), filename);
 
             for(int i = 0; i < tracks; i++) {
                 String track_title = request.getParameter("title-" + (i + 1));
@@ -63,9 +62,8 @@ public class UploadAlbum extends HttpServlet {
                 int track_id = trackDAO.get(album_id, track_title);
 
                 Part audio = request.getPart("edit-audio-track-" + (i + 1));
-                filename = track_id + ".mp3";
-                localpath = getServletContext().getRealPath(filename);
-                uploader.upload(audio.getInputStream(), Uploader.Container.TRACK, localpath, filename);
+                filename = "track/" + track_id + ".mp3";
+                uploader.upload(audio.getInputStream(), filename);
             }
             
         } catch (Exception e) {

@@ -15,19 +15,9 @@ public class Uploader {
 
     public enum Container {ALBUM, PLAYLIST, PROFILE, TRACK};
 
-    private String connection;
-    private String[] containers;
+    public Uploader() {}
 
-    public Uploader(Properties properties) {
-        this.connection = properties.getProperty("connectionString");
-        this.containers = new String[]{
-            properties.getProperty("blobForAlbum"),
-            properties.getProperty("blobForPlaylist"),
-            properties.getProperty("blobForProfile"),
-            properties.getProperty("blobForTrack")
-        };
-    }
-
+    /*
     public void upload(InputStream in, Container container, String localPath, String remoteFilename) throws IOException {
 
         //SAVE FILE ON LOCAL SERVER
@@ -51,6 +41,19 @@ public class Uploader {
 
         //DELETE LOCAL TEMP FILE
         file.delete();
+    }
+     */
+
+    public void upload(InputStream in, String path) throws IOException {
+
+        File file = new File("C:/files/" + path);
+        OutputStream out = new FileOutputStream(file);
+        byte[] buffer = new byte[4096];
+        while(in.read(buffer) >= 0)
+            out.write(buffer);
+        out.close();
+        in.close();
+
     }
 
 }
