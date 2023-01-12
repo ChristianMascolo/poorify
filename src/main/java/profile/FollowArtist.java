@@ -11,7 +11,7 @@ import java.sql.SQLException;
 @WebServlet(name = "FollowArtist", value = "/FollowArtist")
 public class FollowArtist extends HttpServlet {
 
-    private ProfileDAO profileDAO;
+    public ProfileDAO profileDAO;
 
     @Override
     public void init() throws ServletException {
