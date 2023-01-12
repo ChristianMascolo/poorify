@@ -11,7 +11,7 @@ import java.util.Collection;
 @WebServlet(name = "SearchForGuests", value = "/SearchForGuests")
 public class SearchForGuests extends HttpServlet {
 
-    private ProfileDAO profileDAO;
+    public ProfileDAO profileDAO;
 
     @Override
     public void init() throws ServletException {

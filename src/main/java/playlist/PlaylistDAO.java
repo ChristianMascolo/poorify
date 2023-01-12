@@ -44,7 +44,7 @@ public class PlaylistDAO {
 
     public int getLastFromUser(int user) throws SQLException {
         int id = 0;
-        PreparedStatement stmt = connection.prepareStatement("SELECT TOP 1 p.id AS id FROM Playlist p WHERE p.enduser = ? ORDER BY p.id DESC");
+        PreparedStatement stmt = connection.prepareStatement("SELECT p.id AS id FROM Playlist p WHERE p.enduser = ? ORDER BY p.id DESC LIMIT 1");
         stmt.setInt(1, user);
         ResultSet rs = stmt.executeQuery();
         if(rs.next())
@@ -413,10 +413,11 @@ public class PlaylistDAO {
     public Collection<PlaylistBean> searchPlaylistsByTitle(String search) throws SQLException {
         Collection<PlaylistBean> playlists = new TreeSet<>((PlaylistBean a, PlaylistBean b) -> a.getTitle().compareTo(b.getTitle()));
         PreparedStatement stmt = connection.prepareStatement("" +
-                "SELECT TOP 10 p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative, p.lastAccessTime AS lastAccessTime " +
+                "SELECT p.id AS id, p.title AS title, p.tracks AS tracks, p.duration AS duration, p.isPublic AS isPublic, p.isCollaborative AS isCollaborative, p.lastAccessTime AS lastAccessTime " +
                 "FROM Playlist p " +
                 "WHERE p.isPublic = 1 " +
-                "AND p.title LIKE ?");
+                "AND p.title LIKE ? " +
+                "LIMIT 10 ");
         search = '%' + search +  '%';
         stmt.setString(1, search);
 

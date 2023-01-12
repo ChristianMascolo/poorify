@@ -211,12 +211,13 @@ public class TrackDAO {
                 "WHERE t.genre IN (" +
                 "   SELECT t.genre " +
                 "   FROM Plays p, Track t" +
-                "   WHERE p.track = t.id AND p.enduser = ? " +
+                "   WHERE p.track = t.id AND p.enduser = ? AND p.time >= ALL (SELECT p.time FROM Plays p WHERE p.enduser = ?) " +
                 "   ORDER BY p.time DESC" +
-                "   LIMIT 1 " +
-                ") ORDER BY NEWID() " +
+                " " +
+                ") ORDER BY RAND() " +
                 "LIMIT 1 ");
         stmt.setInt(1, id);
+        stmt.setInt(2, id);
         ResultSet rs = stmt.executeQuery();
         if(rs.next())
             outcome = rs.getInt("id");

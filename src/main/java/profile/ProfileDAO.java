@@ -381,10 +381,11 @@ public class ProfileDAO {
     public Collection<UserBean> searchUsersByAlias(String search) throws SQLException {
         Collection<UserBean> users = new TreeSet<>((UserBean a, UserBean b) -> a.getAlias().compareTo(b.getAlias()));
         PreparedStatement stmt = connection.prepareStatement("" +
-                "SELECT TOP 10 p.id AS id, p.email AS email, p.password AS password, p.role AS role, u.alias AS alias, u.birthdate AS birthdate, n.iso AS iso, n.name AS name, u.isPublic AS isPublic " +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, u.alias AS alias, u.birthdate AS birthdate, n.iso AS iso, n.name AS name, u.isPublic AS isPublic " +
                 "FROM Profile p, EndUser u, Nation n " +
                 "WHERE p.id = u.profile AND u.nation = n.iso " +
-                "AND u.alias LIKE ?");
+                "AND u.alias LIKE ?" +
+                "LIMIT 10 ");
         search = '%' + search +  '%';
         stmt.setString(1, search);
 
@@ -399,10 +400,11 @@ public class ProfileDAO {
     public Collection<ArtistBean> searchArtistsByAlias(String search) throws SQLException {
         Collection<ArtistBean> artists = new TreeSet<>((ArtistBean a, ArtistBean b) -> a.getAlias().compareTo(b.getAlias()));
         PreparedStatement stmt = connection.prepareStatement("" +
-                "SELECT TOP 10 p.id AS id, p.email AS email, p.password AS password, p.role AS role, a.alias AS alias, a.bio AS bio " +
+                "SELECT p.id AS id, p.email AS email, p.password AS password, p.role AS role, a.alias AS alias, a.bio AS bio " +
                 "FROM Profile p, Artist a " +
                 "WHERE p.id = a.profile " +
-                "AND a.alias LIKE ?");
+                "AND a.alias LIKE ? " +
+                "LIMIT 10");
         search = '%' + search +  '%';
         stmt.setString(1, search);
 
@@ -539,7 +541,7 @@ public class ProfileDAO {
         stFeaturing.executeUpdate();
         stFeaturing.close();
 
-        PreparedStatement stTracks = connection.prepareStatement("DELETE FROM Tracks WHERE album IN (SELECT a.id AS id FROM Album a WHERE a.artist = ?)");
+        PreparedStatement stTracks = connection.prepareStatement("DELETE FROM Track WHERE album IN (SELECT a.id AS id FROM Album a WHERE a.artist = ?)");
         stTracks.setInt(1, id);
         stTracks.executeUpdate();
         stTracks.close();

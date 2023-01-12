@@ -80,9 +80,10 @@ public class AlbumDAO {
     public Collection<AlbumBean> searchAlbumsByTitle(String search) throws SQLException {
         Collection<AlbumBean> albums = new TreeSet<>((AlbumBean a, AlbumBean b) -> a.getTitle().compareTo(b.getTitle()));
         PreparedStatement stmt = connection.prepareStatement("" +
-                "SELECT TOP 10 a.id AS id, a.title AS title, a.tracks AS tracks, a.duration AS duration, a.year AS year, a.type AS type " +
+                "SELECT a.id AS id, a.title AS title, a.tracks AS tracks, a.duration AS duration, a.year AS year, a.type AS type " +
                 "FROM Album a " +
-                "WHERE a.title LIKE ?");
+                "WHERE a.title LIKE ? " +
+                "LIMIT 10");
         search = '%' + search +  '%';
         stmt.setString(1, search);
 
