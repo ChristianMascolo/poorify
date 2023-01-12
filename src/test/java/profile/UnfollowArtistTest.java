@@ -1,4 +1,4 @@
-package track;
+package profile;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,41 +8,46 @@ import javax.servlet.http.HttpSession;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class kAddToQueueTest {
+class UnfollowArtistTest {
 
     @Test
-    public void addToQueue() throws Exception {
+    public void unfollowArtistTest() throws Exception {
 
         //REQUEST & RESPONSE
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
-
         when(request.getParameter("id")).thenReturn("1");
-
-        //LISTENING QUEUE
-        ListeningQueue queue = mock(ListeningQueue.class);
 
         //SESSION
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
-
-        when(session.getAttribute("ListeningQueue")).thenReturn(queue);
 
         //WRITER
         StringWriter stringWriter = new StringWriter();
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        AddToQueue addToQueue = new AddToQueue();
-        addToQueue.doPost(request, response);
+
+        //PROFILE
+        ProfileDAO profileDAO = mock(ProfileDAO.class);
+        UserBean userBean = mock(UserBean.class);
+        ArtistBean artistBean = mock(ArtistBean.class);
+        when(userBean.getArtists()).thenReturn(new ArrayList<>());
+        when(session.getAttribute("Profile")).thenReturn(userBean);
+
+        UnfollowArtist unfollowArtist = new UnfollowArtist();
+        unfollowArtist.profileDAO = profileDAO;
+        unfollowArtist.doPost(request,response);
 
         writer.flush();
         assert(stringWriter.toString().contains(""));
+
     }
 
 }

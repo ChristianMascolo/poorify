@@ -1,4 +1,4 @@
-package track;
+package playlist;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,36 +13,34 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class kAddToQueueTest {
+class RemoveTrackTest {
 
     @Test
-    public void addToQueue() throws Exception {
-
+    public void removeTrackTest() throws Exception{
         //REQUEST & RESPONSE
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
-
-        when(request.getParameter("id")).thenReturn("1");
-
-        //LISTENING QUEUE
-        ListeningQueue queue = mock(ListeningQueue.class);
+        when(request.getParameter("track")).thenReturn("1");
+        when(request.getParameter("playlist")).thenReturn("1");
 
         //SESSION
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
 
-        when(session.getAttribute("ListeningQueue")).thenReturn(queue);
+        //ATTRIBUTES
+        PlaylistDAO playlistDAO = mock(PlaylistDAO.class);
 
         //WRITER
         StringWriter stringWriter = new StringWriter();
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        AddToQueue addToQueue = new AddToQueue();
-        addToQueue.doPost(request, response);
+        //SERVLET
+        RemoveTrack removeTrack = new RemoveTrack();
+        removeTrack.playlistDAO = playlistDAO;
+        removeTrack.doPost(request,response);
 
         writer.flush();
         assert(stringWriter.toString().contains(""));
     }
-
 }
