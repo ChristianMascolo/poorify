@@ -13,8 +13,8 @@ import java.sql.SQLException;
 
 @WebServlet(name = "LikePublicPlaylist", value = "/LikePublicPlaylist")
 public class LikePublicPlaylist extends HttpServlet {
-    private PlaylistDAO playlistDAO;
-    private ProfileDAO profileDAO;
+    public PlaylistDAO playlistDAO;
+    public ProfileDAO profileDAO;
 
     @Override
     public void init() throws ServletException {
