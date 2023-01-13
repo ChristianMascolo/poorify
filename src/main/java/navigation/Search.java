@@ -18,10 +18,10 @@ import java.util.Collection;
 @WebServlet(name = "Search", value = "/Search")
 public class Search extends HttpServlet {
 
-    private PlaylistDAO playlistDAO;
-    private ProfileDAO profileDAO;
-    private AlbumDAO albumDAO;
-    private TrackDAO trackDAO;
+    public PlaylistDAO playlistDAO;
+    public ProfileDAO profileDAO;
+    public AlbumDAO albumDAO;
+    public TrackDAO trackDAO;
 
     public void init() throws ServletException {
         super.init();
@@ -72,8 +72,8 @@ public class Search extends HttpServlet {
         }
 
         request.getSession().setAttribute("Results", results);
-
         JSONObject jsonObject = new JSONObject();
+        jsonObject.append("empty", results.isEmpty());
         response.getWriter().print(jsonObject);
     }
 }

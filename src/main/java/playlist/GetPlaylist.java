@@ -21,10 +21,10 @@ import java.util.TreeSet;
 @WebServlet(name = "GetPlaylist", value = "/GetPlaylist")
 public class GetPlaylist extends HttpServlet {
 
-    private PlaylistDAO playlistDAO;
-    private ProfileDAO profileDAO;
-    private AlbumDAO albumDAO;
-    private TrackDAO trackDAO;
+    public PlaylistDAO playlistDAO;
+    public ProfileDAO profileDAO;
+    public AlbumDAO albumDAO;
+    public TrackDAO trackDAO;
 
     public void init() throws ServletException {
         super.init();
@@ -106,6 +106,7 @@ public class GetPlaylist extends HttpServlet {
         //RISPOSTA JSON
         request.getSession().setAttribute("Playlist", playlist);
         JSONObject jsonObject = new JSONObject();
+        jsonObject.append("title", playlist.getTitle());
         response.getWriter().print(jsonObject);
     }
 }

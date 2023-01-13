@@ -28,6 +28,7 @@ public class ChangeOrder extends HttpServlet {
         }
 
         JSONObject jsonObject = new JSONObject();
+        jsonObject.append("order", request.getSession().getAttribute("Order"));
         response.getWriter().print(jsonObject);
 
     }

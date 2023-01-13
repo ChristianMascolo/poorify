@@ -70,6 +70,7 @@ public class GetAlbum extends HttpServlet {
         //RISPOSTA JSON
         request.getSession().setAttribute("Album", album);
         JSONObject jsonObject = new JSONObject();
+        jsonObject.append("title", album.getTitle());
         response.getWriter().print(jsonObject);
 
     }
