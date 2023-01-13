@@ -13,8 +13,8 @@ import java.io.IOException;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 3, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 100)
 public class Signup extends HttpServlet {
 
-    private ProfileDAO profileDAO;
-    private PlaylistDAO playlistDAO;
+    public ProfileDAO profileDAO;
+    public PlaylistDAO playlistDAO;
 
     public void init() throws ServletException {
         super.init();

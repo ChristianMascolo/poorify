@@ -10,7 +10,7 @@ import java.io.IOException;
 @WebServlet(name = "CheckFollowing", value = "/CheckFollowing")
 public class CheckFollowing extends HttpServlet {
 
-    private ProfileDAO profileDAO;
+    public ProfileDAO profileDAO;
 
     public void init() throws ServletException {
         super.init();
