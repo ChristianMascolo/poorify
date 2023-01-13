@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet(name = "AddGuest", value = "/AddGuest")
 public class AddGuest extends HttpServlet {
 
-    private PlaylistDAO playlistDAO;
+    public PlaylistDAO playlistDAO;
 
     public void init() throws ServletException {
         super.init();

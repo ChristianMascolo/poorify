@@ -12,7 +12,7 @@ import java.sql.SQLException;
 @WebServlet(name = "AddTrack", value = "/AddTrack")
 public class AddTrack extends HttpServlet {
 
-    private PlaylistDAO playlistDAO;
+    public PlaylistDAO playlistDAO;
 
     public void init() throws ServletException {
         super.init();
