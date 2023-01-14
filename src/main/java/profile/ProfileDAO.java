@@ -496,6 +496,11 @@ public class ProfileDAO {
         stFollowUser.executeUpdate();
         stFollowUser.close();
 
+        PreparedStatement stHost = connection.prepareStatement("DELETE FROM Guests WHERE host = ?");
+        stHost.setInt(1, id);
+        stHost.executeUpdate();
+        stHost.close();
+
         PreparedStatement stGuests = connection.prepareStatement("DELETE FROM Guests WHERE guest = ?");
         stGuests.setInt(1, id);
         stGuests.executeUpdate();
@@ -505,6 +510,21 @@ public class ProfileDAO {
         stPlays.setInt(1, id);
         stPlays.executeUpdate();
         stPlays.close();
+
+        PreparedStatement stPlaylistCollab = connection.prepareStatement("DELETE FROM playlistcollaborative WHERE playlist IN (SELECT p.id FROM playlist p WHERE p.enduser = ?)");
+        stPlaylistCollab.setInt(1, id);
+        stPlaylistCollab.executeUpdate();
+        stPlaylistCollab.close();
+
+        PreparedStatement stPlaylistPublic = connection.prepareStatement("DELETE FROM playlistpublic WHERE playlist IN (SELECT p.id FROM playlist p WHERE p.enduser = ?)");
+        stPlaylistPublic.setInt(1, id);
+        stPlaylistPublic.executeUpdate();
+        stPlaylistPublic.close();
+
+        PreparedStatement stPlaylist = connection.prepareStatement("DELETE FROM playlist WHERE enduser = ?");
+        stPlaylist.setInt(1, id);
+        stPlaylist.executeUpdate();
+        stPlaylist.close();
 
         PreparedStatement stUser = connection.prepareStatement("DELETE FROM EndUser WHERE profile = ?");
         stUser.setInt(1, id);

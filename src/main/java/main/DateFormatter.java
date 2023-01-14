@@ -6,7 +6,7 @@ import java.util.Locale;
 
 public class DateFormatter {
 
-    public static final String AZURE_SQL_FORMAT = "yyyy-MM-dd";
+    public static final String SQL_FORMAT = "yyyy-MM-dd";
     public static final String PLAYLIST_DISPLAY_FORMAT = "MMM dd, yyyy";
 
     public String format(String date, String patternFrom, String patternTo) {

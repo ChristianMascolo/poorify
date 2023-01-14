@@ -13,7 +13,7 @@ import java.util.Collection;
 @WebServlet(name = "CheckLike", value = "/CheckLike")
 public class CheckLike extends HttpServlet {
 
-    private PlaylistDAO playlistDAO;
+    public PlaylistDAO playlistDAO;
 
     public void init() throws ServletException {
         super.init();

@@ -119,7 +119,7 @@
                 <% } %>
 
                 <div class="date-added">
-                    <span><%= (new DateFormatter()).format(added.getDate(), DateFormatter.AZURE_SQL_FORMAT, DateFormatter.PLAYLIST_DISPLAY_FORMAT) %></span>
+                    <span><%= (new DateFormatter()).format(added.getDate(), DateFormatter.SQL_FORMAT, DateFormatter.PLAYLIST_DISPLAY_FORMAT) %></span>
                 </div>
 
                 <div class="duration">
