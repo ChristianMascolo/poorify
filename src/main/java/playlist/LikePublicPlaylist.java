@@ -13,6 +13,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "LikePublicPlaylist", value = "/LikePublicPlaylist")
 public class LikePublicPlaylist extends HttpServlet {
+
     public PlaylistDAO playlistDAO;
     public ProfileDAO profileDAO;
 
