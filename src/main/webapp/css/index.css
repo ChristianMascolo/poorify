@@ -66,7 +66,7 @@ section h3 {
     font-size: 1em;
 }
 
-input, label, select, option {
+input, label, select, option, textarea {
     max-width: 100%;
     width: 100%;
 
@@ -83,6 +83,9 @@ input, label, select, option {
 }
 label {
     display: block;
+}
+textarea {
+    resize: none;
 }
 
 input[type=button], input[type=submit] {

@@ -16,11 +16,14 @@ function checkNations() {
 }
 
 function signup(type) {
-    if (type == 'user') {
-
-    } else {
-
-    }
+    let response = true;
+    response = response && validateEmail(document.getElementById("email").children[0]);
+    response = response && validatePassword(document.getElementById("password").children[0]);
+    response = response && validateAlias(document.getElementById("alias").children[0]);
+    response = response && validatePicture(document.getElementById("picture").children[0]);
+    if (type == 'user')
+        response = response && validateBirthdate(document.getElementById("birthdate").children[0]);
+    return response;
 }
 
 function validateEmail(field) {
@@ -73,6 +76,8 @@ function validatePicture(field) {
 
     let file = field.files[0];
     let img = new Image();
+
+    div.children[1].children[0].innerHTML = field.value.replace(/.*[\/\\]/, '');
 
     let objurl = window.URL.createObjectURL(file);
     img.onload = function() {

@@ -7,7 +7,7 @@
 <body>
 
 <div id="container">
-  <img src="images/sfondo_index.jpg">
+  <img src="images/sfondoduotone.png">
 
   <div>
   <section class="form">
@@ -18,17 +18,17 @@
       <input type="hidden" name="type" value="user">
 
       <div id="email" class="box">
-        <input type="email" name="email" placeholder="Email address" required onblur="validateEmail(this)">
+        <input type="email" name="email" placeholder="Email address" onblur="validateEmail(this)">
         <p class="error"></p>
       </div>
 
       <div id="password" class="box">
-        <input type="password" name="password" placeholder="Password" required onblur="validatePassword(this)">
+        <input type="password" name="password" placeholder="Password" onblur="validatePassword(this)">
         <p class="error"></p>
       </div>
 
       <div id="alias" class="box">
-        <input type="text" name="alias" placeholder="Alias" required onblur="validateAlias(this)">
+        <input type="text" name="alias" placeholder="Alias" onblur="validateAlias(this)">
         <p class="error"></p>
       </div>
 

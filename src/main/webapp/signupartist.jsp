@@ -7,39 +7,40 @@
 <body>
 
 <div id="container">
-  <img src="images/sfondo_index.jpg">
+  <img src="images/sfondoduotone.png">
 
   <div>
   <section class="form">
 
     <h3>SIGN UP FOR POORIFY ARTIST</h3>
 
-    <form action="Signup" method="post" enctype="multipart/form-data">
+    <form action="Signup" method="post" enctype="multipart/form-data" onsubmit="return signup('artist')">
       <input type="hidden" name="type" value="artist">
 
       <div id="email" class="box">
-        <p>Email address</p>
-        <input type="email" name="email" placeholder="Email address" required>
+        <input type="email" name="email" placeholder="Email address" onblur="validateEmail(this)">
+        <p class="error"></p>
       </div>
 
       <div id="password" class="box">
-        <p>Password</p>
-        <input type="password" name="password" placeholder="Password" required>
+        <input type="password" name="password" placeholder="Password" onblur="validatePassword(this)">
+        <p class="error"></p>
       </div>
 
       <div id="alias" class="box">
-        <p>Alias</p>
-        <input type="text" name="alias" placeholder="Alias" required>
+        <input type="text" name="alias" placeholder="Alias" onblur="validateAlias(this)">
+        <p class="error"></p>
       </div>
 
       <div id="picture" class="box">
-        <p>Profile picture</p>
-        <input type="file" accept="image/jpeg" name="picture" placeholder="Profile picture" required>
+        <input id="picture-input" type="file" accept="image/jpeg" name="picture" onchange="validatePicture(this)">
+        <label for="picture-input"><span>Upload profile picture</span></label>
+        <p class="error"></p>
       </div>
 
       <div id="bio" class="box">
-        <p>Biography</p>
-        <textarea name="bio" rows="5" cols="50" maxlength="1024" required>Tell us about yourself...</textarea>
+        <textarea name="bio" rows="7" cols="50" maxlength="1024">Tell us about yourself...</textarea>
+        <p class="error"></p>
       </div>
 
       <div class="submit">

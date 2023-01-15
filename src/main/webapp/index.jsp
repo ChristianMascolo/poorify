@@ -7,7 +7,7 @@
 <body>
 
 <div id="container">
-  <img src="images/sfondo_index.jpg">
+  <img src="images/sfondoduotone.png">
 
   <div>
   <section class="form">
