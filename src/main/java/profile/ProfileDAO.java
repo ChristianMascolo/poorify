@@ -434,7 +434,7 @@ public class ProfileDAO {
 
     public void changePassword(int id, String password) throws SQLException {
 
-        PreparedStatement st1 = connection.prepareStatement("UPDATE Profile SET password = ? WHERE profile = ?");
+        PreparedStatement st1 = connection.prepareStatement("UPDATE Profile SET password = ? WHERE id = ?");
         st1.setString(1, password);
         st1.setInt(2, id);
         st1.executeUpdate();
