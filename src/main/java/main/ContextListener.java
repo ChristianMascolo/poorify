@@ -70,10 +70,6 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
             Properties properties = new Properties();
             properties.load(ContextListener.class.getClassLoader().getResourceAsStream("application.properties"));
             sce.getServletContext().setAttribute("Properties", properties);
-            
-            //CREATE UTIL CLASSES
-            Uploader uploader = new Uploader();
-            sce.getServletContext().setAttribute("Uploader", uploader);
 
             //DATASOURCE
             Context initCtx = new InitialContext();

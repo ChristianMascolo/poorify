@@ -1,7 +1,5 @@
 package profile;
 
-import main.Uploader;
-import org.json.JSONObject;
 import playlist.PlaylistDAO;
 
 import javax.servlet.*;
@@ -79,10 +77,12 @@ public class Signup extends HttpServlet {
 
                 profile = profileDAO.get(email, password);
                 Part part = request.getPart("picture");
-
                 String filename = "profile/" + profile.getId() + ".jpg";
-                Uploader uploader = (Uploader) request.getServletContext().getAttribute("Uploader");
-                uploader.upload(part.getInputStream(), filename);
+
+                request.setAttribute("Upload", true);
+                request.setAttribute("InputStream", part.getInputStream());
+                request.setAttribute("Path", filename);
+                request.getRequestDispatcher("files").include(request, response);
 
                 //REDIRECT TO LOGIN
                 request.setAttribute("email", profile.getEmail());

@@ -1,6 +1,5 @@
 package album;
 
-import main.Uploader;
 import org.junit.jupiter.api.Test;
 import profile.ArtistBean;
 import track.TrackDAO;
@@ -59,13 +58,9 @@ class UploadAlbumIntegrationTest {
         artistBean.setAlbums(new ArrayList<>());
         when(session.getAttribute("Profile")).thenReturn(artistBean);
 
-        //UPLOADER
-        Uploader uploader = mock(Uploader.class);
-
         //CONTEXT
         ServletContext context = mock(ServletContext.class);
         when(request.getServletContext()).thenReturn(context);
-        when(context.getAttribute("Uploader")).thenReturn(uploader);
 
         //WRITER
         StringWriter stringWriter = new StringWriter();

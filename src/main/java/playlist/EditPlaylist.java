@@ -1,6 +1,5 @@
 package playlist;
 
-import main.Uploader;
 import org.json.JSONObject;
 import profile.ProfileBean;
 import profile.UserBean;
@@ -43,8 +42,10 @@ public class EditPlaylist extends HttpServlet {
 
             if(part.getSize() > 0) {
                 String filename = "playlist/" + id + ".jpg";
-                Uploader uploader = (Uploader) request.getServletContext().getAttribute("Uploader");
-                uploader.upload(part.getInputStream(), filename);
+                request.setAttribute("Upload", true);
+                request.setAttribute("InputStream", part.getInputStream());
+                request.setAttribute("Path", filename);
+                request.getRequestDispatcher("files").include(request, response);
             }
 
             PlaylistBean playlist = playlistDAO.get(id);

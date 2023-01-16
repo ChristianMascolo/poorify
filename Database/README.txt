@@ -1,0 +1,1 @@
+CREARE UN UTENTE SU MySQL CON USERNAME = "poorify" e PASSWORD = "poorify"

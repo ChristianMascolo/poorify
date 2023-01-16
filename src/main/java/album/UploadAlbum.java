@@ -1,8 +1,6 @@
 package album;
 
-import main.Uploader;
 import org.json.JSONObject;
-import playlist.PlaylistDAO;
 import profile.ArtistBean;
 import track.TrackDAO;
 
@@ -49,11 +47,12 @@ public class UploadAlbum extends HttpServlet {
             albumDAO.add(artist.getId(), title, tracks, duration, year, type);
             int album_id = albumDAO.get(artist.getId(), title);
 
-            Uploader uploader = (Uploader) request.getServletContext().getAttribute("Uploader");
-
             if(cover.getSize() > 0) {
                 String filename = "album/" + album_id + ".jpg";
-                uploader.upload(cover.getInputStream(), filename);
+                request.setAttribute("Upload", true);
+                request.setAttribute("InputStream", cover.getInputStream());
+                request.setAttribute("Path", filename);
+                request.getRequestDispatcher("files").include(request, response);
             }
 
             for(int i = 0; i < tracks; i++) {
@@ -67,7 +66,10 @@ public class UploadAlbum extends HttpServlet {
                 Part audio = request.getPart("edit-audio-track-" + (i + 1));
                 if(audio.getSize() > 0) {
                     String filename = "track/" + track_id + ".mp3";
-                    uploader.upload(audio.getInputStream(), filename);
+                    request.setAttribute("Upload", true);
+                    request.setAttribute("InputStream", audio.getInputStream());
+                    request.setAttribute("Path", filename);
+                    request.getRequestDispatcher("files").include(request, response);
                 }
             }
             

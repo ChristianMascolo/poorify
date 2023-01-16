@@ -16,9 +16,8 @@
     </resource-ref>
 
     <servlet-mapping>
-        <servlet-name>Download</servlet-name>
+        <servlet-name>FileSystemManager</servlet-name>
         <url-pattern>/files/*</url-pattern>
     </servlet-mapping>
-
 
 </web-app>

@@ -1,6 +1,5 @@
 package profile;
 
-import main.Uploader;
 import org.json.JSONObject;
 import playlist.PlaylistDAO;
 
@@ -43,8 +42,10 @@ public class EditProfile extends HttpServlet {
 
             if(part.getSize() > 0) {
                 String filename = "profile/" + id + ".jpg";
-                Uploader uploader = (Uploader) request.getServletContext().getAttribute("Uploader");
-                uploader.upload(part.getInputStream(), filename);
+                request.setAttribute("Upload", true);
+                request.setAttribute("InputStream", part.getInputStream());
+                request.setAttribute("Path", filename);
+                request.getRequestDispatcher("files").include(request, response);
             }
 
             if(profile.getRole() == ProfileBean.Role.USER) {
