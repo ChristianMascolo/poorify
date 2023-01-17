@@ -1,5 +1,7 @@
 package profile;
 
+import org.json.JSONObject;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -48,7 +50,11 @@ public class DeleteProfile extends HttpServlet {
 
         if(profile.getRole() != ProfileBean.Role.OVERSEER)
             request.getRequestDispatcher("index.jsp").forward(request, response);
-        else
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
+        else {
+            response.setContentType("application/json");
+            JSONObject jsonObject = new JSONObject();
+            response.getWriter().print(jsonObject);
+        }
+
     }
 }

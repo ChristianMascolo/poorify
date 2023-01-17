@@ -30,6 +30,7 @@ function hideProfileMenu() {
 
 function deleteProfile(id) {
     $.post("DeleteProfile", {id: String(id)}, function(data) {
-
+        notify("Profile deleted");
+        home();
     });
 }
